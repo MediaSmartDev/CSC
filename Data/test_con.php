@@ -1,15 +1,12 @@
 <?php
-$host = 'localhost'; // Change this to your database host
-$dbname = 'cscdz9818_pitanco'; // Change this to your database name
-$username = 'cscdz9818_kia'; // Change this to your database username
-$password = 'Lovisca.com#2904'; // Change this to your database password
-
+$c = file_exists(__DIR__.'/config.php') ? require __DIR__.'/config.php' : require __DIR__.'/config.example.php';
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Set PDO to throw exceptions on errors
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
+    $pdo = new PDO("mysql:host={$c['db_host']};dbname={$c['db_name']};charset=utf8mb4", $c['db_user'], $c['db_pass'],
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    echo "Connexion OK à la base « {$c['db_name']} »<br>";
+    foreach (['classement','joueurs'] as $t) {
+        echo $t.' : '.$pdo->query("SELECT COUNT(*) FROM `$t`")->fetchColumn().' lignes<br>';
+    }
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    echo "Connexion échouée : " . htmlspecialchars($e->getMessage());
 }
-?>

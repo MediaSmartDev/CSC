@@ -28,31 +28,46 @@ include('Connexion.php');
     }
     
     function getClassmentTable(){
-        return queryAll("SELECT * FROM `classement` ORDER BY pos ASC");
+        $r = queryAll("SELECT *, pos AS position FROM `classement` ORDER BY pos ASC");
+        return is_array($r) ? $r : [];
+    }
+    function getClassementInfo(){
+        $r = queryAll("SELECT * FROM `classement_info` LIMIT 1");
+        return (is_array($r) && isset($r[0])) ? $r[0] : null;
     }
     
     function getPlaersByCateg($i){
-        return query_all("SELECT * FROM `joueurs` WHERE categorie = ? AND `published` = ? ORDER BY nom ASC",array($i,1));
+        $r = query_all("SELECT * FROM `joueurs` WHERE categorie = ? AND `published` = ? ORDER BY ordre ASC, dossard ASC, nom ASC",array($i,1));
+        return is_array($r) ? $r : [];
     }
     function getPlayersByNumber($i){
         $data = query_all("SELECT * FROM `joueurs` WHERE dossard = ?",array($i));
-        return $data[0];
+        return (is_array($data) && isset($data[0])) ? $data[0] : null;
     }
     function getFeaturedPlayers(){
-        return query_all("SELECT * FROM `joueurs` WHERE `featured` = ?  AND `published` = ?  LIMIT 4",array(1,1));
+        $r = query_all("SELECT * FROM `joueurs` WHERE `featured` = ?  AND `published` = ?  LIMIT 4",array(1,1));
+        return is_array($r) ? $r : [];
+    }
+    /* Age : calculé depuis date_naissance si connue, sinon colonne age (donnée LFP) */
+    function playerAge($row){
+        if (!empty($row['date_naissance'])) {
+            return (new DateTime())->diff(new DateTime($row['date_naissance']))->y;
+        }
+        return isset($row['age']) ? (int)$row['age'] : '';
     }
     function getContact(){
         $data = queryAll("SELECT * FROM `contact`");
-        return $data[0];
+        return (is_array($data) && isset($data[0])) ? $data[0] : null;
     }
     function getNextMatch(){
         $data = queryAll("SELECT * FROM `calendrier25`");
-        return $data[0];
+        return (is_array($data) && isset($data[0])) ? $data[0] : null;
     }
     function getNextMatchList(){
-        return queryAll("SELECT * FROM `calendrier25`");
+        $r = queryAll("SELECT * FROM `calendrier25`");
+        return is_array($r) ? $r : [];
     }
     function getPartenairesList(){
-        return query_all("SELECT * FROM `partenaires` WHERE `published` = ? LIMIT 3",array(1));
+        $r = query_all("SELECT * FROM `partenaires` WHERE `published` = ? LIMIT 3",array(1));
+        return is_array($r) ? $r : [];
     }
-    

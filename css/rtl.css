@@ -1,0 +1,28 @@
+/* ===== Version arabe (droite à gauche) ===== */
+html[dir="rtl"] body{direction:rtl;text-align:right;font-family:'Cairo','Poppins',sans-serif;}
+html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3,html[dir="rtl"] h4,html[dir="rtl"] h5,html[dir="rtl"] h6,
+html[dir="rtl"] p,html[dir="rtl"] a,html[dir="rtl"] li,html[dir="rtl"] span,html[dir="rtl"] strong,html[dir="rtl"] button,
+html[dir="rtl"] label,html[dir="rtl"] input,html[dir="rtl"] textarea,html[dir="rtl"] td,html[dir="rtl"] th{font-family:'Cairo','Poppins',sans-serif;letter-spacing:0 !important;}
+html[dir="rtl"] .logo-navbar .nav-item>a{text-transform:none;font-size:16px;}
+/* menus déroulants */
+html[dir="rtl"] .main-nav .drop-down ul{left:auto;right:0;text-align:right;}
+html[dir="rtl"] .main-nav .drop-down > a:after{margin-left:0;margin-right:5px;}
+/* tableaux */
+html[dir="rtl"] .point-table-widget table th,html[dir="rtl"] .point-table-widget table td{text-align:right;}
+html[dir="rtl"] .point-table-widget table img{margin-right:0 !important;margin-left:6px;}
+html[dir="rtl"] .header_time-info{text-align:left;}
+/* bandes animées : on garde le sens d'origine */
+html[dir="rtl"] .sponsor-strip,html[dir="rtl"] .csc-scroll-wrapper{direction:ltr;}
+html[dir="rtl"] .csc-scroll-card{direction:rtl;text-align:right;}
+/* footer */
+html[dir="rtl"] .footer-links li a i.fa-angle-double-right{transform:scaleX(-1);display:inline-block;}
+html[dir="rtl"] .about-widget ul li{padding:0 25px 0 0;}
+html[dir="rtl"] .about-widget li i{left:auto;right:0;}
+html[dir="rtl"] .footer-widget h4:before,html[dir="rtl"] .footer-widget h4:after{left:auto;right:0;}
+/* fil d'ariane */
+html[dir="rtl"] .gt-breadcrumbs ul li{direction:rtl;}
+/* formulaires */
+html[dir="rtl"] .ins-count{text-align:left;}
+html[dir="rtl"] input[type=email],html[dir="rtl"] input[type=tel]{direction:ltr;text-align:right;}
+/* noms latins dans un texte arabe : ponctuation à la bonne place */
+html[dir="rtl"] .player-txt h3,html[dir="rtl"] .ts-cap h4,html[dir="rtl"] .fem-info h5{unicode-bidi:plaintext;}

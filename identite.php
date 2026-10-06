@@ -1,5 +1,6 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
-<html lang="fr">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
     <link rel="stylesheet" href="css/audioplayer.css">
-    <title>Site officiel du CSC - Club Sportif Constantinois</title>
+    <title><?= L('Identité - CS Constantine', 'الهوية - النادي الرياضي القسنطيني') ?></title>
     <style type="text/css">
         .static-pagetitle {
             background: linear-gradient(145deg,#0f830a 0,#020e01);
@@ -38,12 +39,12 @@
        
       <!--Main Slider Start-->
         <div class="inner-banner-header wf100">
-          <h1 data-generated="Identité">Identité</h1>
+          <h1 data-generated="<?= L('Identité', 'الهوية') ?>"><?= L('Identité', 'الهوية') ?></h1>
           <div class="gt-breadcrumbs">
             <ul>
-              <li> <a href="index.html" class="active"> <i class="fas fa-home"></i> Accueil </a> </li>
-              <li> <a href="#"> CLUB </a> </li>
-              <li> <a href="#"> Identité </a> </li>
+              <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
+              <li> <a href="#"> <?= L('CLUB', 'النادي') ?> </a> </li>
+              <li> <a href="#"> <?= L('Identité', 'الهوية') ?> </a> </li>
             </ul>
           </div>
         </div>
@@ -58,6 +59,20 @@
                             <div class="news-large-post">
                                 <!--<div class="post-thumb"> <img src="images/nlarge2.jpg" alt=""></div>-->
                                 <div class="post-txt">
+<?php if ($LANG === 'ar'): ?>
+                                    <h1 class="static-pagetitle">الألوان وتطور الشعار</h1>
+                                    <p style="text-align: justify;">الألوان الرئيسية للنادي هي الأخضر والأسود؛ يرمز الأخضر إلى الأمل ويرمز الأسود إلى الحداد (الأمل في الحداد).
+ويحمل شعار النادي ثلاثة أحرف رمزية تمثل الاسم المختصر للنادي الرياضي القسنطيني.</p>
+                                    <blockquote style="text-align: center;">
+                                      <p>1898 هو تاريخ تأسيس "إقبال التحرر".</p>
+                                    </blockquote>
+                                    <img src="images/blason_evol.jpg" alt="">
+                                    <h2 style="text-align: justify;margin-bottom: 1.1rem;">رمزية النسر</h2>
+                                    <p style="text-align: justify;">يُتخذ رمز النسر علامةً للانتماء على لافتات الأنصار، كما يظهر على شعار النادي. ويرمز في مخيال النادي وأنصاره إلى القوة والرجولة. ومن التقاليد الرياضية للنادي إحضار مجسّم لنسر عملاق إلى الملعب، مطليّ بألوان النادي الأخضر والأسود، خلال المباريات التي يخوضها الفريق. وكان بمثابة تميمة حظ للنادي، إذ كان حضوره في الملعب يُلهب حماس الجماهير، خاصة خلال موسم 1993-94 حين فاز النادي على غريمه "مولودية قسنطينة" بنتيجة لا تقبل الجدل 3-0، ليُنهي الموسم بطلاً للرابطة الثانية ويصعد بذلك إلى الرابطة الأولى. وتُعرف مدينة قسنطينة عادةً بـ«مدينة النسور» أو «عش النسر».</p>
+                                    <h2 style="text-align: justify;margin-bottom: 1.1rem;">التميمة</h2>
+                                    <p style="text-align: justify;">في موسم 2017-18، أصبحت تميمة النادي "سنفوراً" يرتدي ألوان النادي الأخضر والأسود (لباس أخضر مع قبعة، وسروال وحذاء وجوارب طويلة سوداء)، ويحمل أيضاً شعار النادي والأحرف الثلاثة للاسم المختصر للنادي باللون الأخضر على السروال.
+وقد فرض نفسه كأحد رموز النادي وأنصاره الذين يُلقَّبون بـ"السنافر".</p>
+<?php else: ?>
                                     <h1 class="static-pagetitle">Couleurs et évolutions du blason</h1>
                                     <p style="text-align: justify;">Les couleurs principales du club sont le Vert et le Noir, le vert symbolise l'espérance et le noir symbolise le deuil (L’espérance en deuil).
 Sur les blasons du club figure les trois lettres symbolique CSC, indiquent le nom abrégé du club Club Sportif Constantinois.</p>
@@ -80,6 +95,7 @@ Sur les blasons du club figure les trois lettres symbolique CSC, indiquent le no
                                     <p style="text-align: justify;">La saison 2017-18, la mascotte du club est un Schtroumpf qui porte les couleurs du club de Vert et Noir (vêtue du vert avec un bonnet et d'un pantalon, chaussure et chaussettes montantes noirs), il porte aussi le logo du club et les trois lettres CSC (le nom abrégé du club) en vert sur le pantalon.
 Il s'impose comme l'un des emblèmes du club et des supporters qui sont appelés les Sanafers ou Sanafirs littéralement en arabe les Schtroumpfs.
 </p>
+<?php endif; ?>
                                   </div>
                                 
                             </div>
