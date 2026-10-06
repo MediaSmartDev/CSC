@@ -1,0 +1,7 @@
+---
+# Déploiement cPanel : copie le site du dépôt Git vers public_html
+# (cPanel > Git Version Control > Manage > Pull or Deploy > "Deploy HEAD Commit")
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/csconstantine/public_html/
+    - /bin/rsync -a --exclude='.git' --exclude='.gitignore' --exclude='.cpanel.yml' --exclude='Data/config.php' --exclude='database/' --exclude='README.md' ./ $DEPLOYPATH
