@@ -1,5 +1,6 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
-<html lang="en">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +14,7 @@
    <link rel="stylesheet" href="css/owl.carousel.min.css">
    <link rel="stylesheet" href="css/prettyPhoto.css">
    <link rel="stylesheet" href="css/audioplayer.css">
-   <title>Résultats - Site officiel du CSConstantine</title>
+   <title><?= L('Résultats - CS Constantine', 'النتائج - النادي الرياضي القسنطيني') ?></title>
    <style type="text/css">
        .fixture-date{
             font-weight: 600;
@@ -119,22 +120,22 @@
            <div class="container">
                <div class="row">
                    <div class="col-md-12">
-                       <h5>Coupe de la CAF</h5>
-                       <p>Phase de groupes - Groupe A</p>
+                       <h5><?= L('Coupe de la CAF', 'كأس الكونفدرالية الإفريقية') ?></h5>
+                       <p><?= L('Phase de groupes - Groupe A', 'دور المجموعات - المجموعة أ') ?></p>
                        <ul class="teamz">
-                           <li class="mt-left"><img src="images/CSConstantine.png" alt=""> <strong>CS Constantine</strong> </li>
+                           <li class="mt-left"><img src="images/CSConstantine.png" alt=""> <strong><?= L('CS Constantine', 'ش.قسنطينة') ?></strong> </li>
                            <li class="mt-center-score">
                                <div class="score-left"> <span>4</span></div>
                                <div class="score-right"> <span>0</span></div>
                            </li>
-                           <li class="mt-right"><img src="ressources/logo/fcbravos_do_maquis_t4.png" alt=""> <strong>Bravos do Maquis</strong> </li>
+                           <li class="mt-right"><img src="ressources/logo/fcbravos_do_maquis_t4.png" alt=""> <strong><?= L('Bravos do Maquis', 'برافوس دو ماكيس') ?></strong> </li>
                        </ul>
                        <ul class="match-score">
                             <li class="text-right">
-                                <p>Miloud Rebiaï <span>(41')</span> <i class="fas fa-futbol"></i></p>
-                                <p>Tosin Omoyele <span>(45+1')</span> <i class="fas fa-futbol"></i></p>
-                                <p>Abdennour Belhocini <span>(86')</span> <i class="fas fa-futbol"></i></p>
-                                <p>Dadi El Hocine Mouaki <span>(89')</span> <i class="fas fa-futbol"></i></p>
+                                <p><?= L('Miloud Rebiaï', 'ميلود ربيعي') ?> <span>(41')</span> <i class="fas fa-futbol"></i></p>
+                                <p><?= L('Tosin Omoyele', 'توسين أومويلي') ?> <span>(45+1')</span> <i class="fas fa-futbol"></i></p>
+                                <p><?= L('Abdennour Belhocini', 'عبد النور بلحوسيني') ?> <span>(86')</span> <i class="fas fa-futbol"></i></p>
+                                <p><?= L('Dadi El Hocine Mouaki', 'دادي الحسين مواكي') ?> <span>(89')</span> <i class="fas fa-futbol"></i></p>
                             </li>
                             <li class="text-left">
                                 
@@ -144,9 +145,9 @@
                </div>
            </div>
             <ul class="m-date-loc">
-               <li><i class="fas fa-calendar-alt"></i> 17 Mai 2024</li>
+               <li><i class="fas fa-calendar-alt"></i> <?= L('17 Mai 2024', '17 ماي 2024') ?></li>
                <li class="pipeline"> | </li>
-               <li><i class="fas fa-map-marker-alt"></i> Stade Chahid Hamlaoui, CNE</li>
+               <li><i class="fas fa-map-marker-alt"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li>
             </ul>
         </div>
         <div class="main-content innerpagebg wf100 p80">
@@ -160,7 +161,7 @@
                         <div class="row">
                            <div class="col-md-12">
                               <div class="match-results-table">
-                                <h4>Résultats des matches</h4>
+                                <h4><?= L('Résultats des matchs', 'نتائج المباريات') ?></h4>
 
                               </div>
                            </div>

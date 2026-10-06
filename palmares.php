@@ -1,5 +1,6 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
-<html lang="fr">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
     <link rel="stylesheet" href="css/audioplayer.css">
-    <title>Palmarès — Club Sportif Constantinois</title>
+    <title><?= L('Palmarès — Club Sportif Constantinois', 'الألقاب — النادي الرياضي القسنطيني') ?></title>
 </head>
 <body>
 <div class="wrapper">

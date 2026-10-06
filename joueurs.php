@@ -1,9 +1,10 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
 <?php 
 include 'Data/Dbo.php';
 $today = new DateTime();
 ?>
-<html lang="fr">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +17,7 @@ $today = new DateTime();
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
-    <title>Site officiel du CSC - Club Sportif Constantinois</title>
+    <title><?= L('Joueurs - CS Constantine', 'اللاعبون - النادي الرياضي القسنطيني') ?></title>
   </head>
   <body>
     <!--Wrapper Start-->
@@ -24,12 +25,12 @@ $today = new DateTime();
         <?php require 'header.php';?>
       <!--Main Slider Start-->
       <div class="inner-banner-header wf100">
-        <h1 data-generated="Joueurs">Joueurs</h1>
+        <h1 data-generated="<?= L('Joueurs', 'اللاعبون') ?>"><?= L('Joueurs', 'اللاعبون') ?></h1>
         <div class="gt-breadcrumbs">
           <ul>
-            <li> <a href="#" class="active"> <i class="fas fa-home"></i> Accueil </a> </li>
-            <li> Equipe première </li>
-            <li> <a href="#"> Joueurs </a> </li>
+            <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
+            <li> <?= L('Équipe première', 'الفريق الأول') ?> </li>
+            <li> <a href="#"> <?= L('Joueurs', 'اللاعبون') ?> </a> </li>
           </ul>
         </div>
       </div>
@@ -43,26 +44,25 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title">Gardiens</h2>
+                            <h2 class="team-main-title"><?= L('Gardiens', 'حراس المرمى') ?></h2>
                         </div>
                         <?php
                         $content = '';
                         $data = getPlaersByCateg(1);
                         foreach ($data as $row){
-                            $birth = new DateTime($row['date_naissance']);
-                            $age = $today->diff($birth)->y;
+                            $age = playerAge($row);
                             $content .= '<div class="col-lg-3 col-md-6">
                                             <div class="team-squad-box">
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
-                                                    <h4>'.$row['nom'].' '.$row['prenom'].'</h4>
-                                                    <p>'.$row['poste'].'</p>
+                                                    <h4>'.htmlspecialchars(player_name($row)).'</h4>
+                                                    <p>'.Lv($row['poste']).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>Ans</span></li>
+                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                         
                                                     </ul>
                                                 </div>
-                                                <img src="'.$row['img'].'" alt=""> 
+                                                <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
                                             </div>
                                         </div>';
                         }
@@ -76,26 +76,25 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title">Défenseurs</h2>
+                            <h2 class="team-main-title"><?= L('Défenseurs', 'المدافعون') ?></h2>
                         </div>
                         <?php
                         $content = '';
                         $data = getPlaersByCateg(2);
                         foreach ($data as $row){
-                            $birth = new DateTime($row['date_naissance']);
-                            $age = $today->diff($birth)->y;
+                            $age = playerAge($row);
                             $content .= '<div class="col-lg-3 col-md-6">
                                             <div class="team-squad-box">
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
-                                                    <h4>'.$row['nom'].' '.$row['prenom'].'</h4>
-                                                    <p>'.$row['poste'].'</p>
+                                                    <h4>'.htmlspecialchars(player_name($row)).'</h4>
+                                                    <p>'.Lv($row['poste']).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>Ans</span></li>
+                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                         
                                                     </ul>
                                                 </div>
-                                                <img src="'.$row['img'].'" alt=""> 
+                                                <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
                                             </div>
                                         </div>';
                         }
@@ -109,25 +108,24 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title">Milieux</h2>
+                            <h2 class="team-main-title"><?= L('Milieux', 'وسط الميدان') ?></h2>
                         </div>
                         <?php
                         $content = '';
                         $data = getPlaersByCateg(3);
                         foreach ($data as $row){
-                            $birth = new DateTime($row['date_naissance']);
-                            $age = $today->diff($birth)->y;
+                            $age = playerAge($row);
                             $content .= '<div class="col-lg-3 col-md-6">
                                             <div class="team-squad-box">
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
-                                                    <h4>'.$row['nom'].' '.$row['prenom'].'</h4>
-                                                    <p>'.$row['poste'].'</p>
+                                                    <h4>'.htmlspecialchars(player_name($row)).'</h4>
+                                                    <p>'.Lv($row['poste']).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>Ans</span></li>                                                    
+                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>                                                    
                                                     </ul>
                                                 </div>
-                                                <img src="'.$row['img'].'" alt=""> 
+                                                <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
                                             </div>
                                         </div>';
                         }
@@ -141,25 +139,24 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title">Attaquants</h2>
+                            <h2 class="team-main-title"><?= L('Attaquants', 'المهاجمون') ?></h2>
                         </div>
                         <?php
                         $content = '';
                         $data = getPlaersByCateg(4);
                         foreach ($data as $row){
-                            $birth = new DateTime($row['date_naissance']);
-                            $age = $today->diff($birth)->y;
+                            $age = playerAge($row);
                             $content .= '<div class="col-lg-3 col-md-6">
                                             <div class="team-squad-box">
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
-                                                    <h4>'.$row['nom'].' '.$row['prenom'].'</h4>
-                                                    <p>'.$row['poste'].'</p>
+                                                    <h4>'.htmlspecialchars(player_name($row)).'</h4>
+                                                    <p>'.Lv($row['poste']).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>Ans</span></li>
+                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                     </ul>
                                                 </div>
-                                                <img src="'.$row['img'].'" alt=""> 
+                                                <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
                                             </div>
                                         </div>';
                         }
@@ -174,23 +171,22 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title">Staff technique</h2>
+                            <h2 class="team-main-title"><?= L('Staff technique', 'الطاقم الفني') ?></h2>
                         </div>
                         <?php
                             $content = '';
                             $data = getPlaersByCateg(5);
                             foreach ($data as $row){
-                                $birth = new DateTime($row['date_naissance']);
-                                $age = $today->diff($birth)->y;
+                                $age = playerAge($row);
                                 $content .= '<div class="col-md-6">
                                                 <div class="player-box with-extra-info">
                                                     <div class="player-thumb"><img src="images/player1.png" alt=""></div>
                                                     <div class="player-txt">
-                                                        <h3>'.$row['nom'].' '.$row['prenom'].'</h3>
+                                                        <h3>'.htmlspecialchars(player_name($row)).'</h3>
                                                         <ul class="pb-small-info">
-                                                          <li>Nationalité <strong><img src="images/" alt=""> Agerie</strong></li>
-                                                          <li>Age <strong>'.$age.' Ans</strong></li>
-                                                          <li>Poste<strong>'.$row['poste'].'</strong></li>
+                                                          <li>'.L('Nationalité', 'الجنسية').' <strong>'.Lv(!empty($row['nationalite']) ? $row['nationalite'] : 'Algérie').'</strong></li>
+                                                          <li>'.L('Âge', 'العمر').' <strong>'.$age.' '.L('ans', 'سنة').'</strong></li>
+                                                          <li>'.L('Poste', 'المنصب').' <strong>'.Lv($row['poste']).'</strong></li>
                                                         </ul>
                                                     </div>
                                                 </div>

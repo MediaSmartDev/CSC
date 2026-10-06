@@ -1,9 +1,10 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
 <?php
 include 'Data/Dbo.php';
 $today = new DateTime();
 ?>
-<html lang="fr">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +19,7 @@ $today = new DateTime();
 <link rel="stylesheet" href="js/rev-slider/css/settings.css" type='text/css' media='all'>
 <link rel="stylesheet" href="js/rev-slider/css/layers.css" type='text/css' media='all'>
 <link rel="stylesheet" href="js/rev-slider/css/navigation.css" type='text/css' media='all'>
-<title>Site officiel du CSC - Club Sportif Constantinois</title>
+<title><?= L('Site officiel du CSC - Club Sportif Constantinois', 'الموقع الرسمي للنادي الرياضي القسنطيني') ?></title>
 <style type="text/css">
     .static-pagetitle { background:linear-gradient(145deg,#0f830a 0,#020e01); -webkit-background-clip:text; -webkit-text-fill-color:transparent; color:#fff; text-align:center; margin:30px !important; font-weight:bold !important; }
     .ar { direction:rtl; text-align:right; font-family:"HelveticaNeue",Helvetica,Arial,sans-serif; font-size:14px; }
@@ -28,18 +29,18 @@ $today = new DateTime();
     .point-table-widget table td, .point-table-widget table th { display:table-cell !important; visibility:visible !important; opacity:1 !important; white-space:nowrap !important; padding:6px 8px !important; font-size:12px !important; }
 
     /* SPONSORS STRIP */
-    .sponsor-strip { width:100%; background:#fff; overflow:hidden; position:relative; z-index:99; padding:25px 0; border-top:1px solid #eee; border-bottom:1px solid #eee; }
-    .sponsor-strip::before,.sponsor-strip::after { content:""; height:100%; position:absolute; width:15%; z-index:2; pointer-events:none; }
-    .sponsor-strip::before { left:0; top:0; background:linear-gradient(to right,#fff 0%,transparent 100%); }
-    .sponsor-strip::after  { right:0; top:0; background:linear-gradient(to left,#fff 0%,transparent 100%); }
-    .sponsor-track-outer { display:flex; overflow:hidden; user-select:none; }
-    .sponsor-track { display:flex; align-items:center; flex-shrink:0; animation:scrollSponsors 35s linear infinite; }
-    .sponsor-track:hover { animation-play-state:paused; }
-    .sponsor-item { margin:0 50px; transition:transform 0.3s ease; }
-    .sponsor-item img { max-height:55px; max-width:160px; object-fit:contain; display:block; }
+    .sponsor-strip { width:100%; background:#fff; overflow:hidden; position:relative; z-index:99; padding:30px 0; border-top:1px solid #eee; border-bottom:1px solid #eee; }
+    .sponsor-strip::before,.sponsor-strip::after { content:""; height:100%; position:absolute; width:8%; z-index:2; pointer-events:none; top:0; }
+    .sponsor-strip::before { left:0; background:linear-gradient(to right,#fff 0%,rgba(255,255,255,0) 100%); }
+    .sponsor-strip::after  { right:0; background:linear-gradient(to left,#fff 0%,rgba(255,255,255,0) 100%); }
+    .sponsor-track-outer { display:flex; width:max-content; animation:scrollSponsors 30s linear infinite; }
+    .sponsor-strip:hover .sponsor-track-outer { animation-play-state:paused; }
+    .sponsor-track { display:flex; align-items:center; flex-shrink:0; }
+    .sponsor-item { display:flex; align-items:center; justify-content:center; width:200px; height:80px; margin:0 40px; transition:transform 0.3s ease; }
+    .sponsor-item img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block; }
     .sponsor-item:hover { transform:scale(1.1); }
     @keyframes scrollSponsors { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    @media(max-width:768px){ .sponsor-strip{padding:15px 0} .sponsor-item{margin:0 25px} .sponsor-item img{max-height:35px;max-width:100px} .sponsor-track{animation-duration:20s} }
+    @media(max-width:768px){ .sponsor-strip{padding:18px 0} .sponsor-item{width:120px;height:50px;margin:0 20px} .sponsor-track-outer{animation-duration:20s} }
 
     /* PALMARES */
     .pal-stat-strip { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; background:#fff; border:2px solid #0a4f0a; border-radius:14px; padding:20px 30px; }
@@ -131,43 +132,52 @@ $today = new DateTime();
     .share-btn.whats { background:#25D366; color:#fff; }
     .share-btn.copy.copied { background:#888; }
     .share-feedback { font-size:12px; color:#0a4f0a; text-align:center; margin-top:10px; min-height:18px; font-weight:700; }
+    #actualites,#contact-section,#palmares{scroll-margin-top:90px;}
 </style>
 </head>
 <body>
 <div class="wrapper"> 
     <?php require 'header.php';?>
 
-    <!-- SLIDER -->
-    <div class="main-slider">
-        <div class="home2-slider rev_slider_wrapper"> 
-            <div class="rev_slider_wrapper fullwidthbanner-container">
-                <div id="rev-slider2" class="rev_slider fullwidthabanner">
-                    <ul>
-                        <li data-transition="fade"> 
-                            <img src="images/couverture.png" alt="" width="1920" height="750" data-bgposition="top center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="1">
-                            <div class="tp-caption tp-resizeme" data-x="right" data-hoffset="850" data-y="bottom" data-voffset="50" data-transform_idle="o:1;" data-transform_in="x:[-75%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0.01;s:3000;e:Power3.easeOut;" data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" data-mask_in="x:[100%];y:0;s:inherit;e:inherit;" data-splitin="none" data-splitout="none" data-start="700">
-                                <div class="slide-content-box"><img src="images/slide1-football.png" alt=""></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- BANNIÈRE -->
+    <section class="csc-banner">
+        <img src="images/banner-csc.jpg" alt="<?= L('CS Constantine 1898', 'النادي الرياضي القسنطيني 1898') ?>">
+    </section>
+    <style>
+        .csc-banner{width:100%;background:#03140c;line-height:0;overflow:hidden;}
+        .csc-banner img{display:block;width:100%;height:auto;max-height:620px;object-fit:cover;object-position:center;}
+    </style>
 
     <div class="main-content wf100"> 
-        <!-- SLIDER TABS -->
-        <div class="slider-tabs wf100">
-            <div class="container">
-                <div class="row">
-                    <ul>
-                        <li class="col-lg-4"><div class="slidetab-box"><span>#</span><h6><a href="#">Lancement du site web officiel du club</a></h6><strong>CSC - Club Sportif Constantinois</strong></div></li>
-                        <li class="col-lg-4"><div class="slidetab-box"><span>#</span><h6><a href="joueurs.php">Effectif du CS Constantine de la saison 2025-2026</a></h6><strong>Ligue 1</strong></div></li>
-                        <li class="col-lg-4"><div class="slidetab-box"><span>#</span><h6><a href="resultats.php">Résultat du dernier match</a></h6><strong>LIGUE 1</strong></div></li>
-                    </ul>
-                </div>
+        <!-- SPONSORS ANIMÉS -->
+        <div class="sponsor-strip" id="sponsors-section">
+            <div class="sponsor-track-outer">
+                <div class="sponsor-track"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/kcs.jpeg" alt="KCS"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
+                <div class="sponsor-track" aria-hidden="true"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/kcs.jpeg" alt="KCS"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
             </div>
         </div>
+
+        <!-- APPEL À L'INSCRIPTION -->
+        <section class="csc-cta-inscription">
+            <div class="container">
+                <div class="csc-cta-box">
+                    <div>
+                        <h3><?= L('Envie de rejoindre le CSC ?', 'هل ترغب في الانضمام إلى النادي؟') ?></h3>
+                        <p><?= L('Marketing, logistique, comptabilité, communication : proposez vos compétences au club.', 'التسويق، اللوجستيك، المحاسبة، الاتصال: اقترح كفاءاتك على النادي.') ?></p>
+                    </div>
+                    <a href="inscription.php" class="csc-cta-btn"><i class="fas fa-user-plus"></i> <?= L('S\'inscrire maintenant', 'سجّل الآن') ?></a>
+                </div>
+            </div>
+        </section>
+        <style>
+            .csc-cta-inscription{padding:35px 0 0;}
+            .csc-cta-box{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:linear-gradient(135deg,#06210f,#0a4f0a 60%,#1a7a1a);border-radius:16px;padding:28px 36px;box-shadow:0 10px 30px rgba(10,79,10,.25);}
+            .csc-cta-box h3{color:#fff;font-weight:800;margin:0 0 6px;}
+            .csc-cta-box p{color:rgba(255,255,255,.8);margin:0;}
+            .csc-cta-btn{background:#f0c040;color:#06210f;font-weight:800;padding:14px 30px;border-radius:30px;white-space:nowrap;text-decoration:none;transition:.2s;}
+            .csc-cta-btn:hover{background:#fff;color:#0a4f0a;text-decoration:none;}
+            @media(max-width:768px){.csc-cta-box{padding:22px;text-align:center;justify-content:center;}}
+        </style>
 
         <!-- PROCHAIN MATCH + CLASSEMENT -->
         <section class="wf100 p80" id="calendrier" style="padding-top:30px !important;">
@@ -176,42 +186,42 @@ $today = new DateTime();
                     <!-- COL 1 : Prochain Match + Forme Récente -->
                     <div class="col-lg-4 col-md-6">
                         <div class="next-match-widget">
-                            <h5 class="title">Prochain Match</h5>
+                            <h5 class="title"><?= L('Prochain match', 'المباراة القادمة') ?></h5>
                             <div class="nmw-wrap">
                                 <ul class="match-teams-vs">
                                     <li class="team-logo">
                                         <img src="ressources/logo/logo_jss_t2.png" alt="JSS" style="width:60px;height:60px;object-fit:contain;">
-                                        <strong>JSS</strong>
+                                        <strong><?= L('JSS', 'ش.الساورة') ?></strong>
                                     </li>
-                                    <li class="mvs"><strong class="vs">VS</strong></li>
+                                    <li class="mvs"><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
                                     <li class="team-logo">
                                         <img src="images/logo-dark.png" alt="CSC" style="width:60px;height:60px;object-fit:contain;">
-                                        <strong>CSC</strong>
+                                        <strong><?= L('CSC', 'ش.قسنطينة') ?></strong>
                                     </li>
                                 </ul>
                                 <ul class="nmw-txt">
-                                    <li><strong>Ligue 1</strong></li>
-                                    <p>23 Mai 2026</p>
+                                    <li><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong></li>
+                                    <p><?= L('23 Mai 2026', '23 ماي 2026') ?></p>
                                     <li>--:--</li>
-                                    <li><span>Stade 20 Aout 1955, Béchar</span></li>
+                                    <li><span><?= L('Stade 20 Août 1955, Béchar', 'ملعب 20 أوت 1955، بشار') ?></span></li>
                                 </ul>
                             </div>
                         </div>
                         <!-- FORME RECENTE -->
                         <div class="forme-widget">
-                            <div class="forme-title">⚽ Forme Récente — CSC</div>
+                            <div class="forme-title">⚽ <?= L('Forme récente — CSC', 'آخر النتائج') ?></div>
                             <div class="forme-badges">
-                                <div class="forme-badge v" title="Victoire">V</div>
-                                <div class="forme-badge n" title="Nul">N</div>
-                                <div class="forme-badge v" title="Victoire">V</div>
-                                <div class="forme-badge d" title="Défaite">D</div>
-                                <div class="forme-badge v" title="Victoire">V</div>
+                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
+                                <div class="forme-badge n" title="<?= L('Nul', 'تعادل') ?>"><?= L('N', 'ت') ?></div>
+                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
+                                <div class="forme-badge d" title="<?= L('Défaite', 'خسارة') ?>"><?= L('D', 'خ') ?></div>
+                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
                             </div>
                             <div class="forme-stats">
-                                <div class="forme-stat-item"><span class="forme-stat-num">11</span><span class="forme-stat-lbl">Victoires</span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">10</span><span class="forme-stat-lbl">Nuls</span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">8</span><span class="forme-stat-lbl">Défaites</span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">43</span><span class="forme-stat-lbl">Points</span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num">11</span><span class="forme-stat-lbl"><?= L('Victoires', 'انتصارات') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num">10</span><span class="forme-stat-lbl"><?= L('Nuls', 'تعادلات') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num">8</span><span class="forme-stat-lbl"><?= L('Défaites', 'هزائم') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num">43</span><span class="forme-stat-lbl"><?= L('Points', 'نقاط') ?></span></div>
                             </div>
                         </div>
                     </div>
@@ -220,27 +230,27 @@ $today = new DateTime();
                     <div class="col-lg-4 col-md-6">
                         <div class="next-match-fixtures">
                             <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong>CSC</strong></li>
-                                <li class="mvs"><p><strong>Ligue 1</strong> 10 Avr 2026<br>17:45</p><strong class="vs">VS</strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_jsk_t2.png" alt="JSK" style="width:50px;height:50px;object-fit:contain;"><strong>JSK</strong></li>
+                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
+                                <li class="mvs"><p><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong> <?= L('10 Avr 2026', '10 أفريل 2026') ?><br>17:45</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
+                                <li class="team-logo"><img src="ressources/logo/logo_jsk_t2.png" alt="JSK" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('JSK', 'ش.القبائل') ?></strong></li>
                             </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> Stade Chahid Hamlaoui, Constantine</li></ul>
+                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
                         </div>
                         <div class="next-match-fixtures">
                             <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong>CSC</strong></li>
-                                <li class="mvs"><p><strong>Ligue 1</strong> 17 Avr 2026<br>--:--</p><strong class="vs">VS</strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_mca_t2.png" alt="MCA" style="width:50px;height:50px;object-fit:contain;"><strong>MCA</strong></li>
+                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
+                                <li class="mvs"><p><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong> <?= L('17 Avr 2026', '17 أفريل 2026') ?><br>--:--</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
+                                <li class="team-logo"><img src="ressources/logo/logo_mca_t2.png" alt="MCA" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('MCA', 'م.الجزائر') ?></strong></li>
                             </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> Stade Chahid Hamlaoui, Constantine</li></ul>
+                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
                         </div>
                         <div class="next-match-fixtures">
                             <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong>CSC</strong></li>
-                                <li class="mvs"><p><strong>Coupe — Demi</strong> 24 Avr 2026<br>--:--</p><strong class="vs">VS</strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_crb_t2.png" alt="CRB" style="width:50px;height:50px;object-fit:contain;"><strong>CRB</strong></li>
+                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
+                                <li class="mvs"><p><strong><?= L('Coupe — Demi', 'الكأس — نصف النهائي') ?></strong> <?= L('24 Avr 2026', '24 أفريل 2026') ?><br>--:--</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
+                                <li class="team-logo"><img src="ressources/logo/logo_crb_t2.png" alt="CRB" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CRB', 'ش.بلوزداد') ?></strong></li>
                             </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> Stade Chahid Hamlaoui, Constantine</li></ul>
+                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
                         </div>
                     </div>
 
@@ -249,17 +259,18 @@ $today = new DateTime();
                         <div class="point-table-widget">
                             <table>
                                 <thead>
-                                    <tr><th></th><th>Equipe</th><th>G</th><th>N</th><th>P</th><th>Pts</th></tr>
+                                    <tr><th></th><th><?= L('Équipe', 'الفريق') ?></th><th><?= L('G', 'ف') ?></th><th><?= L('N', 'ت') ?></th><th><?= L('P', 'خ') ?></th><th><?= L('Pts', 'ن') ?></th></tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $classement = getClassmentTable();
+                                    try { $classement = getClassmentTable(); } catch (Throwable $e) { $classement = []; }
+                                    if (!is_array($classement)) { $classement = []; }
                                     foreach ($classement as $row) {
                                         $csc = (strtolower($row["club"]) === 'csc' || strpos(strtolower($row["club"]), 'constantine') !== false)
                                             ? 'style="background:rgba(10,79,10,0.08);font-weight:bold;"' : '';
                                         echo '<tr '.$csc.'>
                                             <td><strong>'.$row["pos"].'</strong></td>
-                                            <td><img src="'.$row["logo"].'" alt="'.$row["club"].'" style="height:22px;margin-right:5px;"><strong>'.$row["club"].'</strong></td>
+                                            <td><img src="'.$row["logo"].'" alt="'.htmlspecialchars(club_name($row)).'" style="height:22px;margin-right:5px;"><strong>'.htmlspecialchars(club_name($row)).'</strong></td>
                                             <td>'.$row["g"].'</td>
                                             <td>'.$row["n"].'</td>
                                             <td>'.$row["p"].'</td>
@@ -276,92 +287,26 @@ $today = new DateTime();
         </section>
 
         <!-- ACTUALITES CAROUSEL -->
-        <section class="wf100 p80 sports-news">
+        <section class="wf100 p80 sports-news" id="actualites">
             <div class="container">
-                <div class="row"><div class="col-md-12"><div class="section-title"><h2>Actualités du CSC</h2></div></div></div>
+                <div class="row"><div class="col-md-12"><div class="section-title"><h2><?= L('Actualités du CSC', 'أخبار النادي') ?></h2></div></div></div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="csc-scroll-wrapper">
                             <div class="csc-scroll-track">
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=7">
-                                    <img src="images/Actualite/news3.jpeg" alt="">
+<?php foreach ((require __DIR__ . '/Data/actualites.php') as $n): ?>
+                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=<?= (int)$n['id'] ?>">
+                                    <img src="<?= htmlspecialchars(news_img($n['image'])) ?>" alt="">
                                     <div class="overlay"></div>
-                                    <span class="card-label">🎉 تهنئة</span>
+                                    <span class="card-label"><?= htmlspecialchars(nt($n, 'label')) ?></span>
                                     <div class="card-bottom">
-                                        <p class="card-title">تهنئة الأندية الصاعدة 🎉</p>
-                                        <p class="card-desc ar">تتقدم إدارة النادي الرياضي القسنطيني بأسمى التهاني إلى أندية شبيبة الأبيار، شباب تموشنت وإتحاد بسكرة.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#DimaCsc</span></div>
+                                        <p class="card-title"><?= htmlspecialchars(nt($n, 'titre')) ?></p>
+                                        <p class="card-desc<?= $LANG === 'ar' ? ' ar' : '' ?>"><?= htmlspecialchars(nt($n, 'resume')) ?></p>
+                                        <div class="card-hashtags"><?php foreach ($n['tags'] as $t): ?><span><?= htmlspecialchars($t) ?></span><?php endforeach; ?></div>
+                                        <?php if (!empty($n['bouton'])): ?><a href="<?= htmlspecialchars($n['bouton']['lien']) ?>" target="_blank" class="card-ticket-btn" onclick="event.stopPropagation();"><?= htmlspecialchars(nt($n['bouton'], $LANG)) ?></a><?php endif; ?>
                                     </div>
                                 </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=6">
-                                    <img src="images/Actualite/statement.jpeg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">📋 بيان رسمي</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">بيان — STATEMENT</p>
-                                        <p class="card-desc ar">تُعلم إدارة النادي الرياضي القسنطيني أن كل ما يتم تداوله بخصوص ملف الانتدابات الصيفية يبقى مجرد إشاعات.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#DimaCsc</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=5">
-                                    <img src="images/Actualite/ticket-news.jpeg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">🎫 Billetterie</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">ᴛɪᴄᴋᴇᴛɪɴɢ 🎫 ⚫️🟢</p>
-                                        <p class="card-desc ar">مباراة العميد ضد إتحاد خنشلة — الثلاثاء 19 ماي 2026 على الساعة 17:45 بملعب الشهيد حملاوي.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#CSCUSMK</span></div>
-                                        <a href="https://digiticket.dz" target="_blank" class="card-ticket-btn" onclick="event.stopPropagation();">🎟️ اشترِ تذكرتك</a>
-                                    </div>
-                                </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=4">
-                                    <img src="images/Actualite/usmaNews.jpeg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">تهنئة</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">تهنئة 🇩🇿🏆</p>
-                                        <p class="card-desc ar">تقدم النادي الرياضي القسنطيني بأحر التهاني لنادي اتحاد العاصمة بمناسبة فوزه بكأس الكونفدرالية الإفريقية.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#USMA</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=1">
-                                    <img src="images/Actualite/Ooredoonews.jpeg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">🤝 شراكة رسمية</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">🤝 رسمياً: "Ooredoo" ممول جديد 🟢🖤</p>
-                                        <p class="card-desc ar">تعلن إدارة النادي الرياضي القسنطيني عن إبرام عقد رعاية مع شركة "Ooredoo" لمدة سنتين.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#Ooredoo</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=2">
-                                    <img src="images/Actualite/news7.jpg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">الموقع الرسمي</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">"العميد" يعزز ريادته الرقمية 🟢⚫🌐</p>
-                                        <p class="card-desc ar">يسعدنا إعلان إطلاق الموقع الإلكتروني الرسمي للنادي الرياضي القسنطيني.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#DimaCsc</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=3">
-                                    <img src="images/Actualite/news2.jpeg" alt="">
-                                    <div class="overlay"></div>
-                                    <span class="card-label">🇩🇿 CALLED UP</span>
-                                    <div class="card-bottom">
-                                        <p class="card-title">𝐂𝐀𝐋𝐋𝐄𝐃 𝐔𝐏 🇩🇿 — استدعاء لاعبي العميد</p>
-                                        <p class="card-desc ar">تلقى لاعبو العميد "بن عدلة"، "بن موسى" و"خلفاوي" استدعاءً للمنتخب الوطني.</p>
-                                        <div class="card-hashtags"><span>#TheDean1898</span><span>#DimaCsc</span></div>
-                                    </div>
-                                </div>
-
+<?php endforeach; ?>
                             </div><!-- /.csc-scroll-track -->
                             <button class="csc-scroll-btn csc-scroll-prev">&#8249;</button>
                             <button class="csc-scroll-btn csc-scroll-next">&#8250;</button>
@@ -376,10 +321,10 @@ $today = new DateTime();
             <div class="share-modal">
                 <button class="share-modal-close" id="shareClose">&times;</button>
                 <h4 id="shareTitle"></h4>
-                <p>Partager cet article</p>
+                <p><?= L('Partager cet article', 'شارك هذا الخبر') ?></p>
                 <div class="share-btns">
-                    <button class="share-btn copy" id="copyBtn">&nbsp; Copier le lien</button>
-                    <button class="share-btn whats" id="whatsBtn">&nbsp; Partager sur WhatsApp</button>
+                    <button class="share-btn copy" id="copyBtn">&nbsp; <?= L('Copier le lien', 'نسخ الرابط') ?></button>
+                    <button class="share-btn whats" id="whatsBtn">&nbsp; <?= L('Partager sur WhatsApp', 'مشاركة عبر واتساب') ?></button>
                 </div>
                 <div class="share-feedback" id="shareFeedback"></div>
             </div>
@@ -389,55 +334,55 @@ $today = new DateTime();
         <section class="team-squad wf100 p80-50">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12"><div class="section-title white"><h2>Joueurs</h2><a class="full-team" href="joueurs.php">Voir toute l'équipe</a></div></div>
+                    <div class="col-md-12"><div class="section-title white"><h2><?= L('Joueurs', 'اللاعبون') ?></h2><a class="full-team" href="joueurs.php"><?= L('Voir toute l\'équipe', 'كل الفريق') ?></a></div></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux17.jpeg" alt="LAHMERI Aimen" width="240"></div><div class="player-txt"><h3>LAHMERI Aimen A.</h3><br><ul class="pb-small-info"><li>N° <strong>17</strong></li><li>Poste <strong>Milieu</strong></li><li>Age <strong>29 Ans</strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux24.jpeg" alt="GUENAOUI Ghiles" width="240"></div><div class="player-txt"><h3>GUENAOUI Ghiles</h3><br><ul class="pb-small-info"><li>N° <strong>24</strong></li><li>Poste <strong>Milieu</strong></li><li>Age <strong>27 Ans</strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Def4.jpeg" alt="AIT ABDESSELAM Ahmed" width="240"></div><div class="player-txt"><h3>AIT ABDESSELAM Ahmed</h3><br><ul class="pb-small-info"><li>N° <strong>4</strong></li><li>Poste <strong>Défenseur</strong></li><li>Age <strong>28 Ans</strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Attaquant9.jpeg" alt="AGBAGNO Yawo" width="240"></div><div class="player-txt"><h3>AGBAGNO Yawo M. Evra</h3><br><ul class="pb-small-info"><li>N° <strong>9</strong></li><li>Poste <strong>Attaquant</strong></li><li>Age <strong>25 Ans</strong></li></ul></div></div></div>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux17.jpeg" alt="LAHMERI Aimen" width="240"></div><div class="player-txt"><h3><?= L('LAHMERI Aimen A.', 'لحمري أيمن عبد العزيز') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>17</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Milieu', 'وسط ميدان') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>29 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux24.jpeg" alt="GUENAOUI Ghiles" width="240"></div><div class="player-txt"><h3><?= L('GUENAOUI Ghiles', 'قناوي غيلاس') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>24</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Milieu', 'وسط ميدان') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>27 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Def4.jpeg" alt="AIT ABDESSELAM Ahmed" width="240"></div><div class="player-txt"><h3><?= L('AIT ABDESSELAM Ahmed', 'أيت عبد السلام أحمد') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>4</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Défenseur', 'مدافع') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>28 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Attaquant9.jpeg" alt="AGBAGNO Yawo" width="240"></div><div class="player-txt"><h3><?= L('AGBAGNO Yawo M. Evra', 'أغبانيو ياو مارسيل إيفرا') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>9</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Attaquant', 'مهاجم') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>25 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
                 </div>
             </div>
         </section>
 
         <section class="wf100 p80 players-squad portfolio filter-gallery">
-            <div class="container"><div class="row"><div class="col-md-12"><div class="static-pagetitle"><h2>Site officiel du CSC - Club Sportif Constantinois</h2></div></div></div></div>
+            <div class="container"><div class="row"><div class="col-md-12"><div class="static-pagetitle"><h2><?= L('Site officiel du CSC - Club Sportif Constantinois', 'الموقع الرسمي للنادي الرياضي القسنطيني') ?></h2></div></div></div></div>
         </section>
 
         <!-- PALMARES -->
         <section class="wf100 p80" id="palmares" style="background:#f7fdf7;">
             <div class="container">
-                <div class="row"><div class="col-md-12"><div class="section-title"><h2>Palmarès</h2></div><p style="text-align:center;color:#555;font-size:15px;margin-top:-10px;margin-bottom:40px;">Retracez l'histoire riche en succès de l'un des piliers du football algérien.</p></div></div>
+                <div class="row"><div class="col-md-12"><div class="section-title"><h2><?= L('Palmarès', 'الألقاب') ?></h2></div><p style="text-align:center;color:#555;font-size:15px;margin-top:-10px;margin-bottom:40px;"><?= L('Retracez l\'histoire riche en succès de l\'un des piliers du football algérien.', 'تاريخ حافل بالإنجازات لأحد أعمدة كرة القدم الجزائرية.') ?></p></div></div>
                 <div class="row" style="margin-bottom:40px;">
                     <div class="col-md-12">
                         <div class="pal-stat-strip">
-                            <div class="pal-stat-item"><span class="pal-stat-num">1898</span><span class="pal-stat-lbl">Année de fondation</span></div>
+                            <div class="pal-stat-item"><span class="pal-stat-num">1898</span><span class="pal-stat-lbl"><?= L('Année de fondation', 'سنة التأسيس') ?></span></div>
                             <div class="pal-stat-divider"></div>
-                            <div class="pal-stat-item"><span class="pal-stat-num">02</span><span class="pal-stat-lbl">Titres Championnat</span></div>
+                            <div class="pal-stat-item"><span class="pal-stat-num">02</span><span class="pal-stat-lbl"><?= L('Titres de champion', 'ألقاب البطولة') ?></span></div>
                             <div class="pal-stat-divider"></div>
-                            <div class="pal-stat-item"><span class="pal-stat-num">06</span><span class="pal-stat-lbl">Titres Ligue 2 <small>(Record National)</small></span></div>
+                            <div class="pal-stat-item"><span class="pal-stat-num">06</span><span class="pal-stat-lbl"><?= L('Titres Ligue 2 <small>(Record national)</small>', 'ألقاب الرابطة الثانية <small>(رقم قياسي وطني)</small>') ?></span></div>
                             <div class="pal-stat-divider"></div>
-                            <div class="pal-stat-item"><span class="pal-stat-num">06</span><span class="pal-stat-lbl">Demi-finales Coupe</span></div>
+                            <div class="pal-stat-item"><span class="pal-stat-num">06</span><span class="pal-stat-lbl"><?= L('Demi-finales de Coupe', 'أنصاف نهائي الكأس') ?></span></div>
                             <div class="pal-stat-divider"></div>
-                            <div class="pal-stat-item"><span class="pal-stat-num">1<sup>er</sup></span><span class="pal-stat-lbl">Demi-finale africaine</span></div>
+                            <div class="pal-stat-item"><span class="pal-stat-num"><?= L('1<sup>er</sup>', '1') ?></span><span class="pal-stat-lbl"><?= L('Demi-finale africaine', 'نصف نهائي إفريقي') ?></span></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🏆</span><h3 class="pal-card-title">Ligue 1 Mobilis</h3><p class="pal-card-sub">Championnat d'Algérie</p></div><div class="pal-card-body"><div class="pal-trophy champion"><span class="pal-trophy-label">🥇 Champion (02)</span><ul class="pal-years"><li>1996 – 1997</li><li>2017 – 2018</li></ul></div><div class="pal-trophy vice"><span class="pal-trophy-label">🥈 Vice-champion</span><ul class="pal-years"><li>1970 – 1971</li><li>2023 – 2024</li></ul></div></div></div></div>
-                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🏆</span><h3 class="pal-card-title">Ligue 2</h3><p class="pal-card-sub">D2 — Record National (06 titres)</p></div><div class="pal-card-body"><div class="pal-trophy champion"><span class="pal-trophy-label">🥇 Champion (06)</span><ul class="pal-years"><li>1969 – 1970</li><li>1976 – 1977</li><li>1985 – 1986</li><li>1993 – 1994</li><li>2003 – 2004</li><li>2010 – 2011</li></ul></div></div></div></div>
-                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🎖️</span><h3 class="pal-card-title">Coupe d'Algérie</h3><p class="pal-card-sub">La Dame Coupe</p></div><div class="pal-card-body"><div class="pal-trophy semi"><span class="pal-trophy-label">Demi-finaliste (06)</span><ul class="pal-years"><li>1986 – 1987</li><li>1991 – 1992</li><li>2011 – 2012</li><li>2018 – 2019</li><li>2024 – 2025</li><li>2025 – 2026</li></ul></div></div></div></div>
-                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🌍</span><h3 class="pal-card-title">Compétitions Africaines</h3><p class="pal-card-sub">Scène continentale</p></div><div class="pal-card-body"><div class="pal-trophy semi"><span class="pal-trophy-label">CAF Champions League</span><ul class="pal-years"><li>Quart-finaliste 2018-2019</li></ul></div><div class="pal-trophy africa-highlight"><span class="pal-trophy-label">Coupe de la CAF</span><ul class="pal-years"><li><strong>🏅 Demi-finaliste 2024-2025</strong></li><li style="font-size:11px;color:#0a4f0a;font-style:italic;">1ère fois de l'histoire !</li></ul></div></div></div></div>
+                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🏆</span><h3 class="pal-card-title"><?= L('Ligue 1 Mobilis', 'الرابطة الأولى موبيليس') ?></h3><p class="pal-card-sub"><?= L('Championnat d\'Algérie', 'البطولة الجزائرية') ?></p></div><div class="pal-card-body"><div class="pal-trophy champion"><span class="pal-trophy-label">🥇 <?= L('Champion (02)', 'بطل (02)') ?></span><ul class="pal-years"><li>1996 – 1997</li><li>2017 – 2018</li></ul></div><div class="pal-trophy vice"><span class="pal-trophy-label">🥈 <?= L('Vice-champion', 'وصيف') ?></span><ul class="pal-years"><li>1970 – 1971</li><li>2023 – 2024</li></ul></div></div></div></div>
+                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🏆</span><h3 class="pal-card-title"><?= L('Ligue 2', 'الرابطة الثانية') ?></h3><p class="pal-card-sub"><?= L('D2 — Record national (06 titres)', 'القسم الثاني — رقم قياسي وطني (06 ألقاب)') ?></p></div><div class="pal-card-body"><div class="pal-trophy champion"><span class="pal-trophy-label">🥇 <?= L('Champion (06)', 'بطل (06)') ?></span><ul class="pal-years"><li>1969 – 1970</li><li>1976 – 1977</li><li>1985 – 1986</li><li>1993 – 1994</li><li>2003 – 2004</li><li>2010 – 2011</li></ul></div></div></div></div>
+                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🎖️</span><h3 class="pal-card-title"><?= L('Coupe d\'Algérie', 'كأس الجزائر') ?></h3><p class="pal-card-sub"><?= L('La Dame Coupe', 'السيدة الكأس') ?></p></div><div class="pal-card-body"><div class="pal-trophy semi"><span class="pal-trophy-label"><?= L('Demi-finaliste (06)', 'نصف نهائي (06)') ?></span><ul class="pal-years"><li>1986 – 1987</li><li>1991 – 1992</li><li>2011 – 2012</li><li>2018 – 2019</li><li>2024 – 2025</li><li>2025 – 2026</li></ul></div></div></div></div>
+                    <div class="col-lg-3 col-md-6 pal-col"><div class="pal-card"><div class="pal-card-header"><span class="pal-icon">🌍</span><h3 class="pal-card-title"><?= L('Compétitions africaines', 'المنافسات الإفريقية') ?></h3><p class="pal-card-sub"><?= L('Scène continentale', 'على الساحة القارية') ?></p></div><div class="pal-card-body"><div class="pal-trophy semi"><span class="pal-trophy-label"><?= L('CAF Champions League', 'رابطة أبطال إفريقيا') ?></span><ul class="pal-years"><li><?= L('Quart-finaliste 2018-2019', 'ربع نهائي 2018-2019') ?></li></ul></div><div class="pal-trophy africa-highlight"><span class="pal-trophy-label"><?= L('Coupe de la CAF', 'كأس الكونفدرالية الإفريقية') ?></span><ul class="pal-years"><li><strong>🏅 <?= L('Demi-finaliste 2024-2025', 'نصف نهائي 2024-2025') ?></strong></li><li style="font-size:11px;color:#0a4f0a;font-style:italic;"><?= L('1ère fois de l\'histoire !', 'لأول مرة في التاريخ!') ?></li></ul></div></div></div></div>
                 </div>
                 <div class="row" style="margin-top:30px;">
                     <div class="col-md-12">
                         <div class="pal-doyen-banner">
                             <div class="pal-doyen-left"><img src="images/logo-dark.png" alt="CSC" style="height:50px;object-fit:contain;"></div>
                             <div class="pal-doyen-center">
-                                <span class="pal-doyen-badge">⚽ Le Doyen des Clubs Algériens</span>
-                                <p>Fondé en <strong>1898</strong>, le CS Constantine est le témoin historique de l'évolution du football en Algérie, soutenu par ses fidèles <strong>Sanafirs</strong>.</p>
+                                <span class="pal-doyen-badge">⚽ <?= L('Le doyen des clubs algériens', 'عميد الأندية الجزائرية') ?></span>
+                                <p><?= L('Fondé en <strong>1898</strong>, le CS Constantine est le témoin historique de l\'évolution du football en Algérie, soutenu par ses fidèles <strong>Sanafirs</strong>.', 'تأسس سنة <strong>1898</strong>، النادي الرياضي القسنطيني شاهد تاريخي على تطور كرة القدم في الجزائر، بدعم أنصاره الأوفياء <strong>السنافير</strong>.') ?></p>
                             </div>
-                            <div class="pal-doyen-right"><a href="histoire.php" class="pal-history-btn">Notre Histoire &rarr;</a></div>
+                            <div class="pal-doyen-right"><a href="histoire.php" class="pal-history-btn"><?= L('Notre histoire &rarr;', 'تاريخنا &larr;') ?></a></div>
                         </div>
                     </div>
                 </div>
@@ -447,24 +392,24 @@ $today = new DateTime();
         <!-- CONTACT -->
         <section class="wf100 p80" id="contact-section" style="background:#f4f9f4;">
             <div class="container">
-                <div class="row"><div class="col-md-12 text-center" style="margin-bottom:40px;"><div class="section-title"><h2>Contact</h2></div><p style="color:#555;font-size:15px;margin-top:-10px;">Une question ? Contactez le Club Sportif Constantinois.</p></div></div>
+                <div class="row"><div class="col-md-12 text-center" style="margin-bottom:40px;"><div class="section-title"><h2><?= L('Contact', 'اتصل بنا') ?></h2></div><p style="color:#555;font-size:15px;margin-top:-10px;"><?= L('Une question ? Contactez le Club Sportif Constantinois.', 'لديك سؤال؟ تواصل مع النادي الرياضي القسنطيني.') ?></p></div></div>
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-6" style="margin-bottom:20px;">
                         <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;align-items:flex-start;gap:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);height:100%;">
                             <div style="background:#0a4f0a;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-map-marker-alt" style="color:#fff;font-size:20px;"></i></div>
-                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;">Adresse</h5><p style="color:#555;font-size:14px;margin:0;line-height:1.6;">Annexe OPOW Chahid Hamlaoui<br>Constantine, Algeria, 25000</p></div>
+                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;"><?= L('Adresse', 'العنوان') ?></h5><p style="color:#555;font-size:14px;margin:0;line-height:1.6;"><?= L('Annexe OPOW Chahid Hamlaoui<br>Constantine, Algérie, 25000', 'ملحق ديوان المركب الأولمبي الشهيد حملاوي<br>قسنطينة، الجزائر، 25000') ?></p></div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" style="margin-bottom:20px;">
                         <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;align-items:flex-start;gap:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);height:100%;">
                             <div style="background:#0a4f0a;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-phone" style="color:#fff;font-size:20px;"></i></div>
-                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;">Téléphone</h5><p style="color:#555;font-size:14px;margin:0;"><a href="tel:+21303164882" style="color:#555;text-decoration:none;">+213 031 64 88 21</a></p></div>
+                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;"><?= L('Téléphone', 'الهاتف') ?></h5><p style="color:#555;font-size:14px;margin:0;"><a href="tel:+21303164882" style="color:#555;text-decoration:none;">+213 031 64 88 21</a></p></div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" style="margin-bottom:20px;">
                         <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;align-items:flex-start;gap:18px;box-shadow:0 2px 12px rgba(0,0,0,0.07);height:100%;">
                             <div style="background:#0a4f0a;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-envelope" style="color:#fff;font-size:20px;"></i></div>
-                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;">Email</h5><p style="color:#555;font-size:14px;margin:0;"><a href="mailto:contact@csconstantine.dz" style="color:#0a4f0a;text-decoration:none;font-weight:600;">contact@csconstantine.dz</a></p></div>
+                            <div><h5 style="font-weight:800;margin:0 0 8px;color:#111;"><?= L('Email', 'البريد الإلكتروني') ?></h5><p style="color:#555;font-size:14px;margin:0;"><a href="mailto:contact@csconstantine.dz" style="color:#0a4f0a;text-decoration:none;font-weight:600;">contact@csconstantine.dz</a></p></div>
                         </div>
                     </div>
                 </div>
@@ -477,34 +422,6 @@ $today = new DateTime();
                 </div>
             </div>
         </section>
-
-        <!-- SPONSORS ANIMÉS -->
-        <div class="sponsor-strip" id="sponsors-section">
-            <div class="sponsor-track-outer">
-                <div class="sponsor-track">
-                    <div class="sponsor-item"><img src="images/entp.jpeg" alt="ENTP"></div>
-                    <div class="sponsor-item"><img src="images/hayat.jpeg" alt="Hayat"></div>
-                    <div class="sponsor-item"><img src="images/kcs.jpeg" alt="KCS"></div>
-                    <div class="sponsor-item"><img src="images/ooredoo.jpeg" alt="Ooredoo"></div>
-                    <div class="sponsor-item"><img src="images/soumam.jpeg" alt="Soummam"></div>
-                    <div class="sponsor-item"><img src="images/entp.jpeg" alt="ENTP"></div>
-                    <div class="sponsor-item"><img src="images/hayat.jpeg" alt="Hayat"></div>
-                    <div class="sponsor-item"><img src="images/kcs.jpeg" alt="KCS"></div>
-                    <div class="sponsor-item"><img src="images/ooredoo.jpeg" alt="Ooredoo"></div>
-                    <div class="sponsor-item"><img src="images/soumam.jpeg" alt="Soummam"></div>
-                    <div class="sponsor-item"><img src="images/entp.jpeg" alt="ENTP"></div>
-                    <div class="sponsor-item"><img src="images/hayat.jpeg" alt="Hayat"></div>
-                    <div class="sponsor-item"><img src="images/kcs.jpeg" alt="KCS"></div>
-                    <div class="sponsor-item"><img src="images/ooredoo.jpeg" alt="Ooredoo"></div>
-                    <div class="sponsor-item"><img src="images/soumam.jpeg" alt="Soummam"></div>
-                    <div class="sponsor-item"><img src="images/entp.jpeg" alt="ENTP"></div>
-                    <div class="sponsor-item"><img src="images/hayat.jpeg" alt="Hayat"></div>
-                    <div class="sponsor-item"><img src="images/kcs.jpeg" alt="KCS"></div>
-                    <div class="sponsor-item"><img src="images/ooredoo.jpeg" alt="Ooredoo"></div>
-                    <div class="sponsor-item"><img src="images/soumam.jpeg" alt="Soummam"></div>
-                </div>
-            </div>
-        </div>
 
     </div><!-- end main-content -->
 
@@ -567,9 +484,9 @@ $today = new DateTime();
     modal.addEventListener('click', function(e){ if(e.target === modal) modal.classList.remove('active'); });
     copyBtn.addEventListener('click', function(){
         navigator.clipboard.writeText(currentUrl).then(function(){
-            copyBtn.textContent = 'Lien copié !';
+            copyBtn.textContent = <?= LJ('Lien copié !', 'تم نسخ الرابط!') ?>;
             copyBtn.classList.add('copied');
-            feedback.textContent = 'Le lien a été copié dans le presse-papiers.';
+            feedback.textContent = <?= LJ('Le lien a été copié dans le presse-papiers.', 'تم نسخ الرابط إلى الحافظة.') ?>;
         }).catch(function(){ feedback.textContent = currentUrl; });
     });
     whatsBtn.addEventListener('click', function(){

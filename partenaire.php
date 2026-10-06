@@ -1,5 +1,6 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!doctype html>
-<html lang="fr">
+<html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,19 +13,19 @@
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
-    <title>Site officiel du CSC - Club Sportif Constantinois</title>
+    <title><?= L('Partenaires - CS Constantine', 'الشركاء - النادي الرياضي القسنطيني') ?></title>
   </head>
 <body>
     <!--Wrapper Start-->
     <div class="wrapper">
         <?php require 'header.php';?>
         <div class="inner-banner-header wf100">
-            <h1 data-generated="Partenaires">Partenaires du CSC</h1>
+            <h1 data-generated="<?= L('Partenaires', 'الشركاء') ?>"><?= L('Partenaires du CSC', 'شركاء النادي') ?></h1>
             <div class="gt-breadcrumbs">
                 <ul>
-                  <li> <a href="#" class="active"> <i class="fas fa-home"></i> Accueil </a> </li>
-                  <li> CLUB </li>
-                  <li> <a href="#"> Partenaires</a></li>
+                  <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
+                  <li> <?= L('CLUB', 'النادي') ?> </li>
+                  <li> <a href="#"> <?= L('Partenaires', 'الشركاء') ?></a></li>
                 </ul>
             </div>
         </div>

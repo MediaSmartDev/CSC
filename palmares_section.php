@@ -1,11 +1,12 @@
+<?php require_once __DIR__ . '/Data/lang.php'; ?>
 <!-- INNER BANNER -->
 <div class="inner-banner-header wf100">
-    <h1 data-generated="Palmarès">Palmarès</h1>
+    <h1 data-generated="<?= L('Palmarès', 'الألقاب') ?>"><?= L('Palmarès', 'الألقاب') ?></h1>
     <div class="gt-breadcrumbs">
         <ul>
-            <li><a href="index.php" class="active"><i class="fas fa-home"></i> Accueil</a></li>
-            <li>CLUB</li>
-            <li><a href="#">Palmarès</a></li>
+            <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?></a></li>
+            <li><?= L('CLUB', 'النادي') ?></li>
+            <li><a href="#"><?= L('Palmarès', 'الألقاب') ?></a></li>
         </ul>
     </div>
 </div>
@@ -22,9 +23,9 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-.palmares-wrap { font-family:'Cairo',sans-serif; direction:rtl; }
+.palmares-wrap { font-family:<?= $LANG === 'ar' ? "'Cairo',sans-serif" : 'inherit' ?>; direction:<?= $DIR ?>; }
 .pal-founded { display:flex; align-items:center; gap:20px; background:#f4faf4; border:1.5px solid #b2d8b2; border-radius:14px; padding:1.2rem 1.5rem; margin-bottom:1.5rem; }
-.pal-founded .year-big { font-size:48px; font-weight:900; color:#0a4f0a; line-height:1; min-width:90px; text-align:center; border-right:3px solid #0a4f0a; padding-right:20px; }
+.pal-founded .year-big { font-size:48px; font-weight:900; color:#0a4f0a; line-height:1; min-width:90px; text-align:center; border-inline-end:3px solid #0a4f0a; padding-inline-end:20px; }
 .pal-founded .year-text { font-size:14px; color:#444; line-height:1.7; }
 .pal-founded .year-text strong { display:block; font-size:16px; color:#0a4f0a; margin-bottom:4px; }
 .pal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; margin-bottom:1.5rem; }
@@ -51,27 +52,26 @@
 </style>
 
 <div class="palmares-wrap">
-    <h2 style="font-size:24px;font-weight:900;color:#0a4f0a;text-align:center;margin-bottom:0.5rem;">🏆 السجل الذهبي للنادي الرياضي القسنطيني | Palmarès CSC</h2>
-    <p style="text-align:center;color:#555;font-size:14px;line-height:1.7;max-width:600px;margin:0 auto 2rem auto;">يستعرض هذا السجل تاريخاً حافلاً من الإنجازات لنادٍ يُعد أحد أعمدة كرة القدم الجزائرية.</p>
+    <h2 style="font-size:24px;font-weight:900;color:#0a4f0a;text-align:center;margin-bottom:0.5rem;">🏆 <?= L('Le palmarès du Club Sportif Constantinois', 'السجل الذهبي للنادي الرياضي القسنطيني') ?></h2>
+    <p style="text-align:center;color:#555;font-size:14px;line-height:1.7;max-width:600px;margin:0 auto 2rem auto;"><?= L('Ce palmarès retrace une histoire riche en succès pour un club qui compte parmi les piliers du football algérien.', 'يستعرض هذا السجل تاريخاً حافلاً من الإنجازات لنادٍ يُعد أحد أعمدة كرة القدم الجزائرية.') ?></p>
 
     <div class="pal-founded">
         <div class="year-big">1898</div>
         <div class="year-text">
-            <strong>أقدم نادٍ رياضي في الجزائر</strong>
-            يُعدّ النادي الرياضي القسنطيني عميد الأندية الجزائرية وشاهدٌ على تاريخ اللعبة منذ أكثر من قرن.
-            جمهوره الوفي يُعرف بـ <strong style="color:#0a4f0a">"السنافر / Clubistes"</strong>.
+            <strong><?= L('Le plus ancien club sportif d\'Algérie', 'أقدم نادٍ رياضي في الجزائر') ?></strong>
+            <?= L('Le CS Constantine est le doyen des clubs algériens et le témoin de l\'histoire du football depuis plus d\'un siècle. Ses fidèles supporters sont connus sous le nom de <strong style="color:#0a4f0a">« Sanafirs / Clubistes »</strong>.', 'يُعدّ النادي الرياضي القسنطيني عميد الأندية الجزائرية وشاهدٌ على تاريخ اللعبة منذ أكثر من قرن. جمهوره الوفي يُعرف بـ <strong style="color:#0a4f0a">"السنافر"</strong>.') ?>
         </div>
     </div>
 
     <div class="pal-grid">
 
         <div class="pal-card2">
-            <h3>🥇 الألقاب الوطنية — Titres Nationaux</h3>
-            <div class="pal-label2">الدوري الجزائري الممتاز — Ligue 1</div>
-            <div class="pal-row2"><span class="bdg bdg-gold">🏆 بطل</span><span>1996–1997 &nbsp;|&nbsp; 2017–2018</span></div>
-            <div class="pal-row2"><span class="bdg bdg-silver">🥈 وصيف</span><span>1970–1971 &nbsp;|&nbsp; 2023–2024</span></div>
-            <div class="pal-label2" style="margin-top:1rem">القسم الثاني — Ligue 2</div>
-            <div class="pal-row2"><span class="bdg bdg-gold">🏆 بطل × 6</span><strong style="color:#0a4f0a;font-size:12px">رقم قياسي وطني</strong></div>
+            <h3>🥇 <?= L('Titres nationaux', 'الألقاب الوطنية') ?></h3>
+            <div class="pal-label2"><?= L('Ligue 1 — Championnat d\'Algérie', 'الرابطة الأولى — البطولة الجزائرية') ?></div>
+            <div class="pal-row2"><span class="bdg bdg-gold">🏆 <?= L('Champion', 'بطل') ?></span><span>1996–1997 &nbsp;|&nbsp; 2017–2018</span></div>
+            <div class="pal-row2"><span class="bdg bdg-silver">🥈 <?= L('Vice-champion', 'وصيف') ?></span><span>1970–1971 &nbsp;|&nbsp; 2023–2024</span></div>
+            <div class="pal-label2" style="margin-top:1rem"><?= L('Ligue 2', 'الرابطة الثانية') ?></div>
+            <div class="pal-row2"><span class="bdg bdg-gold">🏆 <?= L('Champion × 6', 'بطل × 6') ?></span><strong style="color:#0a4f0a;font-size:12px"><?= L('Record national', 'رقم قياسي وطني') ?></strong></div>
             <div class="year-chips2">
                 <span class="year-chip2">1969–70</span><span class="year-chip2">1976–77</span><span class="year-chip2">1985–86</span>
                 <span class="year-chip2">1993–94</span><span class="year-chip2">2003–04</span><span class="year-chip2">2010–11</span>
@@ -79,28 +79,28 @@
         </div>
 
         <div class="pal-card2">
-            <h3>🎖️ كأس الجزائر — Coupe d'Algérie</h3>
-            <div class="pal-label2">نصف النهائي — 6 مرات</div>
-            <div class="pal-row2"><span class="bdg bdg-green">نصف النهائي</span><span>1986–1987</span></div>
-            <div class="pal-row2"><span class="bdg bdg-green">نصف النهائي</span><span>1991–1992</span></div>
-            <div class="pal-row2"><span class="bdg bdg-green">نصف النهائي</span><span>2011–2012</span></div>
-            <div class="pal-row2"><span class="bdg bdg-green">نصف النهائي</span><span>2018–2019</span></div>
-            <div class="pal-row2"><span class="bdg bdg-green">نصف النهائي</span><span>2024–2025</span></div>
-            <div class="pal-row2"><span class="bdg bdg-dark">✓ جارٍ</span><span>2025–2026 — الموسم الحالي</span></div>
+            <h3>🎖️ <?= L('Coupe d\'Algérie', 'كأس الجزائر') ?></h3>
+            <div class="pal-label2"><?= L('Demi-finaliste — 6 fois', 'نصف النهائي — 6 مرات') ?></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Demi-finale', 'نصف النهائي') ?></span><span>1986–1987</span></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Demi-finale', 'نصف النهائي') ?></span><span>1991–1992</span></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Demi-finale', 'نصف النهائي') ?></span><span>2011–2012</span></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Demi-finale', 'نصف النهائي') ?></span><span>2018–2019</span></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Demi-finale', 'نصف النهائي') ?></span><span>2024–2025</span></div>
+            <div class="pal-row2"><span class="bdg bdg-dark">✓ <?= L('En cours', 'جارٍ') ?></span><span>2025–2026 — <?= L('saison en cours', 'الموسم الحالي') ?></span></div>
         </div>
 
         <div class="pal-card2">
-            <h3>🌍 المنافسات القارية — CAF</h3>
-            <div class="pal-label2">دوري أبطال أفريقيا</div>
-            <div class="pal-row2"><span class="bdg bdg-green">ربع النهائي</span><span>2018–2019 · فوز 3-0 على Mazembe</span></div>
-            <div class="pal-label2" style="margin-top:0.8rem">كأس الكونفيدرالية — CAF Cup 2024–25</div>
-            <div class="pal-row2"><span class="bdg bdg-gold">🏆 تاريخي</span><span>نصف النهائي — للمرة الأولى في التاريخ!</span></div>
-            <div class="pal-row2"><span class="bdg bdg-green">ربع النهائي</span><span>تخطّى USM الجزائر 4-3 ركلات</span></div>
+            <h3>🌍 <?= L('Compétitions africaines — CAF', 'المنافسات القارية') ?></h3>
+            <div class="pal-label2"><?= L('Ligue des champions africaine', 'دوري أبطال أفريقيا') ?></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Quart de finale', 'ربع النهائي') ?></span><span>2018–2019 · <?= L('victoire 3-0 contre Mazembe', 'فوز 3-0 على مازيمبي') ?></span></div>
+            <div class="pal-label2" style="margin-top:0.8rem"><?= L('Coupe de la Confédération — CAF 2024–25', 'كأس الكونفيدرالية — 2024–25') ?></div>
+            <div class="pal-row2"><span class="bdg bdg-gold">🏆 <?= L('Historique', 'تاريخي') ?></span><span><?= L('Demi-finale — une première dans l\'histoire !', 'نصف النهائي — للمرة الأولى في التاريخ!') ?></span></div>
+            <div class="pal-row2"><span class="bdg bdg-green"><?= L('Quart de finale', 'ربع النهائي') ?></span><span><?= L('USM Alger éliminé 4-3 aux tirs au but', 'تخطّى اتحاد الجزائر 4-3 بركلات الترجيح') ?></span></div>
             <div class="pal-stats2">
-                <div class="pal-stat2"><span class="num2">14</span><span class="lbl2">مباراة</span></div>
-                <div class="pal-stat2"><span class="num2">9</span><span class="lbl2">انتصار</span></div>
-                <div class="pal-stat2"><span class="num2">2</span><span class="lbl2">تعادل</span></div>
-                <div class="pal-stat2"><span class="num2">3</span><span class="lbl2">خسارة</span></div>
+                <div class="pal-stat2"><span class="num2">14</span><span class="lbl2"><?= L('Matchs', 'مباراة') ?></span></div>
+                <div class="pal-stat2"><span class="num2">9</span><span class="lbl2"><?= L('Victoires', 'انتصار') ?></span></div>
+                <div class="pal-stat2"><span class="num2">2</span><span class="lbl2"><?= L('Nuls', 'تعادل') ?></span></div>
+                <div class="pal-stat2"><span class="num2">3</span><span class="lbl2"><?= L('Défaites', 'خسارة') ?></span></div>
             </div>
         </div>
 
@@ -108,7 +108,7 @@
 
     <div class="gold-hl">
         <i class="fas fa-trophy"></i>
-        إنجازات تتحدث عن نفسها — تألق محلي وقاري يليق بعميد الأندية الجزائرية
+        <?= L('Des résultats qui parlent d\'eux-mêmes — un rayonnement national et continental digne du doyen des clubs algériens', 'إنجازات تتحدث عن نفسها — تألق محلي وقاري يليق بعميد الأندية الجزائرية') ?>
         <i class="fas fa-trophy"></i>
     </div>
 </div>

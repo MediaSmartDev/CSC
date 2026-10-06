@@ -1,30 +1,39 @@
 <?php
-$DB_HOST = 'localhost';
-$DB_USER = '';
-$DB_PASS = '';
-$DB_NAME = '';
-$pdo;
-$pdo2;
-$statement;
-$statement2;
+/*
+ * Connexion à la base de données.
+ * Les identifiants NE SONT PLUS écrits ici : ils sont lus depuis Data/config.php
+ * (fichier local, non versionné dans Git). Voir Data/config.example.php.
+ */
+$CSC_CONFIG = file_exists(__DIR__ . '/config.php')
+    ? require __DIR__ . '/config.php'
+    : require __DIR__ . '/config.example.php';
+
+$DB_HOST = $CSC_CONFIG['db_host'];
+$DB_USER = $CSC_CONFIG['db_user'];
+$DB_PASS = $CSC_CONFIG['db_pass'];
+$DB_NAME = $CSC_CONFIG['db_name'];
+$DB_DEBUG = !empty($CSC_CONFIG['debug']);
+$pdo = null;
+$statement = null;
 
         function getConnectionPDO(){
-           global $DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $pdo;
-                $dsn='mysql:host='.$DB_HOST.';dbname='.$DB_NAME.';charset=utf8';
+           global $DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_DEBUG, $pdo;
+                $dsn = 'mysql:host='.$DB_HOST.';dbname='.$DB_NAME.';charset=utf8mb4';
                 try{
-                       //$pdo = new PDO($dsn, $DB_USER, $DB_PASS);
-                        $pdo = new PDO('mysql:host=localhost;dbname=cscdz9818_pitanco;charset=utf8', 'cscdz9818_kia', 'Lovisca.com#2904' );
-                        //echo'Connexion etablit avec succès !';                       
+                        $pdo = new PDO($dsn, $DB_USER, $DB_PASS, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
                 } catch (PDOException $e) {
-                        //echo 'Could not connect to database ' . $e->getMessage();
-                    echo 'Could not service your request. Please try again later.!';
+                    $pdo = null;
+                    // On n'affiche plus de message dans la page : on journalise seulement.
+                    error_log('[CSC] Connexion BDD impossible : ' . $e->getMessage());
+                    if ($DB_DEBUG) echo '<!-- BDD : ' . htmlspecialchars($e->getMessage()) . ' -->';
                 }
                 return $pdo;
-	   }        
+	   }
         function executeQuery_PDO($sql, array $array){
             global $pdo, $statement;            
             if ($pdo === null) getConnectionPDO ();           
-            if (empty($sql)) return $null;           
+            if ($pdo === null) return null;
+            if (empty($sql)) return null;           
             if ($array === null || sizeof($array) == 0) return null;            
             try {
                 $statement = $pdo->prepare($sql);
@@ -32,18 +41,21 @@ $statement2;
                 $statement->execute($array);
 //                $count = $statement->rowCount();
             } catch (Exception $ex) {
-                    echo 'Could not execute query' . $ex->getMessage();
+                    error_log('[CSC] Requête échouée : ' . $ex->getMessage());
+                    return null;
             }           
             return $statement;
         }        
         function executeQueryPDO($sql){
             global $pdo, $statement;            
             if ($pdo === null) getConnectionPDO ();           
-            if (empty($sql)) return $null;                     
+            if ($pdo === null) return null;
+            if (empty($sql)) return null;                     
             try{
                 $statement = $pdo->query($sql);                
             } catch (Exception $ex) {
-                echo 'Could not execute query' . $ex->getMessage();
+                error_log('[CSC] Requête échouée : ' . $ex->getMessage());
+                return null;
             }           
             return $statement;           
         }
