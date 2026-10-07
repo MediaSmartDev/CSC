@@ -45,6 +45,7 @@ if (!function_exists('Lv')) {
 /* Image d'une actualité (image de secours si le fichier n'existe pas encore) */
 if (!function_exists('news_img')) {
     function news_img($path) {
+        if (is_string($path) && preg_match('#^https?://#', $path)) return $path;   // image en ligne (ex. lfp.dz)
         return (is_string($path) && $path !== '' && file_exists(__DIR__ . '/../' . $path)) ? $path : 'images/banner-csc.jpg';
     }
     function news_date($d) {

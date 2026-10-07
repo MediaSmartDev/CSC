@@ -88,6 +88,10 @@ $today = new DateTime();
     .forme-badge.v { background:#0a4f0a; }
     .forme-badge.n { background:#888; }
     .forme-badge.d { background:#c0392b; }
+    .dernier-resultat { text-align:center; margin:4px 0 12px; }
+    .dernier-resultat .dr-lbl { display:block; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:.5px; }
+    .dernier-resultat .dr-score { font-weight:700; color:#111; font-size:15px; }
+    .dernier-resultat .dr-score b { background:#0a4f0a; color:#fff; border-radius:6px; padding:1px 8px; margin:0 4px; }
     .forme-stats { display:flex; justify-content:space-around; margin-top:14px; padding-top:12px; border-top:1px solid #e8f5e8; }
     .forme-stat-item { text-align:center; }
     .forme-stat-num { display:block; font-size:20px; font-weight:900; color:#0a4f0a; line-height:1; }
@@ -152,8 +156,8 @@ $today = new DateTime();
         <!-- SPONSORS ANIMÉS -->
         <div class="sponsor-strip" id="sponsors-section">
             <div class="sponsor-track-outer">
-                <div class="sponsor-track"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/kcs.jpeg" alt="KCS"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
-                <div class="sponsor-track" aria-hidden="true"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/kcs.jpeg" alt="KCS"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
+                <div class="sponsor-track"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/macron.jpeg" alt="Macron"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
+                <div class="sponsor-track" aria-hidden="true"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/macron.jpeg" alt="Macron"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
             </div>
         </div>
 
@@ -163,7 +167,7 @@ $today = new DateTime();
                 <div class="csc-cta-box">
                     <div>
                         <h3><?= L('Envie de rejoindre le CSC ?', 'هل ترغب في الانضمام إلى النادي؟') ?></h3>
-                        <p><?= L('Marketing, logistique, comptabilité, communication : proposez vos compétences au club.', 'التسويق، اللوجستيك، المحاسبة، الاتصال: اقترح كفاءاتك على النادي.') ?></p>
+                        <p><?= L('Administration, marketing, logistique, communication : proposez vos compétences au club.', 'الإدارة، التسويق، اللوجستيك، الاتصال: اقترح كفاءاتك على النادي.') ?></p>
                     </div>
                     <a href="inscription.php" class="csc-cta-btn"><i class="fas fa-user-plus"></i> <?= L('S\'inscrire maintenant', 'سجّل الآن') ?></a>
                 </div>
@@ -183,75 +187,77 @@ $today = new DateTime();
         <section class="wf100 p80" id="calendrier" style="padding-top:30px !important;">
             <div class="container">
                 <div class="row">
+                    <?php
+                    require_once __DIR__ . '/Data/calendrier.php';
+                    $joues   = matchs_joues();
+                    $avenir  = matchs_a_venir();
+                    $next    = $avenir[0] ?? null;
+                    $dernier = $joues ? $joues[count($joues) - 1] : null;
+                    $bilan   = bilan_csc();
+                    $forme   = array_slice($joues, -5);
+                    $lettres = ['v' => [L('V', 'ف'), L('Victoire', 'فوز')], 'n' => [L('N', 'ت'), L('Nul', 'تعادل')], 'd' => [L('D', 'خ'), L('Défaite', 'خسارة')]];
+                    ?>
                     <!-- COL 1 : Prochain Match + Forme Récente -->
                     <div class="col-lg-4 col-md-6">
+                        <?php if ($next): $d = club_info($next['dom']); $e = club_info($next['ext']); ?>
                         <div class="next-match-widget">
                             <h5 class="title"><?= L('Prochain match', 'المباراة القادمة') ?></h5>
                             <div class="nmw-wrap">
                                 <ul class="match-teams-vs">
                                     <li class="team-logo">
-                                        <img src="ressources/logo/logo_jss_t2.png" alt="JSS" style="width:60px;height:60px;object-fit:contain;">
-                                        <strong><?= L('JSS', 'ش.الساورة') ?></strong>
+                                        <img src="<?= htmlspecialchars($d['logo']) ?>" alt="" style="width:60px;height:60px;object-fit:contain;">
+                                        <strong><?= club_court($next['dom']) ?></strong>
                                     </li>
                                     <li class="mvs"><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
                                     <li class="team-logo">
-                                        <img src="images/logo-dark.png" alt="CSC" style="width:60px;height:60px;object-fit:contain;">
-                                        <strong><?= L('CSC', 'ش.قسنطينة') ?></strong>
+                                        <img src="<?= htmlspecialchars($e['logo']) ?>" alt="" style="width:60px;height:60px;object-fit:contain;">
+                                        <strong><?= club_court($next['ext']) ?></strong>
                                     </li>
                                 </ul>
                                 <ul class="nmw-txt">
-                                    <li><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong></li>
-                                    <p><?= L('23 Mai 2026', '23 ماي 2026') ?></p>
-                                    <li>--:--</li>
-                                    <li><span><?= L('Stade 20 Août 1955, Béchar', 'ملعب 20 أوت 1955، بشار') ?></span></li>
+                                    <li><strong><?= L('Ligue 1', 'الرابطة الأولى') ?> — <?= L('Journée', 'الجولة') ?> <?= (int)$next['j'] ?></strong></li>
+                                    <p><?= match_date($next) ?></p>
+                                    <li><?= match_heure($next) ?></li>
+                                    <li><span><?= match_stade($next) ?></span></li>
                                 </ul>
                             </div>
                         </div>
+                        <?php endif; ?>
                         <!-- FORME RECENTE -->
                         <div class="forme-widget">
                             <div class="forme-title">⚽ <?= L('Forme récente — CSC', 'آخر النتائج') ?></div>
+                            <?php if ($dernier): ?>
+                            <div class="dernier-resultat">
+                                <span class="dr-lbl"><?= L('Dernier match', 'آخر مباراة') ?> (<?= L('J', 'ج') ?><?= (int)$dernier['j'] ?>)</span>
+                                <span class="dr-score"><?= club_court($dernier['dom']) ?> <b><?= (int)$dernier['bd'] ?> - <?= (int)$dernier['be'] ?></b> <?= club_court($dernier['ext']) ?></span>
+                            </div>
+                            <?php endif; ?>
                             <div class="forme-badges">
-                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
-                                <div class="forme-badge n" title="<?= L('Nul', 'تعادل') ?>"><?= L('N', 'ت') ?></div>
-                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
-                                <div class="forme-badge d" title="<?= L('Défaite', 'خسارة') ?>"><?= L('D', 'خ') ?></div>
-                                <div class="forme-badge v" title="<?= L('Victoire', 'فوز') ?>"><?= L('V', 'ف') ?></div>
+                                <?php foreach ($forme as $m): $r = match_resultat($m); ?>
+                                <div class="forme-badge <?= $r ?>" title="<?= $lettres[$r][1] ?> : <?= club_court($m['dom']) ?> <?= (int)$m['bd'] ?>-<?= (int)$m['be'] ?> <?= club_court($m['ext']) ?>"><?= $lettres[$r][0] ?></div>
+                                <?php endforeach; ?>
                             </div>
                             <div class="forme-stats">
-                                <div class="forme-stat-item"><span class="forme-stat-num">11</span><span class="forme-stat-lbl"><?= L('Victoires', 'انتصارات') ?></span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">10</span><span class="forme-stat-lbl"><?= L('Nuls', 'تعادلات') ?></span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">8</span><span class="forme-stat-lbl"><?= L('Défaites', 'هزائم') ?></span></div>
-                                <div class="forme-stat-item"><span class="forme-stat-num">43</span><span class="forme-stat-lbl"><?= L('Points', 'نقاط') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num"><?= $bilan['v'] ?></span><span class="forme-stat-lbl"><?= L('Victoires', 'انتصارات') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num"><?= $bilan['n'] ?></span><span class="forme-stat-lbl"><?= L('Nuls', 'تعادلات') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num"><?= $bilan['d'] ?></span><span class="forme-stat-lbl"><?= L('Défaites', 'هزائم') ?></span></div>
+                                <div class="forme-stat-item"><span class="forme-stat-num"><?= $bilan['pts'] ?></span><span class="forme-stat-lbl"><?= L('Points', 'نقاط') ?></span></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- COL 2 : Fixtures -->
+                    <!-- COL 2 : 3 matchs suivants -->
                     <div class="col-lg-4 col-md-6">
+                        <?php foreach (array_slice($avenir, 1, 3) as $m): $d = club_info($m['dom']); $e = club_info($m['ext']); ?>
                         <div class="next-match-fixtures">
                             <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
-                                <li class="mvs"><p><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong> <?= L('10 Avr 2026', '10 أفريل 2026') ?><br>17:45</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_jsk_t2.png" alt="JSK" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('JSK', 'ش.القبائل') ?></strong></li>
+                                <li class="team-logo"><img src="<?= htmlspecialchars($d['logo']) ?>" alt="" style="width:50px;height:50px;object-fit:contain;"><strong><?= club_court($m['dom']) ?></strong></li>
+                                <li class="mvs"><p><strong><?= L('Ligue 1', 'الرابطة الأولى') ?> — <?= L('J', 'ج') ?><?= (int)$m['j'] ?></strong> <?= match_date($m) ?><br><?= match_heure($m) ?></p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
+                                <li class="team-logo"><img src="<?= htmlspecialchars($e['logo']) ?>" alt="" style="width:50px;height:50px;object-fit:contain;"><strong><?= club_court($m['ext']) ?></strong></li>
                             </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
+                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= match_stade($m) ?></li></ul>
                         </div>
-                        <div class="next-match-fixtures">
-                            <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
-                                <li class="mvs"><p><strong><?= L('Ligue 1', 'الرابطة الأولى') ?></strong> <?= L('17 Avr 2026', '17 أفريل 2026') ?><br>--:--</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_mca_t2.png" alt="MCA" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('MCA', 'م.الجزائر') ?></strong></li>
-                            </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
-                        </div>
-                        <div class="next-match-fixtures">
-                            <ul class="match-teams-vs">
-                                <li class="team-logo"><img src="images/logo-dark.png" alt="CSC" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CSC', 'ش.قسنطينة') ?></strong></li>
-                                <li class="mvs"><p><strong><?= L('Coupe — Demi', 'الكأس — نصف النهائي') ?></strong> <?= L('24 Avr 2026', '24 أفريل 2026') ?><br>--:--</p><strong class="vs"><?= L('VS', 'ضد') ?></strong></li>
-                                <li class="team-logo"><img src="ressources/logo/logo_crb_t2.png" alt="CRB" style="width:50px;height:50px;object-fit:contain;"><strong><?= L('CRB', 'ش.بلوزداد') ?></strong></li>
-                            </ul>
-                            <ul class="nmf-loc"><li><i class="fas fa-location-arrow"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li></ul>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
 
                     <!-- COL 3 : Classement -->
@@ -337,10 +343,9 @@ $today = new DateTime();
                     <div class="col-md-12"><div class="section-title white"><h2><?= L('Joueurs', 'اللاعبون') ?></h2><a class="full-team" href="joueurs.php"><?= L('Voir toute l\'équipe', 'كل الفريق') ?></a></div></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux17.jpeg" alt="LAHMERI Aimen" width="240"></div><div class="player-txt"><h3><?= L('LAHMERI Aimen A.', 'لحمري أيمن عبد العزيز') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>17</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Milieu', 'وسط ميدان') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>29 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Milieux24.jpeg" alt="GUENAOUI Ghiles" width="240"></div><div class="player-txt"><h3><?= L('GUENAOUI Ghiles', 'قناوي غيلاس') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>24</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Milieu', 'وسط ميدان') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>27 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Def4.jpeg" alt="AIT ABDESSELAM Ahmed" width="240"></div><div class="player-txt"><h3><?= L('AIT ABDESSELAM Ahmed', 'أيت عبد السلام أحمد') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>4</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Défenseur', 'مدافع') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>28 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="images/Homme/Attaquant9.jpeg" alt="AGBAGNO Yawo" width="240"></div><div class="player-txt"><h3><?= L('AGBAGNO Yawo M. Evra', 'أغبانيو ياو مارسيل إيفرا') ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong>9</strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= L('Attaquant', 'مهاجم') ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong>25 <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <?php foreach (getHomePlayers() as $pl): ?>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="<?= htmlspecialchars(!empty($pl['img']) ? $pl['img'] : 'images/player-default.png') ?>" alt="<?= htmlspecialchars(player_name($pl)) ?>" width="240"></div><div class="player-txt"><h3><?= htmlspecialchars(player_name($pl)) ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong><?= (int)$pl['dossard'] ?></strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= htmlspecialchars(Lv($pl['poste'])) ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong><?= playerAge($pl) ?> <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>

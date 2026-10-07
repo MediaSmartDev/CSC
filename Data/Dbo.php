@@ -44,6 +44,12 @@ include('Connexion.php');
         $data = query_all("SELECT * FROM `joueurs` WHERE dossard = ?",array($i));
         return (is_array($data) && isset($data[0])) ? $data[0] : null;
     }
+    /* Joueurs affichés sur l'accueil (numéros de maillot, dans cet ordre) */
+    function getHomePlayers($numeros = [17, 10, 4, 9]){
+        $in = implode(',', array_map('intval', $numeros));
+        $r = queryAll("SELECT * FROM `joueurs` WHERE categorie BETWEEN 1 AND 4 AND published = 1 AND dossard IN ($in) ORDER BY FIELD(dossard, $in)");
+        return is_array($r) ? $r : [];
+    }
     function getFeaturedPlayers(){
         $r = query_all("SELECT * FROM `joueurs` WHERE `featured` = ?  AND `published` = ?  LIMIT 4",array(1,1));
         return is_array($r) ? $r : [];

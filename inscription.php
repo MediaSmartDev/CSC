@@ -9,9 +9,9 @@ session_start();
 require_once __DIR__ . '/Data/lang.php';
 include 'Data/Dbo.php';   // charge aussi $CSC_CONFIG
 
-$SERVICES = ['Marketing', 'Logistique', 'Comptabilité', 'Communication'];
+$SERVICES = ['Administration', 'Marketing', 'Logistique', 'Communication'];
 // Nom affiché du service (la valeur envoyée reste en français)
-$SERVICE_LABEL = ['Marketing' => L('Marketing', 'التسويق'), 'Logistique' => L('Logistique', 'اللوجستيك'), 'Comptabilité' => L('Comptabilité', 'المحاسبة'), 'Communication' => L('Communication', 'الاتصال')];
+$SERVICE_LABEL = ['Administration' => L('Administration', 'الإدارة'), 'Marketing' => L('Marketing', 'التسويق'), 'Logistique' => L('Logistique', 'اللوجستيك'), 'Communication' => L('Communication', 'الاتصال')];
 
 if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(16));
 
@@ -166,7 +166,7 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
                             <div class="ins-hp" aria-hidden="true"><input type="text" name="site_web" tabindex="-1" autocomplete="off"></div>
 
                             <p class="ins-step"><b>1</b> <?= L('Choisissez le service', 'اختر الخدمة') ?></p>
-                            <?php $icons = ['Marketing' => 'fa-chart-line', 'Logistique' => 'fa-truck', 'Comptabilité' => 'fa-calculator', 'Communication' => 'fa-comments']; ?>
+                            <?php $icons = ['Marketing' => 'fa-chart-line', 'Logistique' => 'fa-truck', 'Administration' => 'fa-briefcase', 'Communication' => 'fa-comments']; ?>
                             <div class="ins-services">
                                 <?php foreach ($SERVICES as $i => $s): ?>
                                     <input type="radio" name="service" id="srv<?= $i ?>" value="<?= $s ?>" <?= $old['service'] === $s ? 'checked' : '' ?> required>

@@ -29,7 +29,8 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
     <meta property="og:type" content="article">
     <meta property="og:title" content="<?= $e(nt($article, 'titre')) ?>">
     <meta property="og:description" content="<?= $e(nt($article, 'resume')) ?>">
-    <meta property="og:image" content="<?= $e(dirname($pageUrl) . '/' . news_img($article['image'])) ?>">
+    <?php $ogi = news_img($article['image']); ?>
+    <meta property="og:image" content="<?= $e(preg_match('#^https?://#', $ogi) ? $ogi : dirname($pageUrl) . '/' . $ogi) ?>">
     <meta property="og:url" content="<?= $e($pageUrl) ?>">
     <?php endif; ?>
     <style>

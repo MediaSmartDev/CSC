@@ -65,7 +65,7 @@
                                 <li><a href="joueurs.php"><?= L('Joueurs', 'اللاعبون') ?></a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="javascript:void(0)" class="nav-empty"><?= L('Catégorie Jeunes', 'الفئات الشبانية') ?></a></li>
+                        <li class="nav-item"><a href="jeunes.php"><?= L('Catégorie Jeunes', 'الفئات الشبانية') ?></a></li>
                         <li class="nav-item"><a href="equipe-feminine.php"><?= L('Équipe féminine', 'الفريق النسوي') ?></a></li>
                         <li class="nav-item"><a href="https://www.youtube.com/@CSConstantineTV" target="_blank"><?= L('CSC TV', 'قناة النادي') ?></a></li>
                         <li class="nav-item"><a href="index.php#contact-section"><?= L('Contact', 'اتصل بنا') ?></a></li>
