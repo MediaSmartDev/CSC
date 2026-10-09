@@ -94,6 +94,9 @@
         .fixture-info-container-away {
             flex-direction: row-reverse;
         }
+
+
+
         
         .fixture-info-score>span {
             font-weight: 800;

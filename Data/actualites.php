@@ -11,13 +11,44 @@
  * ===================================================================== */
 return [
     [
-        'id' => 13, 'date' => '2026-10-05', 'image' => 'images/Actualite/next-csc-usb.jpg',
-        'label'   => ['fr' => '📅 Next match', 'ar' => '📅 المباراة القادمة'],
-        'titre'   => ['fr' => 'Next match : CSC – US Biskra', 'ar' => 'المباراة القادمة: شباب قسنطينة – إتحاد بسكرة'],
-        'resume'  => ['fr' => '4e journée : CSC – US Biskra, mercredi 7 octobre 2026 à 18h00 au stade Chahid Hamlaoui.',
-                      'ar' => 'الجولة 4: شباب قسنطينة – إتحاد بسكرة، الأربعاء 7 أكتوبر 2026 على الساعة 18:00 بملعب الشهيد حملاوي.'],
-        'contenu' => ['fr' => '', 'ar' => ''],
-        'tags' => ['#TheDean1898', '#CSCUSB'], 'bouton' => null,
+        'id' => 15, 'date' => '2026-10-07', 'image' => 'images/Actualite/ft-csc-usb-4-0.jpg',
+        'label'   => ['fr' => '⚽ Résultat', 'ar' => '⚽ نتيجة'],
+        'titre'   => ['fr' => 'Full time : CSC 4 – 0 US Biskra', 'ar' => 'نهاية المباراة: شباب قسنطينة 4 – 0 إتحاد بسكرة'],
+        'resume'  => ['fr' => "Large victoire du Doyen face à l'US Biskra (4-0) au stade Chahid Hamlaoui, pour le compte de la 4e journée de la Ligue 1 Mobilis.",
+                      'ar' => 'فوز عريض للعميد على إتحاد بسكرة (4-0) بملعب الشهيد حملاوي، لحساب الجولة الرابعة من الرابطة المحترفة الأولى موبيليس.'],
+        'contenu' => ['fr' => "Le CS Constantine s'est largement imposé face à l'US Biskra (4-0) ce mercredi 7 octobre 2026 au stade Chahid Hamlaoui, pour le compte de la 4e journée de la Ligue 1 Mobilis.\nButs : Evra (37'), contre son camp (51'), Rebiai (55'), Djaouchi (72').\nAvec cette victoire, le Doyen remonte à la 2e place du classement avec 7 points.",
+                      'ar' => "حقق النادي الرياضي القسنطيني فوزاً عريضاً على إتحاد بسكرة (4-0) هذا الأربعاء 7 أكتوبر 2026 بملعب الشهيد حملاوي، لحساب الجولة الرابعة من الرابطة المحترفة الأولى موبيليس.\nالأهداف: إيفرا (37')، ضد مرماه (51')، ربيعي (55')، جاوشي (72').\nبهذا الفوز يرتقي العميد إلى المركز الثاني في الترتيب برصيد 7 نقاط."],
+        'tags' => ['#TheDean1898', '#CSCUSB', '#DimaCsc'], 'bouton' => null,
+    ],
+    [
+        'id' => 12, 'date' => '2026-10-08', 'image' => 'https://lfp.dz/medias/ar-6ab65006bb74b.jpg',
+        'label'   => ['fr' => '📅 Prochain match', 'ar' => '📅 المباراة القادمة'],
+        'titre'   => ['fr' => '5e journée : USM Khenchela – CS Constantine', 'ar' => 'الجولة 5: إتحاد خنشلة – شباب قسنطينة'],
+        'resume'  => ['fr' => 'Le Doyen se déplace à Khenchela le lundi 12 octobre 2026 à 15h00, au stade Amar Hamam, pour le compte de la 5e journée de la Ligue 1 Mobilis.',
+                      'ar' => 'يتنقل العميد إلى خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.'],
+        'contenu' => ['fr' => "Le CS Constantine affrontera l'USM Khenchela le lundi 12 octobre 2026 à 15h00 au stade Amar Hamam de Khenchela, pour le compte de la 5e journée de la Ligue 1 Mobilis.\nUn déplacement important pour confirmer la belle victoire face à l'US Biskra (4-0).",
+                      'ar' => "يواجه النادي الرياضي القسنطيني فريق إتحاد خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام بخنشلة، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.\nتنقل مهم لتأكيد الفوز العريض على إتحاد بسكرة (4-0)."],
+        'tags' => ['#TheDean1898', '#USMKCSC'], 'bouton' => null,
+    ],
+    [
+        'id' => 16, 'date' => '2026-10-08', 'image' => 'images/Actualite/programme-j6.jpg',
+        'label'   => ['fr' => '📅 Programme', 'ar' => '📅 البرنامج'],
+        'titre'   => ['fr' => 'Programme de la 6e journée : CSC – JS El Biar', 'ar' => 'برنامج الجولة 6: شباب قسنطينة – شبيبة الأبيار'],
+        'resume'  => ['fr' => 'Le Doyen recevra la JS El Biar le samedi 17 octobre 2026 à 17h00 au stade Chahid Hamlaoui de Constantine.',
+                      'ar' => 'يستقبل العميد شبيبة الأبيار يوم السبت 17 أكتوبر 2026 على الساعة 17:00 بملعب الشهيد حملاوي بقسنطينة.'],
+        'contenu' => ['fr' => "La LFP a dévoilé le programme de la 6e journée de la Ligue 1 Mobilis.\nLe CS Constantine recevra la JS El Biar le samedi 17 octobre 2026 à 17h00 au stade Chahid Hamlaoui de Constantine.",
+                      'ar' => "كشفت رابطة كرة القدم المحترفة عن برنامج الجولة السادسة من الرابطة المحترفة الأولى موبيليس.\nيستقبل النادي الرياضي القسنطيني شبيبة الأبيار يوم السبت 17 أكتوبر 2026 على الساعة 17:00 بملعب الشهيد حملاوي بقسنطينة."],
+        'tags' => ['#TheDean1898', '#CSCJSEB'], 'bouton' => null,
+    ],
+    [
+        'id' => 17, 'date' => '2026-10-08', 'image' => 'images/Actualite/programme-j7.jpg',
+        'label'   => ['fr' => '📅 Programme', 'ar' => '📅 البرنامج'],
+        'titre'   => ['fr' => 'Programme de la 7e journée : Olympique Akbou – CSC', 'ar' => 'برنامج الجولة 7: أولمبيك أقبو – شباب قسنطينة'],
+        'resume'  => ['fr' => "Le Doyen se déplacera à Akbou le vendredi 23 octobre 2026 à 15h15, au stade des Chouhada (Béjaïa).",
+                      'ar' => 'يتنقل العميد إلى أقبو يوم الجمعة 23 أكتوبر 2026 على الساعة 15:15 بملعب الشهداء (بجاية).'],
+        'contenu' => ['fr' => "La LFP a dévoilé le programme de la 7e journée de la Ligue 1 Mobilis.\nLe CS Constantine affrontera l'Olympique Akbou le vendredi 23 octobre 2026 à 15h15 au stade des Chouhada, Akbou (Béjaïa).",
+                      'ar' => "كشفت رابطة كرة القدم المحترفة عن برنامج الجولة السابعة من الرابطة المحترفة الأولى موبيليس.\nيواجه النادي الرياضي القسنطيني أولمبيك أقبو يوم الجمعة 23 أكتوبر 2026 على الساعة 15:15 بملعب الشهداء، أقبو - بجاية."],
+        'tags' => ['#TheDean1898', '#OACSC'], 'bouton' => null,
     ],
     [
         'id' => 14, 'date' => '2026-10-06', 'image' => 'images/Actualite/ticket-csc-usb.jpg',
@@ -31,14 +62,13 @@ return [
         'bouton' => null,   // mettre ici le lien de "Tadkirati" : ['lien' => 'https://...', 'fr' => '🎟️ Acheter mon billet', 'ar' => '🎟️ اشترِ تذكرتك']
     ],
     [
-        'id' => 12, 'date' => '2026-10-08', 'image' => 'https://lfp.dz/medias/ar-6ab65006bb74b.jpg',
-        'label'   => ['fr' => '📅 Prochain match', 'ar' => '📅 المباراة القادمة'],
-        'titre'   => ['fr' => '5e journée : USM Khenchela – CS Constantine', 'ar' => 'الجولة 5: إتحاد خنشلة – شباب قسنطينة'],
-        'resume'  => ['fr' => 'Le Doyen se déplace à Khenchela le lundi 12 octobre 2026 à 15h00, au stade Amar Hamam, pour le compte de la 5e journée de la Ligue 1 Mobilis.',
-                      'ar' => 'يتنقل العميد إلى خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.'],
-        'contenu' => ['fr' => "Le CS Constantine affrontera l'USM Khenchela le lundi 12 octobre 2026 à 15h00 au stade Amar Hamam de Khenchela, pour le compte de la 5e journée de la Ligue 1 Mobilis.\nAvant cette rencontre, ",
-                      'ar' => "يواجه النادي الرياضي القسنطيني فريق إتحاد خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام بخنشلة، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.\nقبل هذه المواجهة، "],
-        'tags' => ['#TheDean1898', '#USMKCSC'], 'bouton' => null,
+        'id' => 13, 'date' => '2026-10-05', 'image' => 'images/Actualite/next-csc-usb.jpg',
+        'label'   => ['fr' => '📅 Next match', 'ar' => '📅 المباراة القادمة'],
+        'titre'   => ['fr' => 'Next match : CSC – US Biskra', 'ar' => 'المباراة القادمة: شباب قسنطينة – إتحاد بسكرة'],
+        'resume'  => ['fr' => '4e journée : CSC – US Biskra, mercredi 7 octobre 2026 à 18h00 au stade Chahid Hamlaoui.',
+                      'ar' => 'الجولة 4: شباب قسنطينة – إتحاد بسكرة، الأربعاء 7 أكتوبر 2026 على الساعة 18:00 بملعب الشهيد حملاوي.'],
+        'contenu' => ['fr' => '', 'ar' => ''],
+        'tags' => ['#TheDean1898', '#CSCUSB'], 'bouton' => null,
     ],
     [
         'id' => 10, 'date' => '2026-09-19', 'image' => 'https://lfp.dz/medias/ar-6ab8287a7418f.jpg',
@@ -89,16 +119,3 @@ return [
         'tags' => ['#TheDean1898', '#DimaCsc'], 'bouton' => null,
     ],
 ];
-
-/* --- Résultat à remettre dans la liste (en haut) après le match, avec le bon score ---
-    [
-        'id' => 15, 'date' => '2026-10-07', 'image' => 'images/Actualite/ft-csc-usb-4-0.jpg',
-        'label'   => ['fr' => '⚽ Résultat', 'ar' => '⚽ نتيجة'],
-        'titre'   => ['fr' => 'FT : CSC 4 – 0 US Biskra', 'ar' => 'نهاية المباراة: شباب قسنطينة 4 – 0 إتحاد بسكرة'],
-        'resume'  => ['fr' => 'Large victoire du Doyen face à l\'US Biskra au stade Chahid Hamlaoui, pour le compte de la 4e journée. Buteurs : Djaouchi, L\'ghoul, Evra.',
-                      'ar' => 'فوز عريض للعميد على إتحاد بسكرة بملعب الشهيد حملاوي، لحساب الجولة الرابعة. الهدافون: جاوشي، الغول، إيفرا.'],
-        'contenu' => ['fr' => "Le CS Constantine s'est largement imposé face à l'US Biskra (4-0) ce mercredi 7 octobre 2026 au stade Chahid Hamlaoui, pour le compte de la 4e journée de la Ligue 1 Mobilis.\nButeurs : Djaouchi, L'ghoul, Evra.",
-                      'ar' => "حقق النادي الرياضي القسنطيني فوزاً عريضاً على إتحاد بسكرة (4-0) هذا الأربعاء 7 أكتوبر 2026 بملعب الشهيد حملاوي، لحساب الجولة الرابعة من الرابطة المحترفة الأولى موبيليس.\nالهدافون: جاوشي، الغول، إيفرا."],
-        'tags' => ['#TheDean1898', '#DimaCsc'], 'bouton' => null,
-    ],
-*/
