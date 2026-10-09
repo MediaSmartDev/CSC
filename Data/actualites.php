@@ -31,16 +31,6 @@ return [
         'tags' => ['#TheDean1898', '#FixturesOctober'], 'bouton' => null,
     ],
     [
-        'id' => 17, 'date' => '2026-10-08', 'image' => 'images/Actualite/programme-j7.jpg',
-        'label'   => ['fr' => '📅 Programme', 'ar' => '📅 البرنامج'],
-        'titre'   => ['fr' => 'Programme de la 7e journée : Olympique Akbou – CSC', 'ar' => 'برنامج الجولة 7: أولمبيك أقبو – شباب قسنطينة'],
-        'resume'  => ['fr' => "Le Doyen se déplacera à Akbou le vendredi 23 octobre 2026 à 15h15, au stade des Chouhada (Béjaïa).",
-                      'ar' => 'يتنقل العميد إلى أقبو يوم الجمعة 23 أكتوبر 2026 على الساعة 15:15 بملعب الشهداء (بجاية).'],
-        'contenu' => ['fr' => "La LFP a dévoilé le programme de la 7e journée de la Ligue 1 Mobilis.\nLe CS Constantine affrontera l'Olympique Akbou le vendredi 23 octobre 2026 à 15h15 au stade des Chouhada, Akbou (Béjaïa).",
-                      'ar' => "كشفت رابطة كرة القدم المحترفة عن برنامج الجولة السابعة من الرابطة المحترفة الأولى موبيليس.\nيواجه النادي الرياضي القسنطيني أولمبيك أقبو يوم الجمعة 23 أكتوبر 2026 على الساعة 15:15 بملعب الشهداء، أقبو - بجاية."],
-        'tags' => ['#TheDean1898', '#OACSC'], 'bouton' => null,
-    ],
-    [
         'id' => 14, 'date' => '2026-10-06', 'image' => 'images/Actualite/ticket-csc-usb.jpg',
         'label'   => ['fr' => '🎫 Billetterie', 'ar' => '🎫 التذاكر'],
         'titre'   => ['fr' => 'Billetterie : CSC – US Biskra', 'ar' => 'التذاكر: شباب قسنطينة – إتحاد بسكرة'],
