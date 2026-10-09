@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="footer-widget about-widget">
-                    <a href="index.php" class="csc-footer-logo"><img src="images/logo-light.png" alt="<?= L('CS Constantine', 'النادي الرياضي القسنطيني') ?>"></a>
+                    <a href="index.php" class="csc-footer-logo"><img src="images/logo-light.png?v=3" alt="<?= L('CS Constantine', 'النادي الرياضي القسنطيني') ?>"></a>
                     <address>
                         <ul>
                             <li><i class="fas fa-map-marker-alt"></i> <?= L('Stade Chahid Hamlaoui, Constantine, Algérie', 'ملعب الشهيد حملاوي، قسنطينة، الجزائر') ?></li>

@@ -95,9 +95,6 @@
             flex-direction: row-reverse;
         }
 
-
-
-        
         .fixture-info-score>span {
             font-weight: 800;
             display: inline-block;

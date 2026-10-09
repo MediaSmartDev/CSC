@@ -382,7 +382,7 @@ $today = new DateTime();
                 <div class="row" style="margin-top:30px;">
                     <div class="col-md-12">
                         <div class="pal-doyen-banner">
-                            <div class="pal-doyen-left"><img src="images/logo-dark.png" alt="CSC" style="height:50px;object-fit:contain;"></div>
+                            <div class="pal-doyen-left"><img src="images/logo-dark.png?v=3" alt="CSC" style="height:50px;object-fit:contain;"></div>
                             <div class="pal-doyen-center">
                                 <span class="pal-doyen-badge">⚽ <?= L('Le doyen des clubs algériens', 'عميد الأندية الجزائرية') ?></span>
                                 <p><?= L('Fondé en <strong>1898</strong>, le CS Constantine est le témoin historique de l\'évolution du football en Algérie, soutenu par ses fidèles <strong>Sanafirs</strong>.', 'تأسس سنة <strong>1898</strong>، النادي الرياضي القسنطيني شاهد تاريخي على تطور كرة القدم في الجزائر، بدعم أنصاره الأوفياء <strong>السنافير</strong>.') ?></p>

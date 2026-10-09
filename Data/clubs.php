@@ -2,7 +2,7 @@
 /* Clubs de Ligue 1 (saison 2026/2027) : nom court, ville, logo */
 $R = 'ressources/logo/'; $L = 'https://lfp.dz/clubs-logos/';
 return [
-    'CSC'  => ['fr' => 'CSC',  'ar' => 'ش.قسنطينة', 'nom_fr' => 'CS Constantine',  'ville_fr' => 'Constantine',   'ville_ar' => 'قسنطينة',    'logo' => $R . 'logo_min_csc.png'],
+    'CSC'  => ['fr' => 'CSC',  'ar' => 'ش.قسنطينة', 'nom_fr' => 'CS Constantine',  'ville_fr' => 'Constantine',   'ville_ar' => 'قسنطينة',    'logo' => $R . 'logo_min_csc.png?v=3'],
     'USMA' => ['fr' => 'USMA', 'ar' => 'إ.الجزائر', 'nom_fr' => 'USM Alger',       'ville_fr' => 'Alger',         'ville_ar' => 'الجزائر',    'logo' => $R . 'logo_usma_t2.png'],
     'CRB'  => ['fr' => 'CRB',  'ar' => 'ش.بلوزداد', 'nom_fr' => 'CR Belouizdad',   'ville_fr' => 'Alger',         'ville_ar' => 'الجزائر',    'logo' => $R . 'logo_crb_t2.png'],
     'MCO'  => ['fr' => 'MCO',  'ar' => 'م.وهران',   'nom_fr' => 'MC Oran',         'ville_fr' => 'Oran',          'ville_ar' => 'وهران',      'logo' => $R . 'logo_mco_t2.png'],

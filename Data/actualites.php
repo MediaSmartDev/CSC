@@ -11,7 +11,7 @@
  * ===================================================================== */
 return [
     [
-        'id' => 15, 'date' => '2026-10-07', 'image' => 'images/Actualite/ft-csc-usb-4-0.jpg',
+        'id' => 15, 'date' => '2026-10-07', 'image' => 'images/Actualite/ft-csc-usb-4-0-final.jpg',
         'label'   => ['fr' => '⚽ Résultat', 'ar' => '⚽ نتيجة'],
         'titre'   => ['fr' => 'Full time : CSC 4 – 0 US Biskra', 'ar' => 'نهاية المباراة: شباب قسنطينة 4 – 0 إتحاد بسكرة'],
         'resume'  => ['fr' => "Large victoire du Doyen face à l'US Biskra (4-0) au stade Chahid Hamlaoui, pour le compte de la 4e journée de la Ligue 1 Mobilis.",
@@ -21,24 +21,14 @@ return [
         'tags' => ['#TheDean1898', '#CSCUSB', '#DimaCsc'], 'bouton' => null,
     ],
     [
-        'id' => 12, 'date' => '2026-10-08', 'image' => 'https://lfp.dz/medias/ar-6ab65006bb74b.jpg',
-        'label'   => ['fr' => '📅 Prochain match', 'ar' => '📅 المباراة القادمة'],
-        'titre'   => ['fr' => '5e journée : USM Khenchela – CS Constantine', 'ar' => 'الجولة 5: إتحاد خنشلة – شباب قسنطينة'],
-        'resume'  => ['fr' => 'Le Doyen se déplace à Khenchela le lundi 12 octobre 2026 à 15h00, au stade Amar Hamam, pour le compte de la 5e journée de la Ligue 1 Mobilis.',
-                      'ar' => 'يتنقل العميد إلى خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.'],
-        'contenu' => ['fr' => "Le CS Constantine affrontera l'USM Khenchela le lundi 12 octobre 2026 à 15h00 au stade Amar Hamam de Khenchela, pour le compte de la 5e journée de la Ligue 1 Mobilis.\nUn déplacement important pour confirmer la belle victoire face à l'US Biskra (4-0).",
-                      'ar' => "يواجه النادي الرياضي القسنطيني فريق إتحاد خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00 بملعب عمار حمام بخنشلة، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس.\nتنقل مهم لتأكيد الفوز العريض على إتحاد بسكرة (4-0)."],
-        'tags' => ['#TheDean1898', '#USMKCSC'], 'bouton' => null,
-    ],
-    [
-        'id' => 16, 'date' => '2026-10-08', 'image' => 'images/Actualite/programme-j6.jpg',
-        'label'   => ['fr' => '📅 Programme', 'ar' => '📅 البرنامج'],
-        'titre'   => ['fr' => 'Programme de la 6e journée : CSC – JS El Biar', 'ar' => 'برنامج الجولة 6: شباب قسنطينة – شبيبة الأبيار'],
-        'resume'  => ['fr' => 'Le Doyen recevra la JS El Biar le samedi 17 octobre 2026 à 17h00 au stade Chahid Hamlaoui de Constantine.',
-                      'ar' => 'يستقبل العميد شبيبة الأبيار يوم السبت 17 أكتوبر 2026 على الساعة 17:00 بملعب الشهيد حملاوي بقسنطينة.'],
-        'contenu' => ['fr' => "La LFP a dévoilé le programme de la 6e journée de la Ligue 1 Mobilis.\nLe CS Constantine recevra la JS El Biar le samedi 17 octobre 2026 à 17h00 au stade Chahid Hamlaoui de Constantine.",
-                      'ar' => "كشفت رابطة كرة القدم المحترفة عن برنامج الجولة السادسة من الرابطة المحترفة الأولى موبيليس.\nيستقبل النادي الرياضي القسنطيني شبيبة الأبيار يوم السبت 17 أكتوبر 2026 على الساعة 17:00 بملعب الشهيد حملاوي بقسنطينة."],
-        'tags' => ['#TheDean1898', '#CSCJSEB'], 'bouton' => null,
+        'id' => 18, 'date' => '2026-10-09', 'image' => 'images/Actualite/fixtures-octobre.jpg',
+        'label'   => ['fr' => '📅 Calendrier', 'ar' => '📅 الرزنامة'],
+        'titre'   => ['fr' => 'Les matchs du CSC en octobre', 'ar' => 'مباريات العميد في شهر أكتوبر'],
+        'resume'  => ['fr' => "Le programme du Doyen en octobre : US Biskra, USM Khenchela, JS El Biar et Olympique Akbou.",
+                      'ar' => 'برنامج العميد في شهر أكتوبر: إتحاد بسكرة، إتحاد خنشلة، شبيبة الأبيار وأولمبيك أقبو.'],
+        'contenu' => ['fr' => "Voici le programme du CS Constantine pour le mois d'octobre en Ligue 1 Mobilis :\n• Mercredi 7 octobre, 18h00 : CSC – US Biskra (stade Chahid Hamlaoui) — victoire 4-0\n• Lundi 12 octobre, 15h00 : USM Khenchela – CSC (stade Amar Hamam, Khenchela)\n• Samedi 17 octobre, 17h00 : CSC – JS El Biar (stade Chahid Hamlaoui)\n• Vendredi 23 octobre, 15h15 : Olympique Akbou – CSC (stade des Chouhada, Akbou)",
+                      'ar' => "إليكم برنامج النادي الرياضي القسنطيني لشهر أكتوبر في الرابطة المحترفة الأولى موبيليس:\n• الأربعاء 7 أكتوبر، 18:00: شباب قسنطينة – إتحاد بسكرة (ملعب الشهيد حملاوي) — فوز 4-0\n• الإثنين 12 أكتوبر، 15:00: إتحاد خنشلة – شباب قسنطينة (ملعب عمار حمام، خنشلة)\n• السبت 17 أكتوبر، 17:00: شباب قسنطينة – شبيبة الأبيار (ملعب الشهيد حملاوي)\n• الجمعة 23 أكتوبر، 15:15: أولمبيك أقبو – شباب قسنطينة (ملعب الشهداء، أقبو)"],
+        'tags' => ['#TheDean1898', '#FixturesOctober'], 'bouton' => null,
     ],
     [
         'id' => 17, 'date' => '2026-10-08', 'image' => 'images/Actualite/programme-j7.jpg',

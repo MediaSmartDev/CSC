@@ -41,7 +41,7 @@
     <div class="logo-navbar">
         <div class="container">
             <div class="csc-navbar">
-                <div class="logo csc-logo"><a href="index.php"><img src="images/logo-dark.png" alt="CSC"></a></div>
+                <div class="logo csc-logo"><a href="index.php"><img src="images/logo-dark.png?v=3" alt="CSC"></a></div>
                 <nav class="main-nav csc-main-nav">
                     <ul>
                         <li class="nav-item drop-down">
