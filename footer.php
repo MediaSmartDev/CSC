@@ -38,7 +38,6 @@
                         <li><a href="https://www.tiktok.com/@clubsportifconstantinois" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="13" height="13" fill="currentColor" style="vertical-align:-1px;margin-right:4px;"><path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg> <?= L('TikTok', 'تيك توك') ?></a></li>
                         <li><a href="https://t.me/+Eb8qO-lZuXwyYTY0" target="_blank"><i class="fab fa-telegram"></i> <?= L('Telegram', 'تيليغرام') ?></a></li>
                         <li><a href="https://whatsapp.com/channel/0029VayARgfHFxOv1xDBSl3n" target="_blank"><i class="fab fa-whatsapp"></i> <?= L('WhatsApp', 'واتساب') ?></a></li>
-                        <li><a href="https://www.linkedin.com/company/club-sporif-constantinois/" target="_blank"><i class="fab fa-linkedin-in"></i> <?= L('LinkedIn', 'لينكد إن') ?></a></li>
                     </ul>
                 </div>
             </div>

@@ -64,6 +64,18 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
         .art-more-card:hover{transform:translateY(-4px);text-decoration:none;color:#0a4f0a;}
         .art-more-card img{width:100%;height:170px;object-fit:cover;}
         .art-more-card div{padding:14px 16px;font-weight:700;}
+        .art-gal-title{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#0a4f0a;margin:30px 0 12px;}
+        .art-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+        .art-gal a{display:block;border-radius:10px;overflow:hidden;line-height:0;}
+        .art-gal img{width:100%;height:150px;object-fit:cover;transition:.3s;}
+        .art-gal a:hover img{transform:scale(1.06);}
+        .art-lb{direction:ltr;display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99999;align-items:center;justify-content:center;}
+        .art-lb.on{display:flex;}
+        .art-lb img{max-width:92vw;max-height:88vh;border-radius:6px;}
+        .art-lb button{position:absolute;background:none;border:0;color:#fff;font-size:42px;cursor:pointer;padding:10px 18px;}
+        .art-lb .lb-x{top:10px;right:15px;}
+        .art-lb .lb-p{left:10px;top:50%;transform:translateY(-50%);}
+        .art-lb .lb-n{right:10px;top:50%;transform:translateY(-50%);}
         .art-404{text-align:center;padding:90px 15px;}
         @media(max-width:576px){.art-title{font-size:23px;}.art-body p{font-size:16px;}}
     </style>
@@ -97,6 +109,16 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
         <div class="art-body">
             <?php foreach ($paras as $p): ?><p><?= nl2br($e($p)) ?></p><?php endforeach; ?>
         </div>
+
+        <?php if (!empty($article['galerie']) && count($article['galerie']) > 1): ?>
+        <h6 class="art-gal-title"><i class="fas fa-images"></i> <?= L('Photos', 'الصور') ?> (<?= count($article['galerie']) ?>)</h6>
+        <div class="art-gal">
+            <?php foreach ($article['galerie'] as $gi => $g): ?>
+            <a href="<?= $e($g) ?>" data-i="<?= $gi ?>"><img src="<?= $e($g) ?>" alt="" loading="lazy"></a>
+            <?php endforeach; ?>
+        </div>
+        <div class="art-lb" id="artLb"><button class="lb-x" aria-label="close">&times;</button><button class="lb-p" aria-label="prev">&#10094;</button><img src="" alt=""><button class="lb-n" aria-label="next">&#10095;</button></div>
+        <?php endif; ?>
 
         <?php if (!empty($article['tags'])): ?>
         <div class="art-tags"><?php foreach ($article['tags'] as $t): ?><span><?= $e($t) ?></span><?php endforeach; ?></div>
@@ -164,6 +186,20 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
             document.body.removeChild(t);
         }
     });
+})();
+</script>
+<script>
+(function(){
+    var lb = document.getElementById('artLb'); if (!lb) return;
+    var links = [].slice.call(document.querySelectorAll('.art-gal a')), img = lb.querySelector('img'), cur = 0;
+    function show(i){ cur = (i + links.length) % links.length; img.src = links[cur].getAttribute('href'); lb.classList.add('on'); }
+    links.forEach(function(a, i){ a.addEventListener('click', function(ev){ ev.preventDefault(); show(i); }); });
+    lb.querySelector('.lb-x').onclick = function(){ lb.classList.remove('on'); };
+    lb.querySelector('.lb-p').onclick = function(ev){ ev.stopPropagation(); show(cur - 1); };
+    lb.querySelector('.lb-n').onclick = function(ev){ ev.stopPropagation(); show(cur + 1); };
+    lb.addEventListener('click', function(ev){ if (ev.target === lb) lb.classList.remove('on'); });
+    document.addEventListener('keydown', function(ev){ if (!lb.classList.contains('on')) return;
+        if (ev.key === 'Escape') lb.classList.remove('on'); if (ev.key === 'ArrowRight') show(cur + 1); if (ev.key === 'ArrowLeft') show(cur - 1); });
 })();
 </script>
 </body>

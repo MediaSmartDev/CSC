@@ -11,6 +11,29 @@
  * ===================================================================== */
 return [
     [
+        'id' => 19, 'date' => '2026-10-10', 'image' => 'images/Actualite/ultras-visite-2.jpg',
+        'label'   => ['fr' => '💚 Supporters', 'ar' => '💚 الأنصار'],
+        'titre'   => ['fr' => "Les Ultras Green Army présents à la reprise", 'ar' => 'حضور مميز لمجموعة "Ultras Green Army" في حصة الاستئناف'],
+        'resume'  => ['fr' => "Le groupe de supporters « Ultras Green Army » s'est rendu à la séance de reprise pour soutenir les joueurs et leur remonter le moral.",
+                      'ar' => 'تنقلت مجموعة الأنصار "Ultras Green Army" إلى حصة الاستئناف من أجل مساندة اللاعبين ورفع معنوياتهم.'],
+        'contenu' => ['fr' => "La séance de reprise a été marquée par la présence remarquée du groupe de supporters « Ultras Green Army », venu à l'entraînement pour soutenir les joueurs et leur remonter le moral. Les supporters les ont encouragés à redoubler d'efforts et à travailler avec sérieux afin de continuer à honorer les couleurs du club et à répondre aux attentes des supporters.\nCette présence a eu un effet positif sur les joueurs, qui ont apprécié cette initiative et ont affirmé leur détermination à redoubler d'efforts et à donner le meilleur d'eux-mêmes pour obtenir de bons résultats lors des prochaines échéances.\nLes membres du groupe ont créé une superbe ambiance pendant la séance, avec des chants à la gloire du club, des scènes qui montrent leur attachement et leur fidélité au Doyen, et qui confirment une fois de plus que la relation entre l'équipe et ses supporters repose sur un soutien constant, en toutes circonstances.\nVive le Doyen dans le cœur de ses supporters !",
+                      'ar' => "شهدت حصة الاستئناف حضورا مميزا لمجموعة الأنصار \"Ultras Green Army\" التي تنقلت إلى التدريبات من أجل مساندة اللاعبين ورفع معنوياتهم، حيث حثوهم على بذل المزيد من الجهود والعمل بكل جدية من أجل مواصلة تشريف ألوان الفريق وتحقيق تطلعات الأنصار.\nهذا وقد كان للحضور الأثر الإيجابي في نفوس اللاعبين، الذين استحسنوا هذه المبادرة التشجيعية، مؤكدين عزمهم على مضاعفة المجهودات وتقديم أفضل المستويات لتحقيق نتائج إيجابية في قادم المواعيد.\nيذكر أن أعضاء المجموعة صنعوا أجواء رائعة في الحصة التدريبية، من خلال الأهازيج والتغني بألوان الفريق، في مشاهد تؤكد مدى تعلقهم بناديهم ووفاءهم له، وتؤكد مرة أخرى أن العلاقة بين الفريق وجماهيره تظل قائمة على الدعم المتواصل والوقوف إلى جانبه في مختلف الظروف.\nعاش العميد بقلوب محبيه"],
+        'galerie' => ['images/Actualite/ultras-visite-2.jpg', 'images/Actualite/ultras-visite-1.jpg'],
+        'tags' => ['#TheDean1898', '#UltrasGreenArmy'], 'bouton' => null,
+    ],
+    [
+        'id' => 20, 'date' => '2026-10-10', 'image' => 'images/Actualite/reprise-entrainement-1.jpg',
+        'label'   => ['fr' => '🏃 Entraînement', 'ar' => '🏃 تدريبات'],
+        'titre'   => ['fr' => "Retour à l'entraînement après un jour de repos", 'ar' => 'العودة إلى التدريبات بعد يوم راحة'],
+        'resume'  => ['fr' => "Après une journée de repos, l'équipe a repris l'entraînement avec une séance en soirée.",
+                      'ar' => 'بعد يوم من الراحة، عاد الفريق إلى التدريبات بحصة مسائية.'],
+        'contenu' => ['fr' => "Après une journée de repos, les joueurs du CS Constantine ont repris le chemin de l'entraînement avec une séance en soirée, sous la conduite du staff technique.\nLe groupe poursuit sa préparation en vue du déplacement à Khenchela, lundi 12 octobre 2026 à 15h00, pour le compte de la 5e journée de la Ligue 1 Mobilis.",
+                      'ar' => "بعد يوم من الراحة، عاد لاعبو النادي الرياضي القسنطيني إلى التدريبات بحصة مسائية تحت إشراف الطاقم الفني.\nويواصل الفريق تحضيراته تحسبا للتنقل إلى خنشلة يوم الإثنين 12 أكتوبر 2026 على الساعة 15:00، لحساب الجولة الخامسة من الرابطة المحترفة الأولى موبيليس."],
+        'galerie' => ['images/Actualite/reprise-entrainement-1.jpg', 'images/Actualite/reprise-entrainement-2.jpg', 'images/Actualite/reprise-entrainement-3.jpg',
+                      'images/Actualite/reprise-entrainement-4.jpg', 'images/Actualite/reprise-entrainement-5.jpg', 'images/Actualite/reprise-entrainement-6.jpg'],
+        'tags' => ['#TheDean1898', '#DimaCsc'], 'bouton' => null,
+    ],
+    [
         'id' => 15, 'date' => '2026-10-07', 'image' => 'images/Actualite/ft-csc-usb-4-0-final.jpg',
         'label'   => ['fr' => '⚽ Résultat', 'ar' => '⚽ نتيجة'],
         'titre'   => ['fr' => 'Full time : CSC 4 – 0 US Biskra', 'ar' => 'نهاية المباراة: شباب قسنطينة 4 – 0 إتحاد بسكرة'],

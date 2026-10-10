@@ -12,7 +12,6 @@
                     <ul class="topsocial">
                         <li><a href="https://www.facebook.com/csconstantine.official" target="_blank" class="fb"><i class="fab fa-facebook-f"></i></a></li>
                         <li><a href="https://www.instagram.com/csconstantine_officiel/" target="_blank" class="insta"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.linkedin.com/company/club-sporif-constantinois/" target="_blank" class="in"><i class="fab fa-linkedin-in"></i></a></li>
                         <li><a href="https://www.youtube.com/@CSConstantineTV" target="_blank" class="yt"><i class="fab fa-youtube"></i></a></li>
                         <li><a href="https://www.tiktok.com/@clubsportifconstantinois?_r=1&_t=ZS-95LAMd2fLHg" target="_blank" class="tk">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="14" height="14" fill="currentColor">
