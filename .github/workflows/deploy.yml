@@ -1,0 +1,40 @@
+# Déploiement automatique du site CSC vers cPanel (public_html) par FTP
+# Se lance à chaque "git push" sur la branche main (ou à la main : onglet Actions > Run workflow)
+# Secrets à créer dans GitHub (Settings > Secrets and variables > Actions) :
+#   FTP_SERVER   -> machine42.ayrade.net
+#   FTP_USERNAME -> deploy@csconstantine.dz (compte FTP créé par Ayrade, limité à public_html)
+#   FTP_PASSWORD -> son mot de passe (jamais dans le code !)
+name: Deploiement cPanel
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Envoyer les fichiers par FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: loose
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            database/**
+            Data/config.php
+            .cpanel.yml
+            README.md
+            .htaccess
+            **/error_log
+            *.zip
