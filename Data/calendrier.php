@@ -22,7 +22,16 @@ function match_resultat($m) {
     return $csc > $adv ? 'v' : ($csc == $adv ? 'n' : 'd');
 }
 function matchs_joues()  { global $MATCHS; return array_values(array_filter($MATCHS, 'match_joue')); }
-function matchs_a_venir() { global $MATCHS; return array_values(array_filter($MATCHS, fn($m) => !match_joue($m))); }
+/** Matchs à venir : pas encore joués, et pas en retard (date passée sans score,
+ *  ou sans date mais avant le dernier match joué) — ceux-là attendent juste leur score. */
+function matchs_a_venir() {
+    global $MATCHS;
+    $auj = date('Y-m-d');
+    $j_dernier = 0;
+    foreach ($MATCHS as $m) if (match_joue($m)) $j_dernier = max($j_dernier, $m['j']);
+    return array_values(array_filter($MATCHS, fn($m) => !match_joue($m)
+        && ($m['date'] !== '' ? $m['date'] >= $auj : $m['j'] > $j_dernier)));
+}
 function bilan_csc() {
     $b = ['v' => 0, 'n' => 0, 'd' => 0];
     foreach (matchs_joues() as $m) $b[match_resultat($m)]++;

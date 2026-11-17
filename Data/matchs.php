@@ -4,6 +4,10 @@
  * Après chaque match : mettre le score dans 'bd' (buts équipe à domicile)
  * et 'be' (buts équipe à l'extérieur). null = match pas encore joué.
  * 'date' : AAAA-MM-JJ ('' = date pas encore fixée), 'heure' : HH:MM
+ * Optionnel : 'slogan_fr' / 'slogan_ar' (phrase sous le prochain match),
+ *   'actu' => id de l'actualité avec l'affiche (lien "Voir l'affiche")
+ * Les matchs sans score dont la date est passée ne sont plus affichés
+ *   comme "prochain match" (pensez à mettre leur score).
  * 'stade_fr' / 'stade_ar' : '' = stade par défaut (Hamlaoui à domicile,
  *   ville de l'adversaire à l'extérieur)
  * ===================================================================== */
@@ -16,8 +20,9 @@ return [
     ['j' =>  6, 'dom' => 'CSC'  , 'ext' => 'JSEB' , 'date' => '2026-10-17', 'heure' => '17:00', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
     ['j' =>  7, 'dom' => 'OA'   , 'ext' => 'CSC'  , 'date' => '2026-10-23', 'heure' => '15:15', 'bd' => null, 'be' => null, 'stade_fr' => 'Stade des Chouhada, Akbou (Béjaïa)', 'stade_ar' => 'ملعب الشهداء، أقبو - بجاية'],
     ['j' =>  8, 'dom' => 'CSC'  , 'ext' => 'USMA' , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
-    ['j' =>  9, 'dom' => 'JSS'  , 'ext' => 'CSC'  , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
-    ['j' => 10, 'dom' => 'CSC'  , 'ext' => 'ESBA' , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
+    ['j' =>  9, 'dom' => 'JSS'  , 'ext' => 'CSC'  , 'date' => '', 'heure' => '', 'bd' => 1   , 'be' => 0   , 'stade_fr' => '', 'stade_ar' => ''],
+    ['j' => 10, 'dom' => 'CSC'  , 'ext' => 'ESBA' , 'date' => '2026-11-18', 'heure' => '17:45', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => '',
+     'slogan_fr' => 'Dans le silence du tunnel, la concentration naît avant la tempête.', 'slogan_ar' => 'في صمت النفق.. يولد التركيز قبل العاصفة.', 'actu' => 25],
     ['j' => 11, 'dom' => 'CRB'  , 'ext' => 'CSC'  , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
     ['j' => 12, 'dom' => 'MBR'  , 'ext' => 'CSC'  , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],
     ['j' => 13, 'dom' => 'CSC'  , 'ext' => 'MCO'  , 'date' => '', 'heure' => '', 'bd' => null, 'be' => null, 'stade_fr' => '', 'stade_ar' => ''],

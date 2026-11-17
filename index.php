@@ -219,6 +219,8 @@ $today = new DateTime();
                                     <p><?= match_date($next) ?></p>
                                     <li><?= match_heure($next) ?></li>
                                     <li><span><?= match_stade($next) ?></span></li>
+                                    <?php if (!empty($next['slogan_fr'])): ?><li><em>« <?= htmlspecialchars(L($next['slogan_fr'], $next['slogan_ar'])) ?> »</em></li><?php endif; ?>
+                                    <?php if (!empty($next['actu'])): ?><li><a href="actualite.php?id=<?= (int)$next['actu'] ?>" style="color:#0a4f0a;font-weight:700;"><?= L("Voir l'affiche", 'شاهد الملصق') ?> →</a></li><?php endif; ?>
                                 </ul>
                             </div>
                         </div>
