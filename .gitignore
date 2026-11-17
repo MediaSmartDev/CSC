@@ -16,3 +16,6 @@ desktop.ini
 # Archives
 *.zip
 *.rar
+
+# Images envoyées depuis l espace admin (vivent seulement sur le serveur)
+uploads/

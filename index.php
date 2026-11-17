@@ -302,7 +302,7 @@ $today = new DateTime();
                     <div class="col-md-12">
                         <div class="csc-scroll-wrapper">
                             <div class="csc-scroll-track">
-<?php foreach ((require __DIR__ . '/Data/actualites.php') as $n): ?>
+<?php require_once __DIR__ . '/Data/news.php'; foreach (csc_news_all() as $n): ?>
                                 <div class="csc-scroll-card news-card-link" data-url="actualite.php?id=<?= (int)$n['id'] ?>">
                                     <img src="<?= htmlspecialchars(news_img($n['image'])) ?>" alt="">
                                     <div class="overlay"></div>

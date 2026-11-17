@@ -1,8 +1,9 @@
 <?php require_once __DIR__ . '/Data/lang.php'; ?>
 <?php
 /* Page de détail d'une actualité : actualite.php?id=...
- * Les actualités se trouvent dans Data/actualites.php */
-$ACTUS = require __DIR__ . '/Data/actualites.php';
+ * Les actualités viennent de la base (espace admin), voir Data/news.php */
+require_once __DIR__ . '/Data/news.php';
+$ACTUS = csc_news_all();
 $id = (int)($_GET['id'] ?? 0);
 $article = null;
 foreach ($ACTUS as $a) { if ((int)$a['id'] === $id) { $article = $a; break; } }

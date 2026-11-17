@@ -33,6 +33,7 @@ jobs:
             .github/**
             database/**
             Data/config.php
+            uploads/**
             .cpanel.yml
             README.md
             .htaccess
