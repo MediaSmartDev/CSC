@@ -156,8 +156,9 @@ $today = new DateTime();
         <!-- SPONSORS ANIMÉS -->
         <div class="sponsor-strip" id="sponsors-section">
             <div class="sponsor-track-outer">
-                <div class="sponsor-track"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/macron.png" alt="Macron"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
-                <div class="sponsor-track" aria-hidden="true"><div class="sponsor-item"><img src="images/sponsors/entp.jpeg" alt="ENTP"></div><div class="sponsor-item"><img src="images/sponsors/hayat.jpeg" alt="Hayat"></div><div class="sponsor-item"><img src="images/sponsors/macron.png" alt="Macron"></div><div class="sponsor-item"><img src="images/sponsors/ooredoo.jpeg" alt="Ooredoo"></div><div class="sponsor-item"><img src="images/sponsors/soumam.jpeg" alt="Soummam"></div></div>
+                <?php require_once __DIR__ . '/Data/sponsors.php'; $SPONSORS = csc_sponsors(); ?>
+                <?= csc_sponsors_track($SPONSORS) ?>
+                <?= csc_sponsors_track($SPONSORS, true) ?>
             </div>
         </div>
 

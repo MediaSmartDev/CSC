@@ -167,32 +167,32 @@ $today = new DateTime();
             </div>
             
             <!--Banners Start-->
-            <div class="player-squad">
+            <div class="team-grid">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h2 class="team-main-title"><?= L('Staff technique', 'الطاقم الفني') ?></h2>
                         </div>
                         <?php
-                            $content = '';
-                            $data = getPlaersByCateg(5);
-                            foreach ($data as $row){
-                                $age = playerAge($row);
-                                $content .= '<div class="col-md-6">
-                                                <div class="player-box with-extra-info">
-                                                    <div class="player-thumb"><img src="images/player1.png" alt=""></div>
-                                                    <div class="player-txt">
-                                                        <h3>'.htmlspecialchars(player_name($row)).'</h3>
-                                                        <ul class="pb-small-info">
-                                                          <li>'.L('Nationalité', 'الجنسية').' <strong>'.Lv(!empty($row['nationalite']) ? $row['nationalite'] : 'Algérie').'</strong></li>
-                                                          <li>'.L('Âge', 'العمر').' <strong>'.$age.' '.L('ans', 'سنة').'</strong></li>
-                                                          <li>'.L('Poste', 'المنصب').' <strong>'.Lv($row['poste']).'</strong></li>
-                                                        </ul>
-                                                    </div>
+                        $content = '';
+                        $data = getPlaersByCateg(5);
+                        foreach ($data as $row){
+                            $age = playerAge($row);
+                            $content .= '<div class="col-lg-3 col-md-6">
+                                            <div class="team-squad-box">
+                                                '.(!empty($row['dossard']) ? '<div class="num">'.$row['dossard'].'</div>' : '').'
+                                                <div class="ts-cap">
+                                                    <h4>'.htmlspecialchars(player_name($row)).'</h4>
+                                                    <p>'.htmlspecialchars(Lv($row['poste'])).'</p>
+                                                    <ul>
+                                                        <li>'.($age ? $age.' <span>'.L('Ans', 'سنة').'</span>' : '&nbsp;<span>&nbsp;</span>').'</li>
+                                                    </ul>
                                                 </div>
-                                            </div>';
-                            }
-                            echo $content;
+                                                <img src="'.htmlspecialchars(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'">
+                                            </div>
+                                        </div>';
+                        }
+                        echo $content;
                         ?>
                     </div>
                 </div>

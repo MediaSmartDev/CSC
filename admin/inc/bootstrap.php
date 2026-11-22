@@ -12,6 +12,8 @@ const ADMIN_IDLE_TIMEOUT = 7200;          // déconnexion après 2 h sans activi
 const ADMIN_MAX_ATTEMPTS = 5;             // essais de mot de passe ratés...
 const ADMIN_LOCK_MINUTES = 15;            // ... avant blocage pendant 15 minutes
 const ADMIN_UPLOAD_DIR   = 'uploads/actualites';   // relatif à la racine du site
+const ADMIN_UPLOAD_JOUEURS = 'uploads/joueurs';
+const ADMIN_UPLOAD_SPONSORS = 'uploads/sponsors';
 const ADMIN_IMG_MAX_W    = 1600;          // largeur max des images (redimensionnées)
 const ADMIN_IMG_MAX_BYTES = 8 * 1024 * 1024;
 
@@ -76,8 +78,11 @@ function csrf_check(): void {
     }
     $t = $_POST['csrf'] ?? '';
     if (!is_string($t) || empty($_SESSION['csrf']) || !hash_equals($_SESSION['csrf'], $t)) {
-        http_response_code(400);
-        exit('Requête refusée (jeton de sécurité invalide). Rechargez la page et réessayez.');
+        // Page ouverte depuis longtemps, ou reconnexion dans un autre onglet :
+        // on recharge la page proprement au lieu d'une page d'erreur.
+        flash('warning', 'La page avait expiré (ouverte avant votre dernière connexion). Elle a été rechargée : refaites simplement l’action.');
+        $back = (string)($_SERVER['REQUEST_URI'] ?? 'index.php');
+        redirect(preg_match('#^/[^\s]*$#', $back) ? $back : 'index.php');
     }
 }
 
@@ -131,7 +136,7 @@ function attempt_login(string $username, string $password): bool {
     session_regenerate_id(true);
     $_SESSION['admin_id'] = (int)$row['id'];
     $_SESSION['last_seen'] = time();
-    $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    csrf_token();
     return true;
 }
 
@@ -156,9 +161,9 @@ function upload_limit_bytes(): int {
 function upload_limit_label(): string { return round(upload_limit_bytes() / 1048576, 1) . ' Mo'; }
 
 /** Dossier d'envoi (créé au besoin, avec un .htaccess qui interdit d'y exécuter du code) */
-function upload_dir_abs(): string {
-    $dir = dirname(__DIR__, 2) . '/' . ADMIN_UPLOAD_DIR;
-    if (!is_dir($dir) && !@mkdir($dir, 0755, true)) throw new RuntimeException("Impossible de créer le dossier " . ADMIN_UPLOAD_DIR . " : vérifiez les droits d'écriture.");
+function upload_dir_abs(string $sub = ADMIN_UPLOAD_DIR): string {
+    $dir = dirname(__DIR__, 2) . '/' . $sub;
+    if (!is_dir($dir) && !@mkdir($dir, 0755, true)) throw new RuntimeException("Impossible de créer le dossier " . $sub . " : vérifiez les droits d'écriture.");
     $root = dirname(__DIR__, 2) . '/uploads';
     if (!file_exists($root . '/.htaccess')) {
         @file_put_contents($root . '/.htaccess',
@@ -171,7 +176,7 @@ function upload_dir_abs(): string {
           . "RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar\n"
           . "<FilesMatch \"(?i)\\.(php\\d?|phtml|phar|pl|py|cgi|sh|html?|svg|js)$\">\n  Require all denied\n</FilesMatch>\n");
     }
-    if (!is_writable($dir)) throw new RuntimeException("Le dossier " . ADMIN_UPLOAD_DIR . " n'est pas accessible en écriture.");
+    if (!is_writable($dir)) throw new RuntimeException("Le dossier " . $sub . " n'est pas accessible en écriture.");
     return $dir;
 }
 
@@ -180,7 +185,8 @@ function upload_dir_abs(): string {
  * Renvoie le chemin relatif (ex. uploads/actualites/20261117-ab12cd34.jpg),
  * null si aucun fichier, ou lève une RuntimeException avec un message clair.
  */
-function save_uploaded_image(array $f): ?string {
+/* $sub : dossier d'envoi ; $crop = [largeur, hauteur] pour recadrer au centre (photos de joueurs) */
+function save_uploaded_image(array $f, string $sub = ADMIN_UPLOAD_DIR, ?array $crop = null): ?string {
     $err = $f['error'] ?? UPLOAD_ERR_NO_FILE;
     if ($err === UPLOAD_ERR_NO_FILE) return null;
     if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) throw new RuntimeException('Image trop lourde (max ' . upload_limit_label() . ').');
@@ -194,7 +200,7 @@ function save_uploaded_image(array $f): ?string {
     if (!$ext || !$info || $info[0] < 1 || $info[1] < 1) throw new RuntimeException('Format non accepté : envoyez une image JPG, PNG ou WEBP.');
     if ($info[0] * $info[1] > 40000000) throw new RuntimeException('Image trop grande (dimensions).');
 
-    $dir = upload_dir_abs();
+    $dir = upload_dir_abs($sub);
     $name = date('Ymd') . '-' . bin2hex(random_bytes(8));
 
     // Avec GD : on ré-encode l'image (supprime tout contenu caché) et on la réduit si besoin
@@ -211,6 +217,17 @@ function save_uploaded_image(array $f): ?string {
             if ($rot) { $r = imagerotate($src, $rot, 0); if ($r) { imagedestroy($src); $src = $r; } }
         }
         $w = imagesx($src); $h = imagesy($src);
+        if ($crop) {
+            // Recadrage au centre au bon format (ex. 600x750 comme les photos officielles)
+            [$cw, $ch] = $crop;
+            $ratio = $cw / $ch;
+            if ($w / $h > $ratio) { $sh = $h; $sw = (int)round($h * $ratio); $sx = (int)(($w - $sw) / 2); $sy = 0; }
+            else { $sw = $w; $sh = (int)round($w / $ratio); $sx = 0; $sy = (int)max(0, ($h - $sh) * 0.2); } // garde le haut (visage)
+            $dst = imagecreatetruecolor($cw, $ch);
+            if ($ext !== 'jpg') { imagealphablending($dst, false); imagesavealpha($dst, true); }
+            imagecopyresampled($dst, $src, 0, 0, $sx, $sy, $cw, $ch, $sw, $sh);
+            imagedestroy($src); $src = $dst; $w = $cw; $h = $ch;
+        }
         if ($w > ADMIN_IMG_MAX_W) {
             $nh = (int)round($h * ADMIN_IMG_MAX_W / $w);
             $dst = imagecreatetruecolor(ADMIN_IMG_MAX_W, $nh);
@@ -232,7 +249,50 @@ function save_uploaded_image(array $f): ?string {
         if (!move_uploaded_file($f['tmp_name'], $path)) throw new RuntimeException("Impossible d'enregistrer l'image.");
     }
     @chmod($path, 0644);
-    return ADMIN_UPLOAD_DIR . "/$name.$ext";
+    return $sub . "/$name.$ext";
+}
+
+/**
+ * Logo de sponsor : même format que les logos actuels (carré blanc 500x500,
+ * logo centré). Les marges blanches/transparentes du fichier sont retirées
+ * pour que chaque logo ait la même taille visuelle dans le bandeau.
+ */
+function save_sponsor_logo(array $f): ?string {
+    $tmp = save_uploaded_image($f, ADMIN_UPLOAD_SPONSORS);   // vérifications + ré-encodage
+    if (!$tmp || !extension_loaded('gd')) return $tmp;
+    $abs = dirname(__DIR__, 2) . '/' . $tmp;
+    $src = @imagecreatefromstring((string)file_get_contents($abs));
+    if (!$src) return $tmp;
+    $w = imagesx($src); $h = imagesy($src);
+    // Aplatir sur fond blanc (logos PNG transparents)
+    $flat = imagecreatetruecolor($w, $h);
+    imagefill($flat, 0, 0, imagecolorallocate($flat, 255, 255, 255));
+    imagecopy($flat, $src, 0, 0, 0, 0, $w, $h);
+    imagedestroy($src);
+    // Cadre utile : pixels nettement non blancs
+    $minX = $w; $minY = $h; $maxX = -1; $maxY = -1;
+    $step = max(1, (int)floor(max($w, $h) / 800));
+    for ($y = 0; $y < $h; $y += $step) for ($x = 0; $x < $w; $x += $step) {
+        $c = imagecolorat($flat, $x, $y);
+        if ((($c >> 16) & 255) < 235 || (($c >> 8) & 255) < 235 || ($c & 255) < 235) {
+            if ($x < $minX) $minX = $x; if ($x > $maxX) $maxX = $x;
+            if ($y < $minY) $minY = $y; if ($y > $maxY) $maxY = $y;
+        }
+    }
+    if ($maxX < 0) { $minX = 0; $minY = 0; $maxX = $w - 1; $maxY = $h - 1; }
+    $cw = $maxX - $minX + 1; $ch = $maxY - $minY + 1;
+    $box = 400; $size = 500;                             // logo dans 400x400, centré dans 500x500
+    $r = min($box / $cw, $box / $ch);
+    $nw = max(1, (int)round($cw * $r)); $nh = max(1, (int)round($ch * $r));
+    $dst = imagecreatetruecolor($size, $size);
+    imagefill($dst, 0, 0, imagecolorallocate($dst, 255, 255, 255));
+    imagecopyresampled($dst, $flat, (int)(($size - $nw) / 2), (int)(($size - $nh) / 2), $minX, $minY, $nw, $nh, $cw, $ch);
+    imagedestroy($flat);
+    $final = preg_replace('/\.(png|webp|jpg)$/', '.jpg', $tmp);
+    imagejpeg($dst, dirname(__DIR__, 2) . '/' . $final, 90);
+    imagedestroy($dst);
+    if ($final !== $tmp) @unlink($abs);
+    return $final;
 }
 
 /** Transforme $_FILES['x'] (envoi multiple) en liste de fichiers */
@@ -248,10 +308,15 @@ function files_list(string $field): array {
 
 /** Supprime une image seulement si elle a été envoyée depuis l'admin (jamais les images du dépôt Git) */
 function delete_uploaded_image(?string $rel): void {
-    if (!$rel || !preg_match('#^' . preg_quote(ADMIN_UPLOAD_DIR, '#') . '/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
-    $n = db()->prepare('SELECT COUNT(*) FROM actualites WHERE image = ? OR galerie LIKE ?');
-    $n->execute([$rel, '%' . $rel . '%']);
-    if ((int)$n->fetchColumn() === 0) @unlink(dirname(__DIR__, 2) . '/' . $rel);
+    if (!$rel || !preg_match('#^uploads/(actualites|joueurs|sponsors)/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
+    $checks = ['SELECT COUNT(*) FROM actualites WHERE image = ? OR galerie LIKE ?' => [$rel, '%' . $rel . '%'],
+               'SELECT COUNT(*) FROM joueurs WHERE img = ?' => [$rel],
+               'SELECT COUNT(*) FROM sponsors WHERE logo = ?' => [$rel]];
+    foreach ($checks as $sql => $params) {
+        try { $n = db()->prepare($sql); $n->execute($params); if ((int)$n->fetchColumn() > 0) return; }
+        catch (PDOException $e) { /* table pas encore créée */ }
+    }
+    @unlink(dirname(__DIR__, 2) . '/' . $rel);
 }
 
 /** Chemin d'image utilisable depuis admin/ */
@@ -281,6 +346,10 @@ function page_header(string $title, ?array $admin = null): void { ?>
     <?php if ($admin): ?>
     <div class="adm-links">
       <a href="index.php"><i class="fas fa-newspaper"></i> Actualités</a>
+      <a href="joueurs.php"><i class="fas fa-users"></i> Joueurs</a>
+      <a href="matchs.php"><i class="fas fa-futbol"></i> Matchs</a>
+      <a href="classement.php"><i class="fas fa-list-ol"></i> Classement</a>
+      <a href="sponsors.php"><i class="fas fa-handshake"></i> Sponsors</a>
       <a href="password.php"><i class="fas fa-key"></i> Mot de passe</a>
       <a href="../index.php" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Voir le site</a>
       <form method="post" action="logout.php" class="d-inline"><?= csrf_field() ?>

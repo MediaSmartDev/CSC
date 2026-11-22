@@ -27,10 +27,20 @@ include('Connexion.php');
         return (updateQuery("DELETE FROM ".$table." WHERE ".$sql, $array) == 1);
     }
     
-    /* Classement : lu depuis Data/classement.php (plus de SQL à importer) */
+    /* Classement : lu depuis la base (table classement_l1, modifiée dans l'espace admin).
+     * Si la table n'existe pas encore ou est vide : Data/classement.php (secours). */
     function csc_classement_data(){
         static $d = null;
-        if ($d === null) { $d = @include __DIR__ . '/classement.php'; if (!is_array($d)) $d = []; }
+        if ($d !== null) return $d;
+        $rows = queryAll("SELECT code, j, g, n, p, bp, bc, points FROM `classement_l1` ORDER BY pos ASC");
+        if (is_array($rows) && $rows) {
+            $info = queryAll("SELECT saison, journee, mise_a_jour FROM `classement_l1_info` WHERE id = 1");
+            $info = (is_array($info) && isset($info[0])) ? $info[0] : [];
+            $d = ['saison' => $info['saison'] ?? '', 'journee' => (int)($info['journee'] ?? 0), 'mise_a_jour' => $info['mise_a_jour'] ?? '',
+                  'clubs' => array_map(fn($r) => [$r['code'], (int)$r['j'], (int)$r['g'], (int)$r['n'], (int)$r['p'], (int)$r['bp'], (int)$r['bc'], (int)$r['points']], $rows)];
+            return $d;
+        }
+        $d = @include __DIR__ . '/classement.php'; if (!is_array($d)) $d = [];
         return $d;
     }
     function getClassmentTable(){

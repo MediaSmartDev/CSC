@@ -2,7 +2,30 @@
 /* Outils pour afficher le calendrier (données : Data/matchs.php + Data/clubs.php) */
 require_once __DIR__ . '/lang.php';
 $CLUBS  = require __DIR__ . '/clubs.php';
-$MATCHS = require __DIR__ . '/matchs.php';
+$MATCHS = csc_matchs_load();
+
+/** Matchs du CSC : table `matchs_csc` (espace admin), sinon Data/matchs.php (secours) */
+function csc_matchs_load() {
+    require_once __DIR__ . '/news.php';   // csc_pdo()
+    $pdo = csc_pdo();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM matchs_csc ORDER BY j ASC, date_match IS NULL, date_match ASC, id ASC')->fetchAll();
+            if ($rows) return array_map(fn($r) => [
+                'id' => (int)$r['id'], 'j' => (int)$r['j'], 'dom' => $r['dom'], 'ext' => $r['ext'],
+                'date' => $r['date_match'] ?: '', 'heure' => $r['heure'] ? substr($r['heure'], 0, 5) : '',
+                'bd' => $r['bd'] === null ? null : (int)$r['bd'], 'be' => $r['be'] === null ? null : (int)$r['be'],
+                'stade_fr' => (string)$r['stade_fr'], 'stade_ar' => (string)$r['stade_ar'],
+                'slogan_fr' => (string)$r['slogan_fr'], 'slogan_ar' => (string)$r['slogan_ar'],
+                'actu' => $r['actu'] ? (int)$r['actu'] : null,
+            ], $rows);
+        } catch (PDOException $e) {
+            error_log('[CSC] Lecture matchs impossible : ' . $e->getMessage());
+        }
+    }
+    $m = @include __DIR__ . '/matchs.php';
+    return is_array($m) ? $m : [];
+}
 
 function club_info($code) { global $CLUBS; return $CLUBS[$code] ?? ['fr' => $code, 'ar' => $code, 'ville_fr' => '', 'ville_ar' => '', 'logo' => 'images/logo-dark.png']; }
 function club_court($code) { $c = club_info($code); return L($c['fr'], $c['ar']); }
