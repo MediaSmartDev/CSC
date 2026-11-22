@@ -99,3 +99,23 @@ body{background:#f3f5f3;color:#222;font-family:-apple-system,BlinkMacSystemFont,
   .adm-side-open{overflow:hidden;}
   .adm-has-side .adm-page{margin-left:0;}
 }
+/* ===== Langue : boutons FR / عربي ===== */
+.adm-langsw{display:inline-flex;align-self:flex-start;border:1px solid rgba(255,255,255,.35);border-radius:20px;overflow:hidden;margin:0 20px 16px;}
+.adm-langsw a{color:#e6f4e6;font-size:13px;font-weight:700;padding:3px 12px;}
+.adm-langsw a:hover{color:#fff;text-decoration:none;background:rgba(255,255,255,.1);}
+.adm-langsw a.active{background:#fff;color:var(--g);}
+.adm-nav .adm-langsw{margin:0;}
+.adm-ms{margin-inline-start:.5rem;}
+@media (min-width:768px){ .adm-offset-4{margin-inline-start:33.333333%;} }
+/* ===== Arabe : de droite à gauche, menu à droite ===== */
+[dir=rtl] body{font-family:Tahoma,"Segoe UI",Arial,sans-serif;}
+[dir=rtl] .adm-side{left:auto;right:0;box-shadow:-2px 0 12px rgba(0,0,0,.18);}
+[dir=rtl] .adm-has-side .adm-page{margin-left:0;margin-right:240px;}
+[dir=rtl] .fa-arrow-left,[dir=rtl] .fa-sign-out-alt,[dir=rtl] .fa-external-link-alt{transform:scaleX(-1);}
+[dir=rtl] .alert ul{padding-right:1.2rem;padding-left:0;}
+[dir=rtl] .adm-teams,[dir=rtl] .adm-scoreform{direction:rtl;}
+@media (max-width:991px){
+  [dir=rtl] .adm-side{transform:translateX(100%);}
+  [dir=rtl] .adm-side-open .adm-side{transform:none;}
+  [dir=rtl] .adm-has-side .adm-page{margin-right:0;}
+}
