@@ -14,6 +14,7 @@ const ADMIN_LOCK_MINUTES = 15;            // ... avant blocage pendant 15 minute
 const ADMIN_UPLOAD_DIR   = 'uploads/actualites';   // relatif à la racine du site
 const ADMIN_UPLOAD_JOUEURS = 'uploads/joueurs';
 const ADMIN_UPLOAD_SPONSORS = 'uploads/sponsors';
+const ADMIN_UPLOAD_FEMININE = 'uploads/feminine';
 const ADMIN_IMG_MAX_W    = 1600;          // largeur max des images (redimensionnées)
 const ADMIN_IMG_MAX_BYTES = 8 * 1024 * 1024;
 
@@ -308,10 +309,11 @@ function files_list(string $field): array {
 
 /** Supprime une image seulement si elle a été envoyée depuis l'admin (jamais les images du dépôt Git) */
 function delete_uploaded_image(?string $rel): void {
-    if (!$rel || !preg_match('#^uploads/(actualites|joueurs|sponsors)/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
+    if (!$rel || !preg_match('#^uploads/(actualites|joueurs|sponsors|feminine)/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
     $checks = ['SELECT COUNT(*) FROM actualites WHERE image = ? OR galerie LIKE ?' => [$rel, '%' . $rel . '%'],
                'SELECT COUNT(*) FROM joueurs WHERE img = ?' => [$rel],
-               'SELECT COUNT(*) FROM sponsors WHERE logo = ?' => [$rel]];
+               'SELECT COUNT(*) FROM sponsors WHERE logo = ?' => [$rel],
+               'SELECT COUNT(*) FROM equipe_feminine WHERE img = ?' => [$rel]];
     foreach ($checks as $sql => $params) {
         try { $n = db()->prepare($sql); $n->execute($params); if ((int)$n->fetchColumn() > 0) return; }
         catch (PDOException $e) { /* table pas encore créée */ }
@@ -339,26 +341,57 @@ function page_header(string $title, ?array $admin = null): void { ?>
 <link rel="stylesheet" href="../css/fontawesome.css">
 <link rel="stylesheet" href="assets/admin.css">
 </head>
-<body>
+<body class="<?= $admin ? 'adm-has-side' : '' ?>">
+<?php if ($admin):
+    // Lien actif : la page en cours, ou la liste dont elle depend (edit.php -> index.php...)
+    $cur = basename($_SERVER['SCRIPT_NAME'] ?? '');
+    $cur = ['edit.php' => 'index.php', 'joueur.php' => 'joueurs.php', 'match.php' => 'matchs.php', 'feminine_edit.php' => 'feminine.php'][$cur] ?? $cur;
+    $menu = [
+        'Contenu' => [['index.php', 'fa-newspaper', 'Actualités'], ['matchs.php', 'fa-futbol', 'Matchs'], ['classement.php', 'fa-list-ol', 'Classement']],
+        'Équipes' => [['joueurs.php', 'fa-users', 'Joueurs'], ['feminine.php', 'fa-female', 'Équipe féminine']],
+        'Partenaires' => [['sponsors.php', 'fa-handshake', 'Sponsors']],
+    ];
+?>
+<header class="adm-topbar">
+  <button type="button" class="adm-burger" id="admBurger" aria-label="Menu" aria-controls="admSide" aria-expanded="false"><i class="fas fa-bars"></i></button>
+  <a class="adm-brand" href="index.php"><img src="../images/logo-csc.png" alt=""> Admin CSC</a>
+</header>
+<aside class="adm-side" id="admSide">
+  <a class="adm-brand adm-side-brand" href="index.php"><img src="../images/logo-csc.png" alt=""> Admin CSC</a>
+  <nav class="adm-side-nav">
+    <?php foreach ($menu as $section => $links): ?>
+      <div class="adm-side-title"><?= e($section) ?></div>
+      <?php foreach ($links as [$href, $icon, $label]): ?>
+        <a href="<?= $href ?>" class="<?= $cur === $href ? 'active' : '' ?>"<?= $cur === $href ? ' aria-current="page"' : '' ?>><i class="fas <?= $icon ?> fa-fw"></i> <?= e($label) ?></a>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+    <div class="adm-side-title">Compte</div>
+    <a href="password.php" class="<?= $cur === 'password.php' ? 'active' : '' ?>"><i class="fas fa-key fa-fw"></i> Mot de passe</a>
+    <a href="../index.php" target="_blank" rel="noopener"><i class="fas fa-external-link-alt fa-fw"></i> Voir le site</a>
+  </nav>
+  <form method="post" action="logout.php" class="adm-side-foot"><?= csrf_field() ?>
+    <div class="adm-side-user"><i class="fas fa-user-circle"></i> <?= e($admin['username']) ?></div>
+    <button type="submit" class="adm-logout"><i class="fas fa-sign-out-alt fa-fw"></i> Déconnexion</button>
+  </form>
+</aside>
+<div class="adm-backdrop" id="admBackdrop"></div>
+<script>
+(function () {
+  var b = document.getElementById('admBurger'), bd = document.getElementById('admBackdrop');
+  function set(open) { document.body.classList.toggle('adm-side-open', open); b.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  b.addEventListener('click', function () { set(!document.body.classList.contains('adm-side-open')); });
+  bd.addEventListener('click', function () { set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+})();
+</script>
+<?php else: ?>
 <nav class="adm-nav">
   <div class="container adm-nav-in">
     <a class="adm-brand" href="index.php"><img src="../images/logo-csc.png" alt=""> Admin CSC</a>
-    <?php if ($admin): ?>
-    <div class="adm-links">
-      <a href="index.php"><i class="fas fa-newspaper"></i> Actualités</a>
-      <a href="joueurs.php"><i class="fas fa-users"></i> Joueurs</a>
-      <a href="matchs.php"><i class="fas fa-futbol"></i> Matchs</a>
-      <a href="classement.php"><i class="fas fa-list-ol"></i> Classement</a>
-      <a href="sponsors.php"><i class="fas fa-handshake"></i> Sponsors</a>
-      <a href="password.php"><i class="fas fa-key"></i> Mot de passe</a>
-      <a href="../index.php" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Voir le site</a>
-      <form method="post" action="logout.php" class="d-inline"><?= csrf_field() ?>
-        <button type="submit" class="adm-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion (<?= e($admin['username']) ?>)</button>
-      </form>
-    </div>
-    <?php endif; ?>
   </div>
 </nav>
+<?php endif; ?>
+<div class="adm-page">
 <main class="container adm-main">
 <?php
     if (!empty($_SESSION['flash'])) {
@@ -370,6 +403,7 @@ function page_header(string $title, ?array $admin = null): void { ?>
 function page_footer(): void { ?>
 </main>
 <footer class="adm-foot">CS Constantine · espace d'administration</footer>
+</div>
 </body>
 </html>
 <?php }

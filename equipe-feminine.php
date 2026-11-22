@@ -3,23 +3,11 @@
 <?php
 /* =====================================================================
  * ÉQUIPE FÉMININE - CS Constantine
- * Pour compléter : remplir 'nom' et 'num' de chaque joueuse ci-dessous.
- * (laisser '' tant que l'info n'est pas connue : rien ne s'affiche)
+ * L'effectif se gère dans l'espace admin (admin/feminine.php).
+ * La liste d'origine reste dans Data/feminine.php (secours).
  * ===================================================================== */
-$equipe = [
-    'Gardiennes' => [
-        ['img' => 'gardienne-01.jpg', 'nom' => '', 'num' => ''],
-        ['img' => 'gardienne-02.jpg', 'nom' => '', 'num' => ''],
-    ],
-    'Joueuses' => [],
-    'Staff technique' => [
-        ['img' => 'staff-01.jpg', 'nom' => '', 'num' => '', 'role' => 'Staff'],
-        ['img' => 'staff-02.jpg', 'nom' => '', 'num' => '', 'role' => 'Staff'],
-    ],
-];
-for ($i = 1; $i <= 24; $i++) {
-    $equipe['Joueuses'][] = ['img' => sprintf('joueuse-%02d.jpg', $i), 'nom' => '', 'num' => ''];
-}
+require_once __DIR__ . '/Data/feminine.php';
+$equipe = csc_feminine();
 $roles = ['Gardiennes' => L('Gardienne', 'حارسة مرمى'), 'Joueuses' => L('Joueuse', 'لاعبة'), 'Staff technique' => L('Staff', 'الطاقم الفني')];
 $titres = ['Gardiennes' => L('Gardiennes', 'حارسات المرمى'), 'Joueuses' => L('Joueuses', 'اللاعبات'), 'Staff technique' => L('Staff technique', 'الطاقم الفني')];
 $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff technique' => 'staff'];
@@ -99,9 +87,9 @@ $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff techniq
                 <div class="fem-group" data-group="<?= $slug[$groupe] ?>">
                     <div class="fem-group-title"><h3><?= $titres[$groupe] ?></h3><span class="count"><?= count($liste) ?></span></div>
                     <div class="fem-grid">
-                        <?php foreach ($liste as $p): $role = isset($p['role']) ? Lv($p['role']) : $roles[$groupe]; ?>
-                        <div class="fem-card" data-src="images/feminine/<?= $p['img'] ?>">
-                            <img src="images/feminine/<?= $p['img'] ?>" alt="<?= htmlspecialchars($p['nom'] ?: $role) ?>" loading="lazy">
+                        <?php foreach ($liste as $p): $role = $p['role'] ?? $roles[$groupe]; ?>
+                        <div class="fem-card" data-src="<?= htmlspecialchars($p['img']) ?>">
+                            <img src="<?= htmlspecialchars($p['img']) ?>" alt="<?= htmlspecialchars($p['nom'] ?: $role) ?>" loading="lazy">
                             <?php if ($p['num'] !== ''): ?><div class="fem-num"><?= htmlspecialchars($p['num']) ?></div><?php endif; ?>
                             <div class="fem-info">
                                 <?php if ($p['nom'] !== ''): ?><h5><?= htmlspecialchars($p['nom']) ?></h5><?php endif; ?>
