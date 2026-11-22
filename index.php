@@ -347,7 +347,7 @@ $today = new DateTime();
                 </div>
                 <div class="row">
                     <?php foreach (getHomePlayers() as $pl): ?>
-                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="<?= htmlspecialchars(!empty($pl['img']) ? $pl['img'] : 'images/player-default.png') ?>" alt="<?= htmlspecialchars(player_name($pl)) ?>" width="240"></div><div class="player-txt"><h3><?= htmlspecialchars(player_name($pl)) ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong><?= (int)$pl['dossard'] ?></strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= htmlspecialchars(Lv($pl['poste'])) ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong><?= playerAge($pl) ?> <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
+                    <div class="col-md-6"><div class="player-box with-extra-info"><div class="player-thumb"><img src="<?= htmlspecialchars(!empty($pl['img']) ? $pl['img'] : 'images/player-default.png') ?>" alt="<?= htmlspecialchars(player_name($pl)) ?>" width="240"></div><div class="player-txt"><h3><?= htmlspecialchars(player_name($pl)) ?></h3><br><ul class="pb-small-info"><li><?= L('N°', 'الرقم') ?> <strong><?= (int)$pl['dossard'] ?></strong></li><li><?= L('Poste', 'المنصب') ?> <strong><?= htmlspecialchars(player_poste($pl)) ?></strong></li><li><?= L('Âge', 'العمر') ?> <strong><?= playerAge($pl) ?> <?= L('ans', 'سنة') ?></strong></li></ul></div></div></div>
                     <?php endforeach; ?>
                 </div>
             </div>

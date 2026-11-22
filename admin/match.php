@@ -118,7 +118,8 @@ $clubOptions = function ($sel) use ($CLUBS) {
       <div class="form-group col-md-6" dir="rtl"><label>الملعب (AR)</label>
         <input class="form-control" name="stade_ar" value="<?= e($v['stade_ar']) ?>" maxlength="150"></div>
     </div>
-    <small class="text-muted">Vide : « Stade Chahid Hamlaoui, Constantine » à domicile, la ville de l’adversaire à l’extérieur.</small>
+    <small class="text-muted">Vide : « Stade Chahid Hamlaoui, Constantine » à domicile, la ville de l’adversaire à l’extérieur (traduits automatiquement).
+    Si seul le français est rempli, la version arabe du site affiche le texte français.</small>
   </div>
 
   <div class="adm-card">

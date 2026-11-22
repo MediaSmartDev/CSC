@@ -4,6 +4,7 @@ require __DIR__ . '/inc/bootstrap.php';
 require __DIR__ . '/inc/joueurs_common.php';
 $admin = require_login();
 $pdo = db();
+$hasPosteAr = (function () use ($pdo) { try { $pdo->query('SELECT poste_ar FROM joueurs LIMIT 0'); return true; } catch (PDOException $e) { return false; } })();
 
 $id = (int)($_GET['id'] ?? 0);
 $row = null;
@@ -27,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $v['prenom'] = $txt('prenom', 100);
     $v['nom_ar'] = $txt('nom_ar', 150);
     $v['poste'] = $txt('poste', 50);
+    $v['poste_ar'] = $txt('poste_ar', 80);
     $v['nationalite'] = $txt('nationalite', 50) ?: 'Algérie';
     $v['categorie'] = (int)($_POST['categorie'] ?? 0);
     $v['published'] = isset($_POST['published']) ? 1 : 0;
@@ -67,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         $cols = ['nom', 'prenom', 'nom_ar', 'dossard', 'poste', 'categorie', 'date_naissance', 'age', 'nationalite', 'img', 'published'];
-        $vals = array_map(fn($c) => $v[$c] === '' && in_array($c, ['nom_ar', 'img'], true) ? null : $v[$c], $cols);
+        if ($hasPosteAr) $cols[] = 'poste_ar';
+        $vals = array_map(fn($c) => $v[$c] === '' && in_array($c, ['nom_ar', 'img', 'poste_ar'], true) ? null : $v[$c], $cols);
         if ($row) {
             if ((int)$row['categorie'] !== $v['categorie']) {        // changement de catégorie : à la fin de la nouvelle
                 $cols[] = 'ordre';
@@ -155,10 +158,17 @@ page_header($row ? 'Modifier un joueur' : 'Ajouter un joueur', $admin);
       <div class="form-group col-md-5"><label>Poste</label>
         <input class="form-control" name="poste" id="poste" list="postes" value="<?= e($v['poste']) ?>" maxlength="50">
         <datalist id="postes"><?php foreach ($postes as $p): ?><option value="<?= e($p) ?>"><?php endforeach; ?></datalist>
-        <small class="text-muted">Gardien, Défenseur, Milieu, Attaquant et Entraîneur sont traduits en arabe automatiquement.</small></div>
+        <small class="text-muted">Les postes proposés dans la liste sont traduits en arabe automatiquement.</small></div>
       <div class="form-group col-md-3"><label>Numéro (maillot)</label>
         <input type="number" class="form-control" name="dossard" min="1" max="99" value="<?= e($v['dossard'] ?? '') ?>"></div>
     </div>
+    <?php if ($hasPosteAr): ?>
+    <div class="form-row">
+      <div class="form-group col-md-5 offset-md-4" dir="rtl"><label>المنصب بالعربية <small class="text-muted">(facultatif)</small></label>
+        <input class="form-control" name="poste_ar" value="<?= e($v['poste_ar'] ?? '') ?>" maxlength="80" placeholder="مثال : مدرب مساعد">
+        <small class="text-muted" dir="ltr">Vide = traduction automatique du poste (ou le poste en français s’il n’est pas dans la liste).</small></div>
+    </div>
+    <?php endif; ?>
     <label class="adm-switch"><input type="checkbox" name="published" value="1" <?= $v['published'] ? 'checked' : '' ?>> Affiché sur le site</label>
   </div>
 

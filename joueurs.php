@@ -56,7 +56,7 @@ $today = new DateTime();
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
-                                                    <p>'.Lv($row['poste']).'</p>
+                                                    <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
                                                         <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                         
@@ -88,7 +88,7 @@ $today = new DateTime();
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
-                                                    <p>'.Lv($row['poste']).'</p>
+                                                    <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
                                                         <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                         
@@ -120,7 +120,7 @@ $today = new DateTime();
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
-                                                    <p>'.Lv($row['poste']).'</p>
+                                                    <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
                                                         <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>                                                    
                                                     </ul>
@@ -151,7 +151,7 @@ $today = new DateTime();
                                                 <div class="num">'.$row['dossard'].'</div>
                                                 <div class="ts-cap">
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
-                                                    <p>'.Lv($row['poste']).'</p>
+                                                    <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
                                                         <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
                                                     </ul>
@@ -183,7 +183,7 @@ $today = new DateTime();
                                                 '.(!empty($row['dossard']) ? '<div class="num">'.$row['dossard'].'</div>' : '').'
                                                 <div class="ts-cap">
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
-                                                    <p>'.htmlspecialchars(Lv($row['poste'])).'</p>
+                                                    <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
                                                         <li>'.($age ? $age.' <span>'.L('Ans', 'سنة').'</span>' : '&nbsp;<span>&nbsp;</span>').'</li>
                                                     </ul>

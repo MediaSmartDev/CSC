@@ -15,8 +15,8 @@ function csc_matchs_load() {
                 'id' => (int)$r['id'], 'j' => (int)$r['j'], 'dom' => $r['dom'], 'ext' => $r['ext'],
                 'date' => $r['date_match'] ?: '', 'heure' => $r['heure'] ? substr($r['heure'], 0, 5) : '',
                 'bd' => $r['bd'] === null ? null : (int)$r['bd'], 'be' => $r['be'] === null ? null : (int)$r['be'],
-                'stade_fr' => (string)$r['stade_fr'], 'stade_ar' => (string)$r['stade_ar'],
-                'slogan_fr' => (string)$r['slogan_fr'], 'slogan_ar' => (string)$r['slogan_ar'],
+                'stade_fr' => (string)$r['stade_fr'], 'stade_ar' => (string)($r['stade_ar'] ?: $r['stade_fr']),
+                'slogan_fr' => (string)$r['slogan_fr'], 'slogan_ar' => (string)($r['slogan_ar'] ?: $r['slogan_fr']),
                 'actu' => $r['actu'] ? (int)$r['actu'] : null,
             ], $rows);
         } catch (PDOException $e) {

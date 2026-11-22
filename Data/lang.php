@@ -36,6 +36,11 @@ if (!function_exists('Lv')) {
         static $map = [
             'Gardien' => 'حارس مرمى', 'Gardienne' => 'حارسة مرمى', 'Défenseur' => 'مدافع', 'Milieu' => 'وسط ميدان',
             'Attaquant' => 'مهاجم', 'Joueuse' => 'لاعبة', 'Staff' => 'الطاقم الفني', 'Entraîneur' => 'مدرب',
+            'Entraîneur principal' => 'المدرب الرئيسي', 'Entraîneur adjoint' => 'مدرب مساعد', 'Entraîneur des gardiens' => 'مدرب حراس المرمى',
+            'Préparateur physique' => 'محضر بدني', 'Directeur technique' => 'مدير فني', 'Médecin' => 'طبيب', 'Kinésithérapeute' => 'معالج فيزيائي',
+            'Analyste vidéo' => 'محلل فيديو', 'Intendant' => 'مسؤول العتاد', 'Entraîneuse principale' => 'المدربة الرئيسية',
+            'Entraîneuse adjointe' => 'مدربة مساعدة', 'Entraîneur des gardiennes' => 'مدرب حارسات المرمى', 'Préparatrice physique' => 'محضرة بدنية',
+            'Intendante' => 'مسؤولة العتاد',
             'Algérie' => 'الجزائر', 'RD Congo' => 'الكونغو الديمقراطية', 'Ouganda' => 'أوغندا', 'Rwanda' => 'رواندا', 'Togo' => 'توغو',
         ];
         return $map[$val] ?? $val;
@@ -64,6 +69,12 @@ if (!function_exists('club_name')) {
     function club_name($row) {
         global $LANG;
         return ($LANG === 'ar' && !empty($row['club_ar'])) ? $row['club_ar'] : $row['club'];
+    }
+    /** Poste dans la langue courante : poste en arabe saisi dans l'admin, sinon traduction connue */
+    function player_poste($row) {
+        global $LANG;
+        if ($LANG === 'ar' && !empty($row['poste_ar'])) return $row['poste_ar'];
+        return Lv($row['poste'] ?? '');
     }
     function player_name($row) {
         global $LANG;
