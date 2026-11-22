@@ -105,6 +105,7 @@ body{background:#f3f5f3;color:#222;font-family:-apple-system,BlinkMacSystemFont,
 .adm-langsw a:hover{color:#fff;text-decoration:none;background:rgba(255,255,255,.1);}
 .adm-langsw a.active{background:#fff;color:var(--g);}
 .adm-nav .adm-langsw{margin:0;}
+.adm-side .adm-langsw{margin:14px 20px 4px;flex:0 0 auto;}
 .adm-ms{margin-inline-start:.5rem;}
 @media (min-width:768px){ .adm-offset-4{margin-inline-start:33.333333%;} }
 /* ===== Arabe : de droite à gauche, menu à droite ===== */

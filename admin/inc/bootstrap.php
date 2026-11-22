@@ -385,6 +385,7 @@ function page_header(string $title, ?array $admin = null): void { ?>
 </header>
 <aside class="adm-side" id="admSide">
   <a class="adm-brand adm-side-brand" href="index.php"><img src="../images/logo-csc.png" alt=""> Admin CSC</a>
+  <?php admin_lang_switch(); ?>
   <nav class="adm-side-nav">
     <?php foreach ($menu as $section => $links): ?>
       <div class="adm-side-title"><?= e($section) ?></div>
@@ -400,7 +401,6 @@ function page_header(string $title, ?array $admin = null): void { ?>
     <div class="adm-side-user"><i class="fas fa-user-circle"></i> <?= e($admin['username']) ?></div>
     <button type="submit" class="adm-logout"><i class="fas fa-sign-out-alt fa-fw"></i> <?= e(tr('Déconnexion')) ?></button>
   </form>
-  <?php admin_lang_switch(); ?>
 </aside>
 <div class="adm-backdrop" id="admBackdrop"></div>
 <script>
