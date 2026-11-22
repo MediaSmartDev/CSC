@@ -15,6 +15,7 @@ const ADMIN_UPLOAD_DIR   = 'uploads/actualites';   // relatif à la racine du si
 const ADMIN_UPLOAD_JOUEURS = 'uploads/joueurs';
 const ADMIN_UPLOAD_SPONSORS = 'uploads/sponsors';
 const ADMIN_UPLOAD_FEMININE = 'uploads/feminine';
+const ADMIN_UPLOAD_JEUNES = 'uploads/jeunes';
 const ADMIN_IMG_MAX_W    = 1600;          // largeur max des images (redimensionnées)
 const ADMIN_IMG_MAX_BYTES = 8 * 1024 * 1024;
 
@@ -336,11 +337,12 @@ function files_list(string $field): array {
 
 /** Supprime une image seulement si elle a été envoyée depuis l'admin (jamais les images du dépôt Git) */
 function delete_uploaded_image(?string $rel): void {
-    if (!$rel || !preg_match('#^uploads/(actualites|joueurs|sponsors|feminine)/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
+    if (!$rel || !preg_match('#^uploads/(actualites|joueurs|sponsors|feminine|jeunes)/[A-Za-z0-9-]+\.(jpg|png|webp)$#', $rel)) return;
     $checks = ['SELECT COUNT(*) FROM actualites WHERE image = ? OR galerie LIKE ?' => [$rel, '%' . $rel . '%'],
                'SELECT COUNT(*) FROM joueurs WHERE img = ?' => [$rel],
                'SELECT COUNT(*) FROM sponsors WHERE logo = ?' => [$rel],
-               'SELECT COUNT(*) FROM equipe_feminine WHERE img = ?' => [$rel]];
+               'SELECT COUNT(*) FROM equipe_feminine WHERE img = ?' => [$rel],
+               'SELECT COUNT(*) FROM jeunes WHERE img = ?' => [$rel]];
     foreach ($checks as $sql => $params) {
         try { $n = db()->prepare($sql); $n->execute($params); if ((int)$n->fetchColumn() > 0) return; }
         catch (PDOException $e) { /* table pas encore créée */ }
@@ -372,10 +374,10 @@ function page_header(string $title, ?array $admin = null): void { ?>
 <?php if ($admin):
     // Lien actif : la page en cours, ou la liste dont elle depend (edit.php -> index.php...)
     $cur = basename($_SERVER['SCRIPT_NAME'] ?? '');
-    $cur = ['edit.php' => 'index.php', 'joueur.php' => 'joueurs.php', 'match.php' => 'matchs.php', 'feminine_edit.php' => 'feminine.php'][$cur] ?? $cur;
+    $cur = ['edit.php' => 'index.php', 'joueur.php' => 'joueurs.php', 'match.php' => 'matchs.php', 'feminine_edit.php' => 'feminine.php', 'jeune.php' => 'jeunes.php'][$cur] ?? $cur;
     $menu = [
         tr('Contenu') => [['index.php', 'fa-newspaper', tr('Actualités')], ['matchs.php', 'fa-futbol', tr('Matchs')], ['classement.php', 'fa-list-ol', tr('Classement')]],
-        tr('Équipes') => [['joueurs.php', 'fa-users', tr('Joueurs')], ['feminine.php', 'fa-female', tr('Équipe féminine')]],
+        tr('Équipes') => [['joueurs.php', 'fa-users', tr('Joueurs')], ['feminine.php', 'fa-female', tr('Équipe féminine')], ['jeunes.php', 'fa-child', tr('Jeunes')]],
         tr('Partenaires') => [['sponsors.php', 'fa-handshake', tr('Sponsors')]],
     ];
 ?>

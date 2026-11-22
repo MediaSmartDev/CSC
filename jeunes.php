@@ -2,18 +2,11 @@
 <?php
 /* =====================================================================
  * CATÉGORIES JEUNES - CS Constantine
- * Pour remplir une catégorie : ajouter ses joueurs dans 'joueurs'
- *   ['nom' => '...', 'num' => '7', 'poste' => 'Milieu', 'img' => 'images/jeunes/xxx.jpg']
- * et (optionnel) le nom de l'entraîneur dans 'coach'.
- * Tant que 'joueurs' est vide, la carte affiche « Effectif bientôt disponible ».
+ * Les joueurs et le staff se gèrent dans l'espace admin (admin/jeunes.php).
+ * Tant qu'une catégorie est vide, la carte affiche « Effectif bientôt disponible ».
  * ===================================================================== */
-$CATEGORIES = [
-    ['code' => 'U21', 'fr' => 'Réserve (U21)', 'ar' => 'الآمال (أقل من 21 سنة)', 'coach' => '', 'joueurs' => []],
-    ['code' => 'U19', 'fr' => 'Juniors (U19)', 'ar' => 'الأواسط (أقل من 19 سنة)', 'coach' => '', 'joueurs' => []],
-    ['code' => 'U17', 'fr' => 'Cadets (U17)',  'ar' => 'الأشبال (أقل من 17 سنة)', 'coach' => '', 'joueurs' => []],
-    ['code' => 'U15', 'fr' => 'Minimes (U15)', 'ar' => 'الأصاغر (أقل من 15 سنة)', 'coach' => '', 'joueurs' => []],
-    ['code' => 'U13', 'fr' => 'Benjamins (U13)', 'ar' => 'البراعم (أقل من 13 سنة)', 'coach' => '', 'joueurs' => []],
-];
+require_once __DIR__ . '/Data/jeunes.php';
+$CATEGORIES = csc_jeunes();
 $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
 ?>
 <!doctype html>
@@ -105,7 +98,7 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
                             <div class="jn-card">
                                 <img src="<?= $e($j['img'] ?? '' ?: 'images/player-default.png') ?>" alt="<?= $e($j['nom']) ?>" loading="lazy">
                                 <?php if (!empty($j['num'])): ?><div class="jn-num"><?= $e($j['num']) ?></div><?php endif; ?>
-                                <div class="jn-info"><h5><?= $e($j['nom']) ?></h5><small><?= $e(Lv($j['poste'] ?? '')) ?></small></div>
+                                <div class="jn-info"><h5><?= $e($j['nom']) ?></h5><small><?= $e($j['poste'] ?? '') ?></small></div>
                             </div>
                             <?php endforeach; ?>
                         </div>

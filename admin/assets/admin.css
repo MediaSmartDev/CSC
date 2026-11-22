@@ -107,6 +107,13 @@ body{background:#f3f5f3;color:#222;font-family:-apple-system,BlinkMacSystemFont,
 .adm-nav .adm-langsw{margin:0;}
 .adm-side .adm-langsw{margin:14px 20px 4px;flex:0 0 auto;}
 .adm-ms{margin-inline-start:.5rem;}
+/* Onglets (catégories jeunes) */
+.adm-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.adm-tabs a{border:2px solid var(--g);color:var(--g);font-weight:800;padding:5px 14px;border-radius:30px;background:#fff;}
+.adm-tabs a:hover{text-decoration:none;background:#eef7ee;}
+.adm-tabs a.active{background:var(--g);color:#fff;}
+.adm-tabs a .adm-count{background:#f0c040;color:var(--dark);font-size:11px;padding:1px 7px;}
+.adm-cat-head{padding:14px 20px;border-inline-start:5px solid #f0c040;}
 @media (min-width:768px){ .adm-offset-4{margin-inline-start:33.333333%;} }
 /* ===== Arabe : de droite à gauche, menu à droite ===== */
 [dir=rtl] body{font-family:Tahoma,"Segoe UI",Arial,sans-serif;}
