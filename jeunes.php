@@ -20,7 +20,7 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fontawesome.css">
-    <title><?= L('Catégories jeunes - CS Constantine', 'الفئات الشبانية - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Youth teams - CS Constantine', 'الفئات الشبانية - النادي الرياضي القسنطيني') ?></title>
     <style>
         .jn-intro{text-align:center;max-width:760px;margin:0 auto 40px;}
         .jn-intro h2{font-weight:800;color:#0a4f0a;margin-bottom:10px;}
@@ -53,11 +53,11 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
     <?php require 'header.php'; ?>
 
     <div class="inner-banner-header wf100">
-        <h1 data-generated="<?= L('Jeunes', 'الشبان') ?>"><?= L('Catégories jeunes', 'الفئات الشبانية') ?></h1>
+        <h1 data-generated="<?= L('Youth', 'الشبان') ?>"><?= L('Youth teams', 'الفئات الشبانية') ?></h1>
         <div class="gt-breadcrumbs">
             <ul>
-                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?></a></li>
-                <li><a href="#"><?= L('Catégories jeunes', 'الفئات الشبانية') ?></a></li>
+                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?></a></li>
+                <li><a href="#"><?= L('Youth teams', 'الفئات الشبانية') ?></a></li>
             </ul>
         </div>
     </div>
@@ -66,8 +66,8 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
         <div class="wf100 p80">
             <div class="container">
                 <div class="jn-intro">
-                    <h2><?= L('L\'avenir du Doyen', 'مستقبل العميد') ?></h2>
-                    <p><?= L('Les équipes de jeunes du Club Sportif Constantinois, de la réserve aux benjamins.', 'فرق الشبان للنادي الرياضي القسنطيني، من الآمال إلى البراعم.') ?></p>
+                    <h2><?= L('The future of the Doyen', 'مستقبل العميد') ?></h2>
+                    <p><?= L('The youth teams of Club Sportif Constantinois, from the reserves to the under-13s.', 'فرق الشبان للنادي الرياضي القسنطيني، من الآمال إلى البراعم.') ?></p>
                 </div>
 
                 <div class="jn-tabs">
@@ -82,15 +82,15 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
                         <span class="jn-code"><?= $e($c['code']) ?></span>
                         <div>
                             <h3><?= $e(L($c['fr'], $c['ar'])) ?></h3>
-                            <?php if ($c['coach']): ?><small><?= L('Entraîneur', 'المدرب') ?> : <?= $e($c['coach']) ?></small><?php endif; ?>
+                            <?php if ($c['coach']): ?><small><?= L('Coach', 'المدرب') ?> : <?= $e($c['coach']) ?></small><?php endif; ?>
                         </div>
                     </div>
                     <?php if (empty($c['joueurs'])): ?>
                         <div class="jn-empty">
                             <i class="fas fa-users"></i>
-                            <h4><?= L('Effectif bientôt disponible', 'التشكيلة ستتوفر قريباً') ?></h4>
-                            <p><?= L('La liste des joueurs de cette catégorie sera publiée prochainement.', 'سيتم نشر قائمة لاعبي هذه الفئة قريباً.') ?></p>
-                            <a href="index.php#contact-section"><?= L('Contacter le club', 'اتصل بالنادي') ?></a>
+                            <h4><?= L('Squad coming soon', 'التشكيلة ستتوفر قريباً') ?></h4>
+                            <p><?= L('The player list for this team will be published soon.', 'سيتم نشر قائمة لاعبي هذه الفئة قريباً.') ?></p>
+                            <a href="index.php#contact-section"><?= L('Contact the club', 'اتصل بالنادي') ?></a>
                         </div>
                     <?php else: ?>
                         <div class="jn-grid">

@@ -24,7 +24,7 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fontawesome.css">
-    <title><?= $article ? $e(nt($article, 'titre')) . L(' - CS Constantine', ' - النادي الرياضي القسنطيني') : L('Actualité introuvable', 'الخبر غير موجود') ?></title>
+    <title><?= $article ? $e(nt($article, 'titre')) . L(' - CS Constantine', ' - النادي الرياضي القسنطيني') : L('Article not found', 'الخبر غير موجود') ?></title>
     <?php if ($article): ?>
     <!-- Aperçu quand le lien est partagé (WhatsApp, Facebook...) -->
     <meta property="og:type" content="article">
@@ -87,9 +87,9 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
 
 <?php if (!$article): ?>
     <div class="art-404">
-        <h2><?= L('Actualité introuvable', 'الخبر غير موجود') ?></h2>
-        <p><?= L("Cet article n'existe pas ou a été retiré.", 'هذا الخبر غير موجود أو تم حذفه.') ?></p>
-        <a href="index.php#actualites" class="art-back"><?= L('← Retour aux actualités', 'العودة إلى الأخبار →') ?></a>
+        <h2><?= L('Article not found', 'الخبر غير موجود') ?></h2>
+        <p><?= L("This article doesn't exist or has been removed.", 'هذا الخبر غير موجود أو تم حذفه.') ?></p>
+        <a href="index.php#actualites" class="art-back"><?= L('← Back to news', 'العودة إلى الأخبار →') ?></a>
     </div>
 <?php else:
     $contenu = trim(nt($article, 'contenu')) !== '' ? nt($article, 'contenu') : nt($article, 'resume');
@@ -126,27 +126,27 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
         <?php endif; ?>
 
         <?php if (!empty($article['bouton'])): ?>
-            <a class="art-btn-main" href="<?= $e($article['bouton']['lien']) ?>" target="_blank" rel="noopener"><?= $e(nt($article['bouton'], $LANG)) ?></a>
+            <a class="art-btn-main" href="<?= $e($article['bouton']['lien']) ?>" target="_blank" rel="noopener"><?= $e(L($article['bouton']['fr'], $article['bouton']['ar'])) ?></a>
         <?php endif; ?>
 
         <div class="art-share">
-            <h6><?= L('Partager cet article', 'شارك هذا الخبر') ?></h6>
+            <h6><?= L('Share this article', 'شارك هذا الخبر') ?></h6>
             <div class="art-share-btns">
-                <button type="button" class="copy" id="artCopy"><i class="fas fa-link"></i> <span><?= L('Copier le lien', 'نسخ الرابط') ?></span></button>
+                <button type="button" class="copy" id="artCopy"><i class="fas fa-link"></i> <span><?= L('Copy link', 'نسخ الرابط') ?></span></button>
                 <a class="art-wa" target="_blank" rel="noopener" href="https://wa.me/?text=<?= rawurlencode(nt($article, 'titre') . "\n" . $pageUrl) ?>"><i class="fab fa-whatsapp"></i> <?= L('WhatsApp', 'واتساب') ?></a>
                 <a class="art-fb" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=<?= rawurlencode($pageUrl) ?>"><i class="fab fa-facebook-f"></i> <?= L('Facebook', 'فيسبوك') ?></a>
             </div>
             <div class="art-feedback" id="artFeedback"></div>
         </div>
 
-        <a href="index.php#actualites" class="art-back"><?= L('← Retour aux actualités', 'العودة إلى الأخبار →') ?></a>
+        <a href="index.php#actualites" class="art-back"><?= L('← Back to news', 'العودة إلى الأخبار →') ?></a>
     </article>
 
     <?php $autres = array_slice(array_values(array_filter($ACTUS, fn($a) => (int)$a['id'] !== $id)), 0, 3); ?>
     <?php if ($autres): ?>
     <section class="art-more">
         <div class="container">
-            <h3><?= L('Autres actualités', 'أخبار أخرى') ?></h3>
+            <h3><?= L('More news', 'أخبار أخرى') ?></h3>
             <div class="row">
                 <?php foreach ($autres as $o): ?>
                 <div class="col-md-4" style="margin-bottom:20px;">
@@ -176,8 +176,8 @@ $e = fn($s) => htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
     btn.addEventListener('click', function(){
         var done = function(){
             btn.classList.add('done');
-            btn.querySelector('span').textContent = <?= LJ('Lien copié !', 'تم نسخ الرابط!') ?>;
-            fb.textContent = <?= LJ('Le lien a été copié, vous pouvez le coller où vous voulez.', 'تم نسخ الرابط، يمكنك لصقه أينما تريد.') ?>;
+            btn.querySelector('span').textContent = <?= LJ('Link copied!', 'تم نسخ الرابط!') ?>;
+            fb.textContent = <?= LJ('The link has been copied. You can paste it anywhere.', 'تم نسخ الرابط، يمكنك لصقه أينما تريد.') ?>;
         };
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(url).then(done, function(){ fb.textContent = url; });

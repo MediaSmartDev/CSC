@@ -6,7 +6,7 @@
                     <a href="index.php" class="csc-footer-logo"><img src="images/logo-light.png?v=3" alt="<?= L('CS Constantine', 'النادي الرياضي القسنطيني') ?>"></a>
                     <address>
                         <ul>
-                            <li><i class="fas fa-map-marker-alt"></i> <?= L('Stade Chahid Hamlaoui, Constantine, Algérie', 'ملعب الشهيد حملاوي، قسنطينة، الجزائر') ?></li>
+                            <li><i class="fas fa-map-marker-alt"></i> <?= L('Chahid Hamlaoui Stadium, Constantine, Algeria', 'ملعب الشهيد حملاوي، قسنطينة، الجزائر') ?></li>
                             <li><i class="fas fa-envelope"></i> contact@csconstantine.dz</li>
                         </ul>
                     </address>
@@ -14,23 +14,23 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer-widget">
-                    <h4><?= L('Liens rapides', 'روابط سريعة') ?></h4>
+                    <h4><?= L('Quick links', 'روابط سريعة') ?></h4>
                     <ul class="footer-links">
-                        <li><a href="index.php"><i class="fas fa-angle-double-right"></i> <?= L('Accueil', 'الرئيسية') ?></a></li>
-                        <li><a href="identite.php"><i class="fas fa-angle-double-right"></i> <?= L('Identité du club', 'هوية النادي') ?></a></li>
-                        <li><a href="histoire.php"><i class="fas fa-angle-double-right"></i> <?= L('Histoire', 'التاريخ') ?></a></li>
-                        <li><a href="palmares.php"><i class="fas fa-angle-double-right"></i> <?= L('Palmarès', 'الألقاب') ?></a></li>
-                        <li><a href="joueurs.php"><i class="fas fa-angle-double-right"></i> <?= L('Joueurs', 'اللاعبون') ?></a></li>
-                        <li><a href="classement.php"><i class="fas fa-angle-double-right"></i> <?= L('Classement', 'الترتيب') ?></a></li>
-                        <li><a href="resultats.php"><i class="fas fa-angle-double-right"></i> <?= L('Résultats', 'النتائج') ?></a></li>
-                        <li><a href="equipe-feminine.php"><i class="fas fa-angle-double-right"></i> <?= L('Équipe féminine', 'الفريق النسوي') ?></a></li>
-                        <li><a href="inscription.php"><i class="fas fa-angle-double-right"></i> <?= L('Inscription', 'التسجيل') ?></a></li>
+                        <li><a href="index.php"><i class="fas fa-angle-double-right"></i> <?= L('Home', 'الرئيسية') ?></a></li>
+                        <li><a href="identite.php"><i class="fas fa-angle-double-right"></i> <?= L('Club identity', 'هوية النادي') ?></a></li>
+                        <li><a href="histoire.php"><i class="fas fa-angle-double-right"></i> <?= L('History', 'التاريخ') ?></a></li>
+                        <li><a href="palmares.php"><i class="fas fa-angle-double-right"></i> <?= L('Honours', 'الألقاب') ?></a></li>
+                        <li><a href="joueurs.php"><i class="fas fa-angle-double-right"></i> <?= L('Players', 'اللاعبون') ?></a></li>
+                        <li><a href="classement.php"><i class="fas fa-angle-double-right"></i> <?= L('Standings', 'الترتيب') ?></a></li>
+                        <li><a href="resultats.php"><i class="fas fa-angle-double-right"></i> <?= L('Results', 'النتائج') ?></a></li>
+                        <li><a href="equipe-feminine.php"><i class="fas fa-angle-double-right"></i> <?= L('Women\'s team', 'الفريق النسوي') ?></a></li>
+                        <li><a href="inscription.php"><i class="fas fa-angle-double-right"></i> <?= L('Join us', 'التسجيل') ?></a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer-widget">
-                    <h4><?= L('Réseaux sociaux', 'مواقع التواصل') ?></h4>
+                    <h4><?= L('Social media', 'مواقع التواصل') ?></h4>
                     <ul class="footer-links">
                         <li><a href="https://www.facebook.com/csconstantine.official" target="_blank"><i class="fab fa-facebook-f"></i> <?= L('Facebook', 'فيسبوك') ?></a></li>
                         <li><a href="https://www.instagram.com/csconstantine_officiel/" target="_blank"><i class="fab fa-instagram"></i> <?= L('Instagram', 'إنستغرام') ?></a></li>
@@ -46,7 +46,7 @@
     <div class="container brtop">
         <div class="row">
             <div class="col-12 text-center">
-                <p class="copyr">© <?= date('Y') ?> <?= L('CS Constantine', 'النادي الرياضي القسنطيني') ?> — <?= L('Tous droits réservés', 'جميع الحقوق محفوظة') ?></p>
+                <p class="copyr">© <?= date('Y') ?> <?= L('CS Constantine', 'النادي الرياضي القسنطيني') ?> — <?= L('All rights reserved', 'جميع الحقوق محفوظة') ?></p>
             </div>
         </div>
     </div>
@@ -56,10 +56,11 @@
     .main-footer .csc-footer-logo img{height:50px !important;width:auto !important;max-width:100%;display:block;margin:0 !important;}
 </style>
 
-<?php /* ===== ESPACE PUBLICITAIRE (réglages dans Data/pub.php) ===== */
-$PUB = require __DIR__ . '/Data/pub.php';
+<?php /* ===== ESPACE PUBLICITAIRE (réglée dans l'admin, sinon Data/pub.php) ===== */
+require_once __DIR__ . '/Data/medias.php';
+$PUB = csc_pub();
 if (!empty($PUB['actif'])): ?>
-<div class="csc-pub-bar" id="cscPubBar" role="complementary" aria-label="<?= L('Publicité', 'إعلان') ?>">
+<div class="csc-pub-bar" id="cscPubBar" role="complementary" aria-label="<?= L('Advertisement', 'إعلان') ?>">
     <?php if (!empty($PUB['lien'])): ?><a href="<?= htmlspecialchars($PUB['lien']) ?>" target="_blank" rel="noopener sponsored"><?php endif; ?>
     <?php if ($PUB['type'] === 'video'): ?>
         <video src="<?= htmlspecialchars($PUB['fichier']) ?>" <?= !empty($PUB['poster']) ? 'poster="' . htmlspecialchars($PUB['poster']) . '"' : '' ?> autoplay muted loop playsinline preload="metadata" aria-label="<?= htmlspecialchars($PUB['alt']) ?>"></video>
@@ -67,7 +68,7 @@ if (!empty($PUB['actif'])): ?>
         <img src="<?= htmlspecialchars($PUB['fichier']) ?>" alt="<?= htmlspecialchars($PUB['alt']) ?>">
     <?php endif; ?>
     <?php if (!empty($PUB['lien'])): ?></a><?php endif; ?>
-    <button type="button" class="csc-pub-close" aria-label="<?= L('Fermer la publicité', 'إغلاق الإعلان') ?>" onclick="document.getElementById('cscPubBar').style.display='none';document.body.classList.remove('has-pub-bar');">&times;</button>
+    <button type="button" class="csc-pub-close" aria-label="<?= L('Close the advertisement', 'إغلاق الإعلان') ?>" onclick="document.getElementById('cscPubBar').style.display='none';document.body.classList.remove('has-pub-bar');">&times;</button>
 </div>
 <script>document.body.classList.add('has-pub-bar');</script>
 <style>

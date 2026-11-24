@@ -12,14 +12,14 @@ if ($id) {
     $st = $pdo->prepare('SELECT * FROM joueurs WHERE id = ?');
     $st->execute([$id]);
     $row = $st->fetch();
-    if (!$row) { flash('danger', tr('Joueur introuvable.')); redirect('joueurs.php'); }
+    if (!$row) { flash('danger', tr('Player not found.')); redirect('joueurs.php'); }
 }
 $catDefault = (int)($_GET['categorie'] ?? 1);
 if (!isset(JOUEUR_CATEGORIES[$catDefault])) $catDefault = 1;
 
 $v = $row ?: ['nom' => '', 'prenom' => '', 'nom_ar' => '', 'dossard' => '', 'categorie' => $catDefault,
               'poste' => JOUEUR_CATEGORIES[$catDefault][1], 'date_naissance' => '', 'age' => '',
-              'nationalite' => 'Algérie', 'img' => '', 'published' => 1];
+              'nationalite' => 'Algeria', 'img' => '', 'published' => 1];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,31 +29,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $v['nom_ar'] = $txt('nom_ar', 150);
     $v['poste'] = $txt('poste', 50);
     $v['poste_ar'] = $txt('poste_ar', 80);
-    $v['nationalite'] = $txt('nationalite', 50) ?: 'Algérie';
+    $v['nationalite'] = $txt('nationalite', 50) ?: 'Algeria';
     $v['categorie'] = (int)($_POST['categorie'] ?? 0);
     $v['published'] = isset($_POST['published']) ? 1 : 0;
-    if ($v['nom'] === '') $errors[] = tr('Le nom est obligatoire.');
-    if (!isset(JOUEUR_CATEGORIES[$v['categorie']])) $errors[] = tr('Catégorie invalide.');
+    if ($v['nom'] === '') $errors[] = tr('The name is required.');
+    if (!isset(JOUEUR_CATEGORIES[$v['categorie']])) $errors[] = tr('Invalid category.');
     if ($v['poste'] === '' && isset(JOUEUR_CATEGORIES[$v['categorie']])) $v['poste'] = JOUEUR_CATEGORIES[$v['categorie']][1];
 
     $d = trim((string)($_POST['dossard'] ?? ''));
     if ($d === '') $v['dossard'] = null;
-    elseif (!ctype_digit($d) || (int)$d < 1 || (int)$d > 99) $errors[] = tr('Le numéro doit être entre 1 et 99.');
+    elseif (!ctype_digit($d) || (int)$d < 1 || (int)$d > 99) $errors[] = tr('The number must be between 1 and 99.');
     else $v['dossard'] = (int)$d;
 
     // Numéro déjà pris par un autre joueur affiché (staff non concerné)
     if ($v['dossard'] !== null && $v['categorie'] !== 5 && $v['published']) {
         $q = $pdo->prepare('SELECT nom, prenom FROM joueurs WHERE dossard = ? AND categorie BETWEEN 1 AND 4 AND published = 1 AND id <> ?');
         $q->execute([$v['dossard'], $id]);
-        if ($o = $q->fetch()) $errors[] = tr('Le numéro %1$s est déjà porté par %2$s. Masquez ou modifiez ce joueur d’abord.', $v['dossard'], joueur_nom($o));
+        if ($o = $q->fetch()) $errors[] = tr('Number %1$s is already worn by %2$s. Hide or edit that player first.', $v['dossard'], joueur_nom($o));
     }
 
     $dn = trim((string)($_POST['date_naissance'] ?? ''));
     $dt = DateTime::createFromFormat('!Y-m-d', $dn);
-    if ($dn !== '' && (!$dt || $dt->format('Y-m-d') !== $dn || $dt > new DateTime() || (int)$dt->format('Y') < 1940)) $errors[] = tr('Date de naissance invalide.');
+    if ($dn !== '' && (!$dt || $dt->format('Y-m-d') !== $dn || $dt > new DateTime() || (int)$dt->format('Y') < 1940)) $errors[] = tr('Invalid date of birth.');
     $v['date_naissance'] = $dn === '' ? null : $dn;
     $a = trim((string)($_POST['age'] ?? ''));
-    if ($a !== '' && (!ctype_digit($a) || (int)$a < 10 || (int)$a > 90)) $errors[] = tr('Âge invalide.');
+    if ($a !== '' && (!ctype_digit($a) || (int)$a < 10 || (int)$a > 90)) $errors[] = tr('Invalid age.');
     $v['age'] = $a === '' ? null : (int)$a;
 
     $oldImg = $row['img'] ?? '';
@@ -80,14 +80,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $set = implode(', ', array_map(fn($c) => "`$c` = ?", $cols));
             $pdo->prepare("UPDATE joueurs SET $set WHERE id = ?")->execute([...$vals, $id]);
             if ($oldImg !== ($v['img'] ?? '')) delete_uploaded_image($oldImg);
-            flash('success', tr('Enregistré : %s', joueur_nom($v)));
+            flash('success', tr('Saved: %s', joueur_nom($v)));
         } else {
             $o = $pdo->prepare('SELECT COALESCE(MAX(ordre), 0) + 1 FROM joueurs WHERE categorie = ?'); $o->execute([$v['categorie']]);
             $cols[] = 'ordre'; $vals[] = (int)$o->fetchColumn();
             $ph = implode(', ', array_fill(0, count($cols), '?'));
             $pdo->prepare('INSERT INTO joueurs (`' . implode('`, `', $cols) . "`) VALUES ($ph)")->execute($vals);
             $id = (int)$pdo->lastInsertId();
-            flash('success', $v['published'] ? tr('Ajouté : %s (visible sur le site)', joueur_nom($v)) : tr('Ajouté : %s (masqué pour l’instant)', joueur_nom($v)));
+            flash('success', $v['published'] ? tr('Added: %s (visible on the site)', joueur_nom($v)) : tr('Added: %s (hidden for now)', joueur_nom($v)));
         }
         redirect('joueurs.php#j' . $id);
     }
@@ -95,17 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $nats = $pdo->query("SELECT DISTINCT nationalite FROM joueurs WHERE nationalite <> '' ORDER BY nationalite")->fetchAll(PDO::FETCH_COLUMN);
 $postes = array_unique(array_merge(array_column(JOUEUR_CATEGORIES, 1),
-          ['Entraîneur adjoint', 'Entraîneur des gardiens', 'Préparateur physique', 'Directeur technique', 'Médecin', 'Kinésithérapeute', 'Analyste vidéo', 'Intendant'],
+          ['Assistant coach', 'Goalkeeper coach', 'Fitness coach', 'Technical director', 'Doctor', 'Physiotherapist', 'Video analyst', 'Kit manager'],
           $pdo->query("SELECT DISTINCT poste FROM joueurs WHERE poste <> ''")->fetchAll(PDO::FETCH_COLUMN)));
-page_header($row ? tr('Modifier un joueur') : tr('Ajouter un joueur'), $admin);
+page_header($row ? tr('Edit a player') : tr('Add a player'), $admin);
 ?>
 <div class="adm-head">
-  <h1 class="adm-h1"><?= $row ? '<i class="fas fa-pen"></i> ' . e(tr('Modifier : %s', joueur_nom($row))) : '<i class="fas fa-plus"></i> ' . e(tr('Nouveau joueur')) ?></h1>
-  <a class="btn btn-light" href="joueurs.php"><i class="fas fa-arrow-left"></i> <?= e(tr('Retour à la liste')) ?></a>
+  <h1 class="adm-h1"><?= $row ? '<i class="fas fa-pen"></i> ' . e(tr('Edit: %s', joueur_nom($row))) : '<i class="fas fa-plus"></i> ' . e(tr('New player')) ?></h1>
+  <a class="btn btn-light" href="joueurs.php"><i class="fas fa-arrow-left"></i> <?= e(tr('Back to the list')) ?></a>
 </div>
 
 <?php if ($errors): ?>
-  <div class="alert alert-danger"><b><?= e(tr('À corriger :')) ?></b><ul class="mb-0"><?php foreach ($errors as $er): ?><li><?= e($er) ?></li><?php endforeach; ?></ul></div>
+  <div class="alert alert-danger"><b><?= e(tr('Please fix:')) ?></b><ul class="mb-0"><?php foreach ($errors as $er): ?><li><?= e($er) ?></li><?php endforeach; ?></ul></div>
 <?php endif; ?>
 
 <form method="post" enctype="multipart/form-data" class="adm-form">
@@ -118,63 +118,63 @@ page_header($row ? tr('Modifier un joueur') : tr('Ajouter un joueur'), $admin);
       <div style="flex:1;min-width:260px">
         <h2 class="adm-h2"><?= e(tr('Photo')) ?></h2>
         <input type="file" name="img" id="imgInput" accept="image/jpeg,image/png,image/webp" class="form-control-file">
-        <small class="text-muted d-block mt-1"><?= e(tr('JPG, PNG ou WEBP, max %s. La photo est recadrée automatiquement au format portrait 600×750 (comme les photos officielles), en gardant le haut de l’image.', upload_limit_label())) ?></small>
-        <?php if ($v['img']): ?><label class="mt-2 small"><input type="checkbox" name="img_remove" value="1"> <?= e(tr('Retirer la photo')) ?></label><?php endif; ?>
+        <small class="text-muted d-block mt-1"><?= e(tr('JPG, PNG or WEBP, max %s. The photo is cropped automatically to a 600×750 portrait (like the official photos), keeping the top of the image.', upload_limit_label())) ?></small>
+        <?php if ($v['img']): ?><label class="mt-2 small"><input type="checkbox" name="img_remove" value="1"> <?= e(tr('Remove the photo')) ?></label><?php endif; ?>
       </div>
     </div>
   </div>
 
   <div class="adm-card">
-    <h2 class="adm-h2"><?= e(tr('Identité')) ?></h2>
+    <h2 class="adm-h2"><?= e(tr('Identity')) ?></h2>
     <div class="form-row">
-      <div class="form-group col-md-5"><label><?= e(tr('Nom')) ?> * <small class="text-muted"><?= e(tr('(en lettres latines)')) ?></small></label>
-        <input class="form-control" dir="ltr" name="nom" value="<?= e($v['nom']) ?>" required maxlength="100" placeholder="ex. BAKIR Mohamed Islam"></div>
-      <div class="form-group col-md-3"><label><?= e(tr('Prénom')) ?> <small class="text-muted"><?= e(tr('(facultatif)')) ?></small></label>
+      <div class="form-group col-md-5"><label><?= e(tr('Last name')) ?> * <small class="text-muted"><?= e(tr('(in Latin letters)')) ?></small></label>
+        <input class="form-control" dir="ltr" name="nom" value="<?= e($v['nom']) ?>" required maxlength="100" placeholder="e.g. BAKIR Mohamed Islam"></div>
+      <div class="form-group col-md-3"><label><?= e(tr('First name')) ?> <small class="text-muted"><?= e(tr('(optional)')) ?></small></label>
         <input class="form-control" dir="ltr" name="prenom" value="<?= e($v['prenom']) ?>" maxlength="100"></div>
       <div class="form-group col-md-4" dir="rtl"><label>الاسم بالعربية</label>
         <input class="form-control" name="nom_ar" value="<?= e($v['nom_ar'] ?? '') ?>" maxlength="150" placeholder="بكير محمد إسلام"></div>
     </div>
     <div class="form-row">
-      <div class="form-group col-md-3"><label><?= e(tr('Nationalité')) ?></label>
+      <div class="form-group col-md-3"><label><?= e(tr('Nationality')) ?></label>
         <input class="form-control" dir="ltr" name="nationalite" list="nats" value="<?= e($v['nationalite']) ?>" maxlength="50">
         <datalist id="nats"><?php foreach ($nats as $n): ?><option value="<?= e($n) ?>"><?php endforeach; ?></datalist></div>
-      <div class="form-group col-md-3"><label><?= e(tr('Date de naissance')) ?></label>
+      <div class="form-group col-md-3"><label><?= e(tr('Date of birth')) ?></label>
         <input type="date" class="form-control" name="date_naissance" value="<?= e($v['date_naissance'] ?? '') ?>"></div>
-      <div class="form-group col-md-2"><label><?= e(tr('ou âge')) ?></label>
+      <div class="form-group col-md-2"><label><?= e(tr('or age')) ?></label>
         <input type="number" class="form-control" name="age" min="10" max="90" value="<?= e($v['age'] ?? '') ?>"></div>
-      <div class="col-md-4 small text-muted d-flex align-items-center"><?= e(tr('Avec la date de naissance, l’âge se met à jour tout seul chaque année.')) ?></div>
+      <div class="col-md-4 small text-muted d-flex align-items-center"><?= e(tr('With the date of birth, the age updates by itself every year.')) ?></div>
     </div>
   </div>
 
   <div class="adm-card">
-    <h2 class="adm-h2"><?= e(tr('Dans l’équipe')) ?></h2>
+    <h2 class="adm-h2"><?= e(tr('In the team')) ?></h2>
     <div class="form-row">
-      <div class="form-group col-md-4"><label><?= e(tr('Catégorie')) ?> *</label>
+      <div class="form-group col-md-4"><label><?= e(tr('Category')) ?> *</label>
         <select class="form-control" name="categorie" id="cat">
           <?php foreach (JOUEUR_CATEGORIES as $c => [$lab, $poste]): ?>
             <option value="<?= $c ?>" data-poste="<?= e($poste) ?>" <?= (int)$v['categorie'] === $c ? 'selected' : '' ?>><?= e(tr($lab)) ?></option>
           <?php endforeach; ?>
         </select></div>
-      <div class="form-group col-md-5"><label><?= e(tr('Poste (en français)')) ?></label>
+      <div class="form-group col-md-5"><label><?= e(tr('Position (in English)')) ?></label>
         <input class="form-control" dir="ltr" name="poste" id="poste" list="postes" value="<?= e($v['poste']) ?>" maxlength="50">
         <datalist id="postes"><?php foreach ($postes as $p): ?><option value="<?= e($p) ?>"><?php endforeach; ?></datalist>
-        <small class="text-muted"><?= e(tr('Les postes proposés dans la liste sont traduits en arabe automatiquement.')) ?></small></div>
-      <div class="form-group col-md-3"><label><?= e(tr('Numéro (maillot)')) ?></label>
+        <small class="text-muted"><?= e(tr('Positions suggested in the list are translated into Arabic automatically.')) ?></small></div>
+      <div class="form-group col-md-3"><label><?= e(tr('Shirt number')) ?></label>
         <input type="number" class="form-control" name="dossard" min="1" max="99" value="<?= e($v['dossard'] ?? '') ?>"></div>
     </div>
     <?php if ($hasPosteAr): ?>
     <div class="form-row">
-      <div class="form-group col-md-5 adm-offset-4" dir="rtl"><label>المنصب بالعربية <small class="text-muted"><?= e(tr('(facultatif)')) ?></small></label>
+      <div class="form-group col-md-5 adm-offset-4" dir="rtl"><label>المنصب بالعربية <small class="text-muted"><?= e(tr('(optional)')) ?></small></label>
         <input class="form-control" name="poste_ar" value="<?= e($v['poste_ar'] ?? '') ?>" maxlength="80" placeholder="مثال : مدرب مساعد">
-        <small class="text-muted"><?= e(tr('Vide = traduction automatique du poste (ou le poste en français s’il n’est pas dans la liste).')) ?></small></div>
+        <small class="text-muted"><?= e(tr('Empty = automatic translation of the position (or the English position if it is not in the list).')) ?></small></div>
     </div>
     <?php endif; ?>
-    <label class="adm-switch"><input type="checkbox" name="published" value="1" <?= $v['published'] ? 'checked' : '' ?>> <?= e(tr('Affiché sur le site')) ?></label>
+    <label class="adm-switch"><input type="checkbox" name="published" value="1" <?= $v['published'] ? 'checked' : '' ?>> <?= e(tr('Shown on the site')) ?></label>
   </div>
 
   <div class="adm-submit">
-    <button class="btn adm-btn btn-lg" type="submit"><i class="fas fa-save"></i> <?= e(tr('Enregistrer')) ?></button>
-    <a class="btn btn-link" href="joueurs.php"><?= e(tr('Annuler')) ?></a>
+    <button class="btn adm-btn btn-lg" type="submit"><i class="fas fa-save"></i> <?= e(tr('Save')) ?></button>
+    <a class="btn btn-link" href="joueurs.php"><?= e(tr('Cancel')) ?></a>
   </div>
 </form>
 <script>

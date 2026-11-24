@@ -1,11 +1,11 @@
 <?php
 /* Catégories et postes des joueurs (mêmes valeurs que la page joueurs.php) */
 const JOUEUR_CATEGORIES = [
-    1 => ['Gardiens', 'Gardien'],
-    2 => ['Défenseurs', 'Défenseur'],
-    3 => ['Milieux', 'Milieu'],
-    4 => ['Attaquants', 'Attaquant'],
-    5 => ['Staff technique', 'Entraîneur'],
+    1 => ['Goalkeepers', 'Goalkeeper'],
+    2 => ['Defenders', 'Defender'],
+    3 => ['Midfielders', 'Midfielder'],
+    4 => ['Forwards', 'Forward'],
+    5 => ['Coaching staff', 'Coach'],
 ];
 const JOUEUR_PHOTO_SIZE = [600, 750];   // format des photos officielles 2026/2027
 

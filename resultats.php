@@ -14,7 +14,7 @@
    <link rel="stylesheet" href="css/owl.carousel.min.css">
    <link rel="stylesheet" href="css/prettyPhoto.css">
    <link rel="stylesheet" href="css/audioplayer.css">
-   <title><?= L('Résultats - CS Constantine', 'النتائج - النادي الرياضي القسنطيني') ?></title>
+   <title><?= L('Results - CS Constantine', 'النتائج - النادي الرياضي القسنطيني') ?></title>
    <style type="text/css">
        .fixture-date{
             font-weight: 600;
@@ -120,8 +120,8 @@
            <div class="container">
                <div class="row">
                    <div class="col-md-12">
-                       <h5><?= L('Coupe de la CAF', 'كأس الكونفدرالية الإفريقية') ?></h5>
-                       <p><?= L('Phase de groupes - Groupe A', 'دور المجموعات - المجموعة أ') ?></p>
+                       <h5><?= L('CAF Confederation Cup', 'كأس الكونفدرالية الإفريقية') ?></h5>
+                       <p><?= L('Group stage - Group A', 'دور المجموعات - المجموعة أ') ?></p>
                        <ul class="teamz">
                            <li class="mt-left"><img src="images/CSConstantine.png" alt=""> <strong><?= L('CS Constantine', 'ش.قسنطينة') ?></strong> </li>
                            <li class="mt-center-score">
@@ -145,9 +145,9 @@
                </div>
            </div>
             <ul class="m-date-loc">
-               <li><i class="fas fa-calendar-alt"></i> <?= L('17 Mai 2024', '17 ماي 2024') ?></li>
+               <li><i class="fas fa-calendar-alt"></i> <?= L('17 May 2024', '17 ماي 2024') ?></li>
                <li class="pipeline"> | </li>
-               <li><i class="fas fa-map-marker-alt"></i> <?= L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li>
+               <li><i class="fas fa-map-marker-alt"></i> <?= L('Chahid Hamlaoui Stadium, Constantine', 'ملعب الشهيد حملاوي، قسنطينة') ?></li>
             </ul>
         </div>
         <div class="main-content innerpagebg wf100 p80">
@@ -161,7 +161,7 @@
                         <div class="row">
                            <div class="col-md-12">
                               <div class="match-results-table">
-                                <h4><?= L('Résultats des matchs', 'نتائج المباريات') ?></h4>
+                                <h4><?= L('Match results', 'نتائج المباريات') ?></h4>
 
                               </div>
                            </div>

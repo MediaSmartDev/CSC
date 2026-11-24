@@ -127,3 +127,10 @@ body{background:#f3f5f3;color:#222;font-family:-apple-system,BlinkMacSystemFont,
   [dir=rtl] .adm-side-open .adm-side{transform:none;}
   [dir=rtl] .adm-has-side .adm-page{margin-right:0;}
 }
+/* Vidéos et publicité */
+.adm-pub-preview{background:#000;border-radius:8px;overflow:hidden;line-height:0;}
+.adm-pub-preview video,.adm-pub-preview img{display:block;width:100%;height:auto;max-height:96px;object-fit:cover;}
+.adm-pub-preview .text-muted{line-height:1.5;background:#f4f6f5;}
+.adm-hero-preview{position:relative;width:320px;max-width:100%;aspect-ratio:16/9;background:#03140c;border-radius:8px;overflow:hidden;flex:0 0 auto;}
+.adm-hero-preview video,.adm-hero-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+.adm-hero-preview span{position:absolute;left:0;right:0;bottom:0;padding:6px 10px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;}

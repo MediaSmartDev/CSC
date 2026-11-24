@@ -10,16 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $st = $pdo->prepare('SELECT * FROM actualites WHERE id = ?');
     $st->execute([$id]);
     $row = $st->fetch();
-    if (!$row) { flash('danger', tr('Actualité introuvable.')); redirect('index.php'); }
+    if (!$row) { flash('danger', tr('Article not found.')); redirect('index.php'); }
 
     if ($action === 'delete') {
         $pdo->prepare('DELETE FROM actualites WHERE id = ?')->execute([$id]);
         delete_uploaded_image($row['image']);
         foreach (preg_split('/\R/', (string)$row['galerie']) as $g) delete_uploaded_image(trim($g));
-        flash('success', tr('Actualité supprimée : %s', admin_lang() === 'ar' && $row['titre_ar'] !== '' ? $row['titre_ar'] : $row['titre_fr']));
+        flash('success', tr('Article deleted: %s', admin_lang() === 'ar' && $row['titre_ar'] !== '' ? $row['titre_ar'] : $row['titre_fr']));
     } elseif ($action === 'toggle') {
         $pdo->prepare('UPDATE actualites SET publie = 1 - publie WHERE id = ?')->execute([$id]);
-        flash('success', $row['publie'] ? tr('Actualité masquée (elle n’apparaît plus sur le site).') : tr('Actualité publiée sur le site.'));
+        flash('success', $row['publie'] ? tr('Article hidden (it no longer appears on the site).') : tr('Article published on the site.'));
     } elseif ($action === 'up' || $action === 'down') {
         // Échange de position avec la voisine du dessus / du dessous
         $sql = $action === 'up'
@@ -42,16 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $rows = $pdo->query('SELECT id, position, date_pub, image, label_fr, label_ar, titre_fr, titre_ar, publie, updated_at FROM actualites ORDER BY position DESC, id DESC')->fetchAll();
 $ar = admin_lang() === 'ar';
-page_header(tr('Actualités'), $admin);
+page_header(tr('News'), $admin);
 ?>
 <div class="adm-head">
-  <h1 class="adm-h1"><i class="fas fa-newspaper"></i> <?= e(tr('Actualités')) ?> <span class="adm-count"><?= count($rows) ?></span></h1>
-  <a class="btn adm-btn" href="edit.php"><i class="fas fa-plus"></i> <?= e(tr('Ajouter une actualité')) ?></a>
+  <h1 class="adm-h1"><i class="fas fa-newspaper"></i> <?= e(tr('News')) ?> <span class="adm-count"><?= count($rows) ?></span></h1>
+  <a class="btn adm-btn" href="edit.php"><i class="fas fa-plus"></i> <?= e(tr('Add an article')) ?></a>
 </div>
-<p class="text-muted small"><?= e(tr('L’ordre ci-dessous est celui du site : la première est affichée en premier. Les flèches changent l’ordre.')) ?></p>
+<p class="text-muted small"><?= e(tr('The order below is the site’s order: the first one is shown first. The arrows change the order.')) ?></p>
 
 <?php if (!$rows): ?>
-  <div class="adm-card text-center"><?= e(tr('Aucune actualité pour l’instant.')) ?> <a href="edit.php"><?= e(tr('Ajouter la première')) ?></a>.</div>
+  <div class="adm-card text-center"><?= e(tr('No articles yet.')) ?> <a href="edit.php"><?= e(tr('Add the first one')) ?></a>.</div>
 <?php endif; ?>
 
 <div class="adm-list">
@@ -63,23 +63,23 @@ page_header(tr('Actualités'), $admin);
     <div class="adm-item-body">
       <div class="adm-item-meta">
         <?php if ($label !== ''): ?><span class="adm-tag"><?= e($label) ?></span><?php endif; ?>
-        <span><i class="far fa-calendar-alt"></i> <?= $r['date_pub'] ? e(date('d/m/Y', strtotime($r['date_pub']))) : e(tr('sans date')) ?></span>
-        <?php if (!$r['publie']): ?><span class="adm-badge-hidden"><i class="fas fa-eye-slash"></i> <?= e(tr('Masquée')) ?></span><?php endif; ?>
+        <span><i class="far fa-calendar-alt"></i> <?= $r['date_pub'] ? e(date('d/m/Y', strtotime($r['date_pub']))) : e(tr('no date')) ?></span>
+        <?php if (!$r['publie']): ?><span class="adm-badge-hidden"><i class="fas fa-eye-slash"></i> <?= e(tr('Hidden from site')) ?></span><?php endif; ?>
       </div>
       <div class="adm-item-title" dir="<?= $d1 ?>"><?= e($t1) ?></div>
       <div class="adm-item-title-ar" dir="<?= $d2 ?>"><?= e($t2) ?></div>
     </div>
     <div class="adm-actions">
       <form method="post"><?= csrf_field() ?><input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-        <button name="action" value="up" class="btn btn-sm btn-light" title="<?= e(tr('Monter')) ?>" <?= $i === 0 ? 'disabled' : '' ?>><i class="fas fa-arrow-up"></i></button>
-        <button name="action" value="down" class="btn btn-sm btn-light" title="<?= e(tr('Descendre')) ?>" <?= $i === count($rows) - 1 ? 'disabled' : '' ?>><i class="fas fa-arrow-down"></i></button>
-        <button name="action" value="toggle" class="btn btn-sm btn-light" title="<?= e($r['publie'] ? tr('Masquer du site') : tr('Publier sur le site')) ?>"><i class="fas <?= $r['publie'] ? 'fa-eye-slash' : 'fa-eye' ?>"></i></button>
+        <button name="action" value="up" class="btn btn-sm btn-light" title="<?= e(tr('Move up')) ?>" <?= $i === 0 ? 'disabled' : '' ?>><i class="fas fa-arrow-up"></i></button>
+        <button name="action" value="down" class="btn btn-sm btn-light" title="<?= e(tr('Move down')) ?>" <?= $i === count($rows) - 1 ? 'disabled' : '' ?>><i class="fas fa-arrow-down"></i></button>
+        <button name="action" value="toggle" class="btn btn-sm btn-light" title="<?= e($r['publie'] ? tr('Hide from the site') : tr('Publish on the site')) ?>"><i class="fas <?= $r['publie'] ? 'fa-eye-slash' : 'fa-eye' ?>"></i></button>
       </form>
-      <a class="btn btn-sm adm-btn" href="edit.php?id=<?= (int)$r['id'] ?>"><i class="fas fa-pen"></i> <?= e(tr('Modifier')) ?></a>
-      <?php if ($r['publie']): ?><a class="btn btn-sm btn-light" href="../actualite.php?id=<?= (int)$r['id'] ?>" target="_blank" rel="noopener" title="<?= e(tr('Voir sur le site')) ?>"><i class="fas fa-external-link-alt"></i></a><?php endif; ?>
-      <form method="post" onsubmit="return confirm(<?= trjs('Supprimer définitivement cette actualité ?') ?>);"><?= csrf_field() ?>
+      <a class="btn btn-sm adm-btn" href="edit.php?id=<?= (int)$r['id'] ?>"><i class="fas fa-pen"></i> <?= e(tr('Edit')) ?></a>
+      <?php if ($r['publie']): ?><a class="btn btn-sm btn-light" href="../actualite.php?id=<?= (int)$r['id'] ?>" target="_blank" rel="noopener" title="<?= e(tr('View on the site')) ?>"><i class="fas fa-external-link-alt"></i></a><?php endif; ?>
+      <form method="post" onsubmit="return confirm(<?= trjs('Permanently delete this article?') ?>);"><?= csrf_field() ?>
         <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-        <button name="action" value="delete" class="btn btn-sm btn-outline-danger" title="<?= e(tr('Supprimer')) ?>"><i class="fas fa-trash"></i></button>
+        <button name="action" value="delete" class="btn btn-sm btn-outline-danger" title="<?= e(tr('Delete')) ?>"><i class="fas fa-trash"></i></button>
       </form>
     </div>
   </div>

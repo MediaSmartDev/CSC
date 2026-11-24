@@ -16,7 +16,7 @@ include 'Data/Dbo.php';
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
-    <title><?= L('Classement - CS Constantine', 'الترتيب - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Standings - CS Constantine', 'الترتيب - النادي الرياضي القسنطيني') ?></title>
     <style type="text/css">
         .page_title{
             text-align: center;
@@ -52,12 +52,12 @@ include 'Data/Dbo.php';
         <?php require 'header.php';?>
       <!--Main Slider Start-->
       <div class="inner-banner-header wf100">
-        <h1 data-generated="<?= L('Classement', 'الترتيب') ?>"><?= L('Classement', 'الترتيب') ?></h1>
+        <h1 data-generated="<?= L('Standings', 'الترتيب') ?>"><?= L('Standings', 'الترتيب') ?></h1>
         <div class="gt-breadcrumbs">
           <ul>
-            <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
-            <li> <?= L('Équipe première', 'الفريق الأول') ?> </li>
-            <li> <a href="#"> <?= L('Classement', 'الترتيب') ?> </a> </li>
+            <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?> </a> </li>
+            <li> <?= L('First team', 'الفريق الأول') ?> </li>
+            <li> <a href="#"> <?= L('Standings', 'الترتيب') ?> </a> </li>
           </ul>
         </div>
       </div>
@@ -71,14 +71,14 @@ include 'Data/Dbo.php';
             <div class="container">
               <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page_title"><?= L('Championnat d\'Algérie de football Ligue 1', 'البطولة الجزائرية لكرة القدم - الرابطة الأولى') ?></h1>
+                    <h1 class="page_title"><?= L('Algerian Football Championship, Ligue 1', 'البطولة الجزائرية لكرة القدم - الرابطة الأولى') ?></h1>
                     <br>
                     <div class="header_time-info">
                         <?php $info = getClassementInfo(); ?>
                         <?php if ($info): ?>
-                        <div class="last-updated"><?= L('Dernière mise à jour :', 'آخر تحديث:') ?> <?= date('d/m/Y H:i', strtotime($info['mise_a_jour'])) ?></div>
-                        <span class="season-info"><?= L('Saison', 'موسم') ?> <?= htmlspecialchars($info['saison']) ?> :</span>
-                        <span class="match-week-info"><?= $LANG === 'ar' ? 'الجولة ' . (int)$info['journee'] : (int)$info['journee'] . ($info['journee'] == 1 ? 'ère' : 'ème') . ' journée' ?></span>
+                        <div class="last-updated"><?= L('Last updated:', 'آخر تحديث:') ?> <?= date('d/m/Y H:i', strtotime($info['mise_a_jour'])) ?></div>
+                        <span class="season-info"><?= L('Season', 'موسم') ?> <?= htmlspecialchars($info['saison']) ?> :</span>
+                        <span class="match-week-info"><?= $LANG === 'ar' ? 'الجولة ' . (int)$info['journee'] : 'Matchday ' . (int)$info['journee'] ?></span>
                         <?php endif; ?>
                     </div>
                   <div class="point-table-widget">
@@ -86,14 +86,14 @@ include 'Data/Dbo.php';
                         <thead>
                           <tr>
                             <th> </th>
-                            <th><?= L('Équipe', 'الفريق') ?></th>
-                            <th><?= L('J', 'لعب') ?></th>
-                            <th><?= L('G', 'ف') ?></th>
-                            <th><?= L('N', 'ت') ?></th>
-                            <th><?= L('P', 'خ') ?></th>
-                            <th><?= L('BP', 'له') ?></th>
-                            <th><?= L('BC', 'عليه') ?></th>
-                            <th><?= L('DB', 'الفارق') ?></th>
+                            <th><?= L('Team', 'الفريق') ?></th>
+                            <th><?= L('P', 'لعب') ?></th>
+                            <th><?= L('W', 'ف') ?></th>
+                            <th><?= L('D', 'ت') ?></th>
+                            <th><?= L('L', 'خ') ?></th>
+                            <th><?= L('GF', 'له') ?></th>
+                            <th><?= L('GA', 'عليه') ?></th>
+                            <th><?= L('GD', 'الفارق') ?></th>
                             <th><?= L('Points', 'النقاط') ?></th>
                           </tr>
                         </thead>
@@ -102,7 +102,7 @@ include 'Data/Dbo.php';
                     $content = '';
                     $classement = getClassmentTable();
                     if (empty($classement)) {
-                        $content = '<tr><td colspan="10" style="text-align:center;">'.L('Classement indisponible pour le moment.', 'الترتيب غير متوفر حاليا.').'</td></tr>';
+                        $content = '<tr><td colspan="10" style="text-align:center;">'.L('Standings are not available at the moment.', 'الترتيب غير متوفر حاليا.').'</td></tr>';
                     }
                     foreach ($classement as $row){
                         $isCsc = strtoupper($row["club"]) === 'CSC';

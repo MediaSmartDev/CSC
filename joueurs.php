@@ -17,7 +17,7 @@ $today = new DateTime();
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
-    <title><?= L('Joueurs - CS Constantine', 'اللاعبون - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Players - CS Constantine', 'اللاعبون - النادي الرياضي القسنطيني') ?></title>
   </head>
   <body>
     <!--Wrapper Start-->
@@ -25,12 +25,12 @@ $today = new DateTime();
         <?php require 'header.php';?>
       <!--Main Slider Start-->
       <div class="inner-banner-header wf100">
-        <h1 data-generated="<?= L('Joueurs', 'اللاعبون') ?>"><?= L('Joueurs', 'اللاعبون') ?></h1>
+        <h1 data-generated="<?= L('Players', 'اللاعبون') ?>"><?= L('Players', 'اللاعبون') ?></h1>
         <div class="gt-breadcrumbs">
           <ul>
-            <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
-            <li> <?= L('Équipe première', 'الفريق الأول') ?> </li>
-            <li> <a href="#"> <?= L('Joueurs', 'اللاعبون') ?> </a> </li>
+            <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?> </a> </li>
+            <li> <?= L('First team', 'الفريق الأول') ?> </li>
+            <li> <a href="#"> <?= L('Players', 'اللاعبون') ?> </a> </li>
           </ul>
         </div>
       </div>
@@ -44,7 +44,7 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title"><?= L('Gardiens', 'حراس المرمى') ?></h2>
+                            <h2 class="team-main-title"><?= L('Goalkeepers', 'حراس المرمى') ?></h2>
                         </div>
                         <?php
                         $content = '';
@@ -58,7 +58,7 @@ $today = new DateTime();
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
                                                     <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
+                                                        <li>'.$age.' <span>'.L('Years', 'سنة').'</span></li>
                                                         
                                                     </ul>
                                                 </div>
@@ -76,7 +76,7 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title"><?= L('Défenseurs', 'المدافعون') ?></h2>
+                            <h2 class="team-main-title"><?= L('Defenders', 'المدافعون') ?></h2>
                         </div>
                         <?php
                         $content = '';
@@ -90,7 +90,7 @@ $today = new DateTime();
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
                                                     <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
+                                                        <li>'.$age.' <span>'.L('Years', 'سنة').'</span></li>
                                                         
                                                     </ul>
                                                 </div>
@@ -108,7 +108,7 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title"><?= L('Milieux', 'وسط الميدان') ?></h2>
+                            <h2 class="team-main-title"><?= L('Midfielders', 'وسط الميدان') ?></h2>
                         </div>
                         <?php
                         $content = '';
@@ -122,7 +122,7 @@ $today = new DateTime();
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
                                                     <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>                                                    
+                                                        <li>'.$age.' <span>'.L('Years', 'سنة').'</span></li>                                                    
                                                     </ul>
                                                 </div>
                                                 <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
@@ -139,7 +139,7 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title"><?= L('Attaquants', 'المهاجمون') ?></h2>
+                            <h2 class="team-main-title"><?= L('Forwards', 'المهاجمون') ?></h2>
                         </div>
                         <?php
                         $content = '';
@@ -153,7 +153,7 @@ $today = new DateTime();
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
                                                     <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
-                                                        <li>'.$age.' <span>'.L('Ans', 'سنة').'</span></li>
+                                                        <li>'.$age.' <span>'.L('Years', 'سنة').'</span></li>
                                                     </ul>
                                                 </div>
                                                 <img src="'.(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'"> 
@@ -171,7 +171,7 @@ $today = new DateTime();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="team-main-title"><?= L('Staff technique', 'الطاقم الفني') ?></h2>
+                            <h2 class="team-main-title"><?= L('Coaching staff', 'الطاقم الفني') ?></h2>
                         </div>
                         <?php
                         $content = '';
@@ -185,7 +185,7 @@ $today = new DateTime();
                                                     <h4>'.htmlspecialchars(player_name($row)).'</h4>
                                                     <p>'.htmlspecialchars(player_poste($row)).'</p>
                                                     <ul>
-                                                        <li>'.($age ? $age.' <span>'.L('Ans', 'سنة').'</span>' : '&nbsp;<span>&nbsp;</span>').'</li>
+                                                        <li>'.($age ? $age.' <span>'.L('Years', 'سنة').'</span>' : '&nbsp;<span>&nbsp;</span>').'</li>
                                                     </ul>
                                                 </div>
                                                 <img src="'.htmlspecialchars(!empty($row['img']) ? $row['img'] : 'images/player-default.png').'" alt="'.htmlspecialchars(player_name($row)).'">

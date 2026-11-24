@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
     <link rel="stylesheet" href="css/audioplayer.css">
-    <title><?= L('Palmarès — Club Sportif Constantinois', 'الألقاب — النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Honours — Club Sportif Constantinois', 'الألقاب — النادي الرياضي القسنطيني') ?></title>
 </head>
 <body>
 <div class="wrapper">

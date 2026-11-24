@@ -4,15 +4,15 @@ require __DIR__ . '/inc/bootstrap.php';
 $admin = require_login();
 $pdo = db();
 $CLUBS = require __DIR__ . '/../Data/clubs.php';
-const CL_COLS = ['j' => 'J', 'g' => 'G', 'n' => 'N', 'p' => 'P', 'bp' => 'BP', 'bc' => 'BC', 'points' => 'Pts'];
+const CL_COLS = ['j' => 'P', 'g' => 'W', 'n' => 'D', 'p' => 'L', 'bp' => 'GF', 'bc' => 'GA', 'points' => 'Pts'];
 
 try {
     $rows = $pdo->query('SELECT * FROM classement_l1 ORDER BY pos ASC')->fetchAll();
     $info = $pdo->query('SELECT * FROM classement_l1_info WHERE id = 1')->fetch() ?: ['saison' => '', 'journee' => 0, 'mise_a_jour' => date('Y-m-d H:i:s')];
 } catch (PDOException $e) {
-    page_header(tr('Classement'), $admin); ?>
-    <div class="adm-card"><h1 class="adm-h1"><?= e(tr('Classement')) ?></h1>
-      <p><?= tr('La table %1$s n’existe pas encore. Dans <b>phpMyAdmin</b>, importez %2$s, puis rechargez cette page.', tr('du classement'), '<code>database/maj_2026-11-18_admin_classement.sql</code>') ?></p></div>
+    page_header(tr('Standings'), $admin); ?>
+    <div class="adm-card"><h1 class="adm-h1"><?= e(tr('Standings')) ?></h1>
+      <p><?= tr('The %1$s table does not exist yet. In <b>phpMyAdmin</b>, import %2$s, then reload this page.', tr('standings'), '<code>database/maj_2026-11-18_admin_classement.sql</code>') ?></p></div>
     <?php page_footer(); exit;
 }
 
@@ -22,26 +22,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new = [];
     foreach ($codes as $i => $code) {
         $code = (string)$code;
-        if (!isset($CLUBS[$code])) { $errors[] = tr('Ligne %s : club inconnu.', $i + 1); continue; }
+        if (!isset($CLUBS[$code])) { $errors[] = tr('Row %s: unknown club.', $i + 1); continue; }
         $r = ['code' => $code];
         foreach (CL_COLS as $k => $lab) {
             $v = trim((string)($_POST[$k][$i] ?? ''));
-            if (!preg_match('/^\d{1,3}$/', $v)) { $errors[] = tr('%1$s : la colonne %2$s doit être un nombre (0 ou plus).', admin_club($CLUBS, $code), tr($lab)); $v = 0; }
+            if (!preg_match('/^\d{1,3}$/', $v)) { $errors[] = tr('%1$s: column %2$s must be a number (0 or more).', admin_club($CLUBS, $code), tr($lab)); $v = 0; }
             $r[$k] = (int)$v;
         }
         $new[] = $r;
     }
     $dup = array_diff_assoc(array_column($new, 'code'), array_unique(array_column($new, 'code')));
-    foreach (array_unique($dup) as $d) $errors[] = tr('Le club %s apparaît deux fois.', admin_club($CLUBS, $d));
-    if (count($new) < 2) $errors[] = tr('Le classement doit contenir au moins 2 clubs.');
+    foreach (array_unique($dup) as $d) $errors[] = tr('The club %s appears twice.', admin_club($CLUBS, $d));
+    if (count($new) < 2) $errors[] = tr('The standings must contain at least 2 clubs.');
 
     $saison = trim((string)($_POST['saison'] ?? ''));
-    if (!preg_match('#^\d{4}/\d{4}$#', $saison)) $errors[] = tr('Saison au format 2026/2027.');
+    if (!preg_match('#^\d{4}/\d{4}$#', $saison)) $errors[] = tr('Season must look like 2026/2027.');
     $journee = trim((string)($_POST['journee'] ?? ''));
-    if (!preg_match('/^\d{1,2}$/', $journee)) $errors[] = tr('Journée invalide.');
+    if (!preg_match('/^\d{1,2}$/', $journee)) $errors[] = tr('Invalid matchday.');
     $maj = trim((string)($_POST['mise_a_jour'] ?? ''));
     $dt = DateTime::createFromFormat('Y-m-d\TH:i', $maj);
-    if (!$dt) $errors[] = tr('Date de mise à jour invalide.');
+    if (!$dt) $errors[] = tr('Invalid update date.');
 
     if (!$errors) {
         $pdo->beginTransaction();
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare('REPLACE INTO classement_l1_info (id, saison, journee, mise_a_jour) VALUES (1, ?, ?, ?)')
             ->execute([$saison, (int)$journee, $dt->format('Y-m-d H:i:00')]);
         $pdo->commit();
-        flash('success', tr('Classement enregistré (journée %s). Il est déjà à jour sur le site.', (int)$journee));
+        flash('success', tr('Standings saved (matchday %s). They are already updated on the site.', (int)$journee));
         redirect('classement.php');
     }
     // On réaffiche ce qui a été saisi
@@ -59,42 +59,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $info = ['saison' => $saison, 'journee' => $journee, 'mise_a_jour' => $dt ? $dt->format('Y-m-d H:i:s') : date('Y-m-d H:i:s')];
 }
 
-page_header(tr('Classement'), $admin);
+page_header(tr('Standings'), $admin);
 ?>
 <div class="adm-head">
-  <h1 class="adm-h1"><i class="fas fa-list-ol"></i> <?= e(tr('Classement Ligue 1')) ?></h1>
-  <a class="btn btn-light" href="../classement.php" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> <?= e(tr('Voir sur le site')) ?></a>
+  <h1 class="adm-h1"><i class="fas fa-list-ol"></i> <?= e(tr('Ligue 1 standings')) ?></h1>
+  <a class="btn btn-light" href="../classement.php" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> <?= e(tr('View on the site')) ?></a>
 </div>
-<p class="text-muted small"><?= tr('Recopiez les chiffres de %s.', '<a href="https://lfp.dz/fr/ranking" target="_blank" rel="noopener">lfp.dz</a>') ?>
-<?= e(tr('L’ordre des lignes est l’ordre du classement : utilisez les flèches, ou « Trier par points ». La différence de buts est calculée toute seule.')) ?></p>
+<p class="text-muted small"><?= tr('Copy the figures from %s.', '<a href="https://lfp.dz/fr/ranking" target="_blank" rel="noopener">lfp.dz</a>') ?>
+<?= e(tr('The row order is the standings order: use the arrows or “Sort by points”. Goal difference is calculated automatically.')) ?></p>
 
 <?php if ($errors): ?>
-  <div class="alert alert-danger"><b><?= e(tr('À corriger :')) ?></b><ul class="mb-0"><?php foreach (array_unique($errors) as $er): ?><li><?= e($er) ?></li><?php endforeach; ?></ul></div>
+  <div class="alert alert-danger"><b><?= e(tr('Please fix:')) ?></b><ul class="mb-0"><?php foreach (array_unique($errors) as $er): ?><li><?= e($er) ?></li><?php endforeach; ?></ul></div>
 <?php endif; ?>
 
 <form method="post" id="clForm">
   <?= csrf_field() ?>
   <div class="adm-card">
     <div class="form-row">
-      <div class="form-group col-md-3"><label><?= e(tr('Saison')) ?></label>
+      <div class="form-group col-md-3"><label><?= e(tr('Season')) ?></label>
         <input class="form-control" name="saison" value="<?= e($info['saison']) ?>" placeholder="2026/2027" required></div>
-      <div class="form-group col-md-2"><label><?= e(tr('Journée')) ?></label>
+      <div class="form-group col-md-2"><label><?= e(tr('Matchday')) ?></label>
         <input type="number" class="form-control" name="journee" min="0" max="99" value="<?= e($info['journee']) ?>" required></div>
-      <div class="form-group col-md-4"><label><?= e(tr('Dernière mise à jour')) ?></label>
+      <div class="form-group col-md-4"><label><?= e(tr('Last updated')) ?></label>
         <input type="datetime-local" class="form-control" name="mise_a_jour" id="maj" value="<?= e(date('Y-m-d\TH:i', strtotime((string)$info['mise_a_jour']))) ?>" required></div>
       <div class="form-group col-md-3 d-flex align-items-end">
-        <button type="button" class="btn btn-light btn-block" id="majNow"><i class="far fa-clock"></i> <?= e(tr('Maintenant')) ?></button></div>
+        <button type="button" class="btn btn-light btn-block" id="majNow"><i class="far fa-clock"></i> <?= e(tr('Now')) ?></button></div>
     </div>
   </div>
 
   <div class="adm-card adm-table-card">
     <div class="d-flex justify-content-between align-items-center flex-wrap mb-2" style="gap:8px">
-      <h2 class="adm-h2 mb-0"><?= e(tr('Tableau')) ?></h2>
-      <button type="button" class="btn btn-sm btn-light" id="sortBtn"><i class="fas fa-sort-amount-down"></i> <?= e(tr('Trier par points')) ?></button>
+      <h2 class="adm-h2 mb-0"><?= e(tr('Table')) ?></h2>
+      <button type="button" class="btn btn-sm btn-light" id="sortBtn"><i class="fas fa-sort-amount-down"></i> <?= e(tr('Sort by points')) ?></button>
     </div>
     <div class="table-responsive">
     <table class="table table-sm adm-cl">
-      <thead><tr><th>#</th><th><?= e(tr('Club')) ?></th><?php foreach (CL_COLS as $lab): ?><th><?= e(tr($lab)) ?></th><?php endforeach; ?><th><?= e(tr('Diff')) ?></th><th></th></tr></thead>
+      <thead><tr><th>#</th><th><?= e(tr('Club')) ?></th><?php foreach (CL_COLS as $lab): ?><th><?= e(tr($lab)) ?></th><?php endforeach; ?><th><?= e(tr('GD')) ?></th><th></th></tr></thead>
       <tbody id="clBody">
       <?php foreach ($rows as $r): ?>
         <tr class="<?= $r['code'] === 'CSC' ? 'is-csc' : '' ?>">
@@ -107,8 +107,8 @@ page_header(tr('Classement'), $admin);
           <?php endforeach; ?>
           <td class="diff"></td>
           <td class="text-nowrap">
-            <button type="button" class="btn btn-sm btn-light up" title="<?= e(tr('Monter')) ?>"><i class="fas fa-arrow-up"></i></button>
-            <button type="button" class="btn btn-sm btn-light down" title="<?= e(tr('Descendre')) ?>"><i class="fas fa-arrow-down"></i></button>
+            <button type="button" class="btn btn-sm btn-light up" title="<?= e(tr('Move up')) ?>"><i class="fas fa-arrow-up"></i></button>
+            <button type="button" class="btn btn-sm btn-light down" title="<?= e(tr('Move down')) ?>"><i class="fas fa-arrow-down"></i></button>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -119,14 +119,14 @@ page_header(tr('Classement'), $admin);
   </div>
 
   <div class="adm-submit">
-    <button class="btn adm-btn btn-lg" type="submit"><i class="fas fa-save"></i> <?= e(tr('Enregistrer le classement')) ?></button>
-    <a class="btn btn-link" href="classement.php"><?= e(tr('Annuler')) ?></a>
+    <button class="btn adm-btn btn-lg" type="submit"><i class="fas fa-save"></i> <?= e(tr('Save standings')) ?></button>
+    <a class="btn btn-link" href="classement.php"><?= e(tr('Cancel')) ?></a>
   </div>
 </form>
 
 <script>
 (function () {
-  var TXT = <?= json_encode(['gnp' => tr('%s : G + N + P ne fait pas J.'), 'pts' => tr('%s : 3×G + N ne fait pas les points (normal seulement en cas de pénalité).'), 'check' => tr('À vérifier :')], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
+  var TXT = <?= json_encode(['gnp' => tr('%s: W + D + L does not equal P.'), 'pts' => tr('%s: 3×W + D does not equal the points (only normal after a points penalty).'), 'check' => tr('Please check:')], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
   var body = document.getElementById('clBody');
   function val(tr, k) { return parseInt(tr.querySelector('[data-k="' + k + '"]').value, 10) || 0; }
   function refresh() {

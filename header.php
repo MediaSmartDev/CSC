@@ -25,11 +25,11 @@
                 <div class="col-md-6 col-sm-6 d-flex align-items-center justify-content-end">
                     <ul class="toplinks">
                         <li class="csc-lang-switch">
-                            <a href="<?= lang_url('fr') ?>" class="<?= $LANG === 'fr' ? 'active' : '' ?>" lang="fr">FR</a>
+                            <a href="<?= lang_url('en') ?>" class="<?= $LANG === 'en' ? 'active' : '' ?>" lang="en">EN</a>
                             <a href="<?= lang_url('ar') ?>" class="<?= $LANG === 'ar' ? 'active' : '' ?>" lang="ar">عربي</a>
                         </li>
                         <li>
-                            <a href="inscription.php" class="csc-top-inscription"><i class="fas fa-user-plus"></i> <?= L('Inscription', 'التسجيل') ?></a>
+                            <a href="inscription.php" class="csc-top-inscription"><i class="fas fa-user-plus"></i> <?= L('Join us', 'التسجيل') ?></a>
                         </li>
                     </ul>
                 </div>
@@ -46,31 +46,31 @@
                         <li class="nav-item drop-down">
                             <a href="javascript:void(0)"><?= L('Club', 'النادي') ?></a>
                             <ul>
-                                <li><a href="identite.php"><?= L('Identité', 'الهوية') ?></a></li>
-                                <li><a href="histoire.php"><?= L('Histoire', 'التاريخ') ?></a></li>
-                                <li><a href="palmares.php"><?= L('Palmarès', 'الألقاب') ?></a></li>
-                                <li><a href="partenaire.php"><?= L('Partenaires', 'الشركاء') ?></a></li>
-                                <li><a href="javascript:void(0)" class="nav-empty"><?= L('Presse', 'الصحافة') ?></a></li>
+                                <li><a href="identite.php"><?= L('Identity', 'الهوية') ?></a></li>
+                                <li><a href="histoire.php"><?= L('History', 'التاريخ') ?></a></li>
+                                <li><a href="palmares.php"><?= L('Honours', 'الألقاب') ?></a></li>
+                                <li><a href="partenaire.php"><?= L('Partners', 'الشركاء') ?></a></li>
+                                <li><a href="javascript:void(0)" class="nav-empty"><?= L('Press', 'الصحافة') ?></a></li>
                                 <li><a href="javascript:void(0)" class="nav-empty"><?= L('Sponsors', 'الرعاة') ?></a></li>
                             </ul>
                         </li>
                         <li class="nav-item drop-down">
-                            <a href="javascript:void(0)"><?= L('Équipe première', 'الفريق الأول') ?></a>
+                            <a href="javascript:void(0)"><?= L('First team', 'الفريق الأول') ?></a>
                             <ul>
-                                <li><a href="index.php#actualites"><?= L('Actualité', 'الأخبار') ?></a></li>
-                                <li><a href="javascript:void(0)" class="nav-empty"><?= L('Calendrier des matchs', 'رزنامة المباريات') ?></a></li>
-                                <li><a href="resultats.php"><?= L('Résultats', 'النتائج') ?></a></li>
-                                <li><a href="classement.php"><?= L('Classement', 'الترتيب') ?></a></li>
-                                <li><a href="joueurs.php"><?= L('Joueurs', 'اللاعبون') ?></a></li>
+                                <li><a href="index.php#actualites"><?= L('News', 'الأخبار') ?></a></li>
+                                <li><a href="javascript:void(0)" class="nav-empty"><?= L('Fixtures', 'رزنامة المباريات') ?></a></li>
+                                <li><a href="resultats.php"><?= L('Results', 'النتائج') ?></a></li>
+                                <li><a href="classement.php"><?= L('Standings', 'الترتيب') ?></a></li>
+                                <li><a href="joueurs.php"><?= L('Players', 'اللاعبون') ?></a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="jeunes.php"><?= L('Catégorie Jeunes', 'الفئات الشبانية') ?></a></li>
-                        <li class="nav-item"><a href="equipe-feminine.php"><?= L('Équipe féminine', 'الفريق النسوي') ?></a></li>
+                        <li class="nav-item"><a href="jeunes.php"><?= L('Youth teams', 'الفئات الشبانية') ?></a></li>
+                        <li class="nav-item"><a href="equipe-feminine.php"><?= L('Women\'s team', 'الفريق النسوي') ?></a></li>
                         <li class="nav-item"><a href="https://www.youtube.com/@CSConstantineTV" target="_blank"><?= L('CSC TV', 'قناة النادي') ?></a></li>
                         <li class="nav-item"><a href="index.php#contact-section"><?= L('Contact', 'اتصل بنا') ?></a></li>
                         <li class="csc-shop-item">
                             <a href="https://apps.apple.com/app/id371294472" target="_blank" class="csc-shop-btn">
-                                <i class="fab fa-shopify"></i> <?= L('Boutique CSC', 'متجر النادي') ?>
+                                <i class="fab fa-shopify"></i> <?= L('CSC Store', 'متجر النادي') ?>
                             </a>
                         </li>
                     </ul>

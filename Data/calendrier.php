@@ -32,11 +32,11 @@ function club_court($code) { $c = club_info($code); return L($c['fr'], $c['ar'])
 function match_joue($m) { return $m['bd'] !== null && $m['be'] !== null; }
 function match_stade($m) {
     if ($m['stade_fr'] !== '') return L($m['stade_fr'], $m['stade_ar']);
-    if ($m['dom'] === 'CSC') return L('Stade Chahid Hamlaoui, Constantine', 'ملعب الشهيد حملاوي، قسنطينة');
+    if ($m['dom'] === 'CSC') return L('Chahid Hamlaoui Stadium, Constantine', 'ملعب الشهيد حملاوي، قسنطينة');
     $c = club_info($m['dom']);
-    return L($c['ville_fr'], $c['ville_ar']);
+    return L(Lv($c['ville_fr']), $c['ville_ar']);
 }
-function match_date($m) { return $m['date'] ? news_date($m['date']) : L('Date à confirmer', 'التاريخ لم يحدد بعد'); }
+function match_date($m) { return $m['date'] ? news_date($m['date']) : L('Date to be confirmed', 'التاريخ لم يحدد بعد'); }
 function match_heure($m) { return $m['heure'] ?: '--:--'; }
 /** Résultat du CSC : 'v', 'n' ou 'd' */
 function match_resultat($m) {

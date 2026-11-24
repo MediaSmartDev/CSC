@@ -13,19 +13,19 @@
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/prettyPhoto.css">
-    <title><?= L('Partenaires - CS Constantine', 'الشركاء - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Partners - CS Constantine', 'الشركاء - النادي الرياضي القسنطيني') ?></title>
   </head>
 <body>
     <!--Wrapper Start-->
     <div class="wrapper">
         <?php require 'header.php';?>
         <div class="inner-banner-header wf100">
-            <h1 data-generated="<?= L('Partenaires', 'الشركاء') ?>"><?= L('Partenaires du CSC', 'شركاء النادي') ?></h1>
+            <h1 data-generated="<?= L('Partners', 'الشركاء') ?>"><?= L('CSC Partners', 'شركاء النادي') ?></h1>
             <div class="gt-breadcrumbs">
                 <ul>
-                  <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?> </a> </li>
+                  <li> <a href="index.php" class="active"> <i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?> </a> </li>
                   <li> <?= L('CLUB', 'النادي') ?> </li>
-                  <li> <a href="#"> <?= L('Partenaires', 'الشركاء') ?></a></li>
+                  <li> <a href="#"> <?= L('Partners', 'الشركاء') ?></a></li>
                 </ul>
             </div>
         </div>

@@ -40,22 +40,34 @@ function csc_news_from_row(array $r) {
     $galerie = $split($r['galerie']);
     // Texte arabe vide -> on affiche le français
     $t = fn($k) => ['fr' => (string)$r[$k . '_fr'], 'ar' => trim((string)$r[$k . '_ar']) !== '' ? (string)$r[$k . '_ar'] : (string)$r[$k . '_fr']];
-    $contenuAr = trim((string)$r['contenu_ar']) !== '' ? (string)$r['contenu_ar'] : (trim((string)$r['resume_ar']) !== '' ? '' : (string)$r['contenu_fr']);
+    // Article (anciennes actualités sans article : leur ancien résumé). Le résumé des cartes = début de l'article.
+    $contenuFr = trim((string)$r['contenu_fr']) !== '' ? (string)$r['contenu_fr'] : (string)($r['resume_fr'] ?? '');
+    $contenuAr = trim((string)$r['contenu_ar']) !== '' ? (string)$r['contenu_ar'] : (trim((string)($r['resume_ar'] ?? '')) !== '' ? (string)$r['resume_ar'] : $contenuFr);
     return [
         'id'      => (int)$r['id'],
         'date'    => $r['date_pub'] ?: '',
         'image'   => (string)$r['image'],
         'label'   => $t('label'),
         'titre'   => $t('titre'),
-        'resume'  => $t('resume'),
-        'contenu' => ['fr' => (string)$r['contenu_fr'], 'ar' => $contenuAr],
+        'resume'  => ['fr' => csc_news_excerpt($contenuFr), 'ar' => csc_news_excerpt($contenuAr)],
+        'contenu' => ['fr' => $contenuFr, 'ar' => $contenuAr],
         'tags'    => $tags,
         'galerie' => $galerie,
         'bouton'  => trim((string)$r['bouton_lien']) !== ''
-                     ? ['lien' => $r['bouton_lien'], 'fr' => $r['bouton_fr'] ?: 'En savoir plus', 'ar' => $r['bouton_ar'] ?: 'المزيد']
+                     ? ['lien' => $r['bouton_lien'], 'fr' => $r['bouton_fr'] ?: 'Read more', 'ar' => $r['bouton_ar'] ?: 'المزيد']
                      : null,
         'publie'  => (int)$r['publie'],
     ];
+}
+
+/** Début d'un article (cartes de l'accueil, partage) : premier paragraphe coupé proprement */
+function csc_news_excerpt($text, $max = 180) {
+    $paras = array_values(array_filter(array_map('trim', preg_split('/\R/u', (string)$text)), 'strlen'));
+    $s = $paras[0] ?? '';
+    if (mb_strlen($s) <= $max) return $s;
+    $cut = mb_substr($s, 0, $max);
+    $sp = mb_strrpos($cut, ' ');
+    return preg_replace('/[\s,;:\x{2013}-]+$/u', '', $sp > $max * 0.6 ? mb_substr($cut, 0, $sp) : $cut) . "\u{2026}";
 }
 
 /** Ancien fichier (secours) */

@@ -9339,3 +9339,13 @@ Search Overlay End
 .mb-1 {
 	margin-bottom: 1em;
 }
+
+/* ===== Retouches 2026-11-24 (inspirées de realracingclub.es) ===== */
+.section-title h2 {
+	text-transform: uppercase;
+	letter-spacing: .6px;
+	font-weight: 800;
+}
+html[dir="rtl"] .section-title h2 {
+	letter-spacing: 0;
+}

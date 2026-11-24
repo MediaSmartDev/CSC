@@ -1,13 +1,14 @@
 <?php
 /* =====================================================================
- * Gestion des langues du site : Français (fr) / Arabe (ar)
- *  - changer de langue : ajouter ?lang=fr ou ?lang=ar à l'URL
+ * Gestion des langues du site : Anglais (en) / Arabe (ar)
+ *  - changer de langue : ajouter ?lang=en ou ?lang=ar à l'URL
  *    (le choix est mémorisé 1 an dans un cookie)
- *  - dans les pages : <?= L('Texte français', 'النص العربي') ?>
+ *  - dans les pages : <?= L('English text', 'النص العربي') ?>
+ *  - les champs *_fr de la base contiennent le texte anglais (ancien nom de colonne)
  * ===================================================================== */
 if (!function_exists('L')) {
-    $LANGS = ['fr', 'ar'];
-    $LANG  = 'fr';
+    $LANGS = ['en', 'ar'];
+    $LANG  = 'en';                     // ancien cookie « fr » = anglais
     if (isset($_GET['lang']) && in_array($_GET['lang'], $LANGS, true)) {
         $LANG = $_GET['lang'];
         if (!headers_sent()) setcookie('csc_lang', $LANG, time() + 31536000, '/');
@@ -32,7 +33,17 @@ if (!function_exists('L')) {
 if (!function_exists('Lv')) {
     function Lv($val) {
         global $LANG;
-        if ($LANG !== 'ar') return $val;
+        static $en = [
+            'Gardien' => 'Goalkeeper', 'Gardienne' => 'Goalkeeper', 'Défenseur' => 'Defender', 'Milieu' => 'Midfielder',
+            'Attaquant' => 'Forward', 'Joueuse' => 'Player', 'Staff' => 'Staff', 'Entraîneur' => 'Coach',
+            'Entraîneur principal' => 'Head coach', 'Entraîneur adjoint' => 'Assistant coach', 'Entraîneur des gardiens' => 'Goalkeeper coach',
+            'Préparateur physique' => 'Fitness coach', 'Directeur technique' => 'Technical director', 'Médecin' => 'Doctor', 'Kinésithérapeute' => 'Physiotherapist',
+            'Analyste vidéo' => 'Video analyst', 'Intendant' => 'Kit manager', 'Entraîneuse principale' => 'Head coach',
+            'Entraîneuse adjointe' => 'Assistant coach', 'Entraîneur des gardiennes' => 'Goalkeeper coach', 'Préparatrice physique' => 'Fitness coach',
+            'Intendante' => 'Kit manager',
+            'Algérie' => 'Algeria', 'RD Congo' => 'DR Congo', 'Ouganda' => 'Uganda', 'Rwanda' => 'Rwanda', 'Togo' => 'Togo', 'Alger' => 'Algiers',
+        ];
+        if ($LANG !== 'ar') return $en[$val] ?? $val;
         static $map = [
             'Gardien' => 'حارس مرمى', 'Gardienne' => 'حارسة مرمى', 'Défenseur' => 'مدافع', 'Milieu' => 'وسط ميدان',
             'Attaquant' => 'مهاجم', 'Joueuse' => 'لاعبة', 'Staff' => 'الطاقم الفني', 'Entraîneur' => 'مدرب',
@@ -42,6 +53,11 @@ if (!function_exists('Lv')) {
             'Entraîneuse adjointe' => 'مدربة مساعدة', 'Entraîneur des gardiennes' => 'مدرب حارسات المرمى', 'Préparatrice physique' => 'محضرة بدنية',
             'Intendante' => 'مسؤولة العتاد',
             'Algérie' => 'الجزائر', 'RD Congo' => 'الكونغو الديمقراطية', 'Ouganda' => 'أوغندا', 'Rwanda' => 'رواندا', 'Togo' => 'توغو',
+            // mêmes valeurs saisies en anglais
+            'Goalkeeper' => 'حارس مرمى', 'Defender' => 'مدافع', 'Midfielder' => 'وسط ميدان', 'Forward' => 'مهاجم', 'Player' => 'لاعب',
+            'Coach' => 'مدرب', 'Head coach' => 'المدرب الرئيسي', 'Assistant coach' => 'مدرب مساعد', 'Goalkeeper coach' => 'مدرب حراس المرمى',
+            'Fitness coach' => 'محضر بدني', 'Technical director' => 'مدير فني', 'Doctor' => 'طبيب', 'Physiotherapist' => 'معالج فيزيائي',
+            'Video analyst' => 'محلل فيديو', 'Kit manager' => 'مسؤول العتاد', 'Algeria' => 'الجزائر', 'DR Congo' => 'الكونغو الديمقراطية', 'Uganda' => 'أوغندا',
         ];
         return $map[$val] ?? $val;
     }
@@ -57,10 +73,10 @@ if (!function_exists('news_img')) {
         global $LANG;
         if (!$d) return '';
         $t = strtotime($d);
-        $mfr = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+        $men = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         $mar = ['جانفي','فيفري','مارس','أفريل','ماي','جوان','جويلية','أوت','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
         $m = (int)date('n', $t) - 1;
-        return date('j', $t) . ' ' . ($LANG === 'ar' ? $mar[$m] : $mfr[$m]) . ' ' . date('Y', $t);
+        return date('j', $t) . ' ' . ($LANG === 'ar' ? $mar[$m] : $men[$m]) . ' ' . date('Y', $t);
     }
 }
 

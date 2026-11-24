@@ -8,8 +8,8 @@
  * ===================================================================== */
 require_once __DIR__ . '/Data/feminine.php';
 $equipe = csc_feminine();
-$roles = ['Gardiennes' => L('Gardienne', 'حارسة مرمى'), 'Joueuses' => L('Joueuse', 'لاعبة'), 'Staff technique' => L('Staff', 'الطاقم الفني')];
-$titres = ['Gardiennes' => L('Gardiennes', 'حارسات المرمى'), 'Joueuses' => L('Joueuses', 'اللاعبات'), 'Staff technique' => L('Staff technique', 'الطاقم الفني')];
+$roles = ['Gardiennes' => L('Goalkeeper', 'حارسة مرمى'), 'Joueuses' => L('Player', 'لاعبة'), 'Staff technique' => L('Staff', 'الطاقم الفني')];
+$titres = ['Gardiennes' => L('Goalkeepers', 'حارسات المرمى'), 'Joueuses' => L('Players', 'اللاعبات'), 'Staff technique' => L('Coaching staff', 'الطاقم الفني')];
 $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff technique' => 'staff'];
 ?>
 <html lang="<?= $LANG ?>" dir="<?= $DIR ?>">
@@ -22,7 +22,7 @@ $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff techniq
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fontawesome.css">
-    <title><?= L('Équipe féminine - CS Constantine', 'الفريق النسوي - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Women\'s team - CS Constantine', 'الفريق النسوي - النادي الرياضي القسنطيني') ?></title>
     <style>
         .fem-intro{text-align:center;max-width:720px;margin:0 auto 35px;}
         .fem-intro h2{font-weight:800;color:#0a4f0a;margin-bottom:10px;}
@@ -59,11 +59,11 @@ $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff techniq
     <?php require 'header.php'; ?>
 
     <div class="inner-banner-header wf100">
-        <h1 data-generated="<?= L('Féminine', 'النسوي') ?>"><?= L('Équipe féminine', 'الفريق النسوي') ?></h1>
+        <h1 data-generated="<?= L('Women', 'النسوي') ?>"><?= L('Women\'s team', 'الفريق النسوي') ?></h1>
         <div class="gt-breadcrumbs">
             <ul>
-                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?></a></li>
-                <li><a href="#"><?= L('Équipe féminine', 'الفريق النسوي') ?></a></li>
+                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?></a></li>
+                <li><a href="#"><?= L('Women\'s team', 'الفريق النسوي') ?></a></li>
             </ul>
         </div>
     </div>
@@ -72,12 +72,12 @@ $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff techniq
         <div class="wf100 p80">
             <div class="container">
                 <div class="fem-intro">
-                    <h2><?= L('Les Sanafirettes du CSC', 'سنافيرات النادي الرياضي القسنطيني') ?></h2>
-                    <p><?= L('L\'effectif de l\'équipe féminine du Club Sportif Constantinois.', 'تشكيلة الفريق النسوي للنادي الرياضي القسنطيني.') ?></p>
+                    <h2><?= L('The CSC Sanafirettes', 'سنافيرات النادي الرياضي القسنطيني') ?></h2>
+                    <p><?= L('The squad of Club Sportif Constantinois\' women\'s team.', 'تشكيلة الفريق النسوي للنادي الرياضي القسنطيني.') ?></p>
                 </div>
 
                 <div class="fem-filters">
-                    <button class="active" data-filter="all"><?= L('Tout l\'effectif', 'كل التشكيلة') ?></button>
+                    <button class="active" data-filter="all"><?= L('Full squad', 'كل التشكيلة') ?></button>
                     <?php foreach ($equipe as $groupe => $liste): ?>
                         <button data-filter="<?= $slug[$groupe] ?>"><?= $titres[$groupe] ?></button>
                     <?php endforeach; ?>
@@ -105,10 +105,10 @@ $slug  = ['Gardiennes' => 'gardiennes', 'Joueuses' => 'joueuses', 'Staff techniq
     </div>
 
     <div class="fem-lightbox" id="femLightbox">
-        <button class="fem-close" aria-label="<?= L('Fermer', 'إغلاق') ?>">&times;</button>
-        <button class="fem-nav fem-prev" aria-label="Précédente">&#8249;</button>
+        <button class="fem-close" aria-label="<?= L('Close', 'إغلاق') ?>">&times;</button>
+        <button class="fem-nav fem-prev" aria-label="<?= L('Previous', 'السابق') ?>">&#8249;</button>
         <img src="" alt="">
-        <button class="fem-nav fem-next" aria-label="Suivante">&#8250;</button>
+        <button class="fem-nav fem-next" aria-label="<?= L('Next', 'التالي') ?>">&#8250;</button>
     </div>
 
     <?php require 'footer.php'; ?>

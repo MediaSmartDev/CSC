@@ -11,7 +11,7 @@ include 'Data/Dbo.php';   // charge aussi $CSC_CONFIG
 
 $SERVICES = ['Administration', 'Marketing', 'Logistique', 'Communication'];
 // Nom affiché du service (la valeur envoyée reste en français)
-$SERVICE_LABEL = ['Administration' => L('Administration', 'الإدارة'), 'Marketing' => L('Marketing', 'التسويق'), 'Logistique' => L('Logistique', 'اللوجستيك'), 'Communication' => L('Communication', 'الاتصال')];
+$SERVICE_LABEL = ['Administration' => L('Administration', 'الإدارة'), 'Marketing' => L('Marketing', 'التسويق'), 'Logistique' => L('Logistics', 'اللوجستيك'), 'Communication' => L('Communication', 'الاتصال')];
 
 if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(16));
 
@@ -25,33 +25,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Anti-spam : champ caché rempli par les robots + jeton du formulaire
     $isBot = !empty($_POST['site_web']);
     if (!hash_equals($_SESSION['csrf'], (string)($_POST['csrf'] ?? ''))) {
-        $errors['global'] = L('La session a expiré, merci de renvoyer le formulaire.', 'انتهت صلاحية الجلسة، يرجى إعادة إرسال الاستمارة.');
+        $errors['global'] = L('Your session expired. Please send the form again.', 'انتهت صلاحية الجلسة، يرجى إعادة إرسال الاستمارة.');
     }
 
-    if (!in_array($old['service'], $SERVICES, true))            $errors['service'] = L('Choisissez un service.', 'اختر خدمة.');
-    if (mb_strlen($old['nom']) < 3)                               $errors['nom'] = L('Indiquez votre nom complet.', 'أدخل اسمك الكامل.');
-    if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL))       $errors['email'] = L('Adresse email invalide.', 'البريد الإلكتروني غير صحيح.');
+    if (!in_array($old['service'], $SERVICES, true))            $errors['service'] = L('Choose a department.', 'اختر خدمة.');
+    if (mb_strlen($old['nom']) < 3)                               $errors['nom'] = L('Enter your full name.', 'أدخل اسمك الكامل.');
+    if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL))       $errors['email'] = L('Invalid email address.', 'البريد الإلكتروني غير صحيح.');
     $tel = preg_replace('/[\s.\-]/', '', $old['telephone']);
-    if (!preg_match('/^(\+213|00213|0)[5-7]\d{8}$|^\+?\d{8,15}$/', $tel)) $errors['telephone'] = L('Numéro de téléphone invalide (ex : 0555 12 34 56).', 'رقم الهاتف غير صحيح (مثال: 0555 12 34 56).');
-    if (mb_strlen($old['description']) < 10)                      $errors['description'] = L('Décrivez votre demande (10 caractères minimum).', 'صف طلبك (10 أحرف على الأقل).');
-    if (mb_strlen($old['description']) > 3000)                    $errors['description'] = L('Description trop longue (3000 caractères maximum).', 'الوصف طويل جدا (3000 حرف كحد أقصى).');
+    if (!preg_match('/^(\+213|00213|0)[5-7]\d{8}$|^\+?\d{8,15}$/', $tel)) $errors['telephone'] = L('Invalid phone number (e.g. 0555 12 34 56).', 'رقم الهاتف غير صحيح (مثال: 0555 12 34 56).');
+    if (mb_strlen($old['description']) < 10)                      $errors['description'] = L('Describe your request (at least 10 characters).', 'صف طلبك (10 أحرف على الأقل).');
+    if (mb_strlen($old['description']) > 3000)                    $errors['description'] = L('Description too long (3000 characters maximum).', 'الوصف طويل جدا (3000 حرف كحد أقصى).');
 
     if (!$errors && $isBot) { $success = true; }   // on fait semblant pour le robot
     elseif (!$errors) {
         // 1) Envoi de l'email à l'équipe CSC
         $to   = $CSC_CONFIG['mail_to']   ?? 'contact@csconstantine.dz';
         $from = $CSC_CONFIG['mail_from'] ?? 'no-reply@csconstantine.dz';
-        $subject = '=?UTF-8?B?' . base64_encode('Nouvelle inscription - ' . $old['service']) . '?=';
+        $subject = '=?UTF-8?B?' . base64_encode('New application - ' . ($old['service'] === 'Logistique' ? 'Logistics' : $old['service'])) . '?=';
         $e = fn($s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
         $body = '<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #e3e3e3;border-radius:8px;overflow:hidden">'
-              . '<div style="background:#0a4f0a;color:#fff;padding:16px 20px;font-size:18px;font-weight:bold">Nouvelle inscription - site CSC</div>'
+              . '<div style="background:#0a4f0a;color:#fff;padding:16px 20px;font-size:18px;font-weight:bold">New application - CSC website</div>'
               . '<table style="width:100%;border-collapse:collapse;font-size:14px">'
-              . '<tr><td style="padding:10px 20px;color:#666;width:140px">Service</td><td style="padding:10px 20px;font-weight:bold">' . $e($old['service']) . '</td></tr>'
-              . '<tr style="background:#f7f7f7"><td style="padding:10px 20px;color:#666">Nom</td><td style="padding:10px 20px">' . $e($old['nom']) . '</td></tr>'
+              . '<tr><td style="padding:10px 20px;color:#666;width:140px">Department</td><td style="padding:10px 20px;font-weight:bold">' . $e($old['service'] === 'Logistique' ? 'Logistics' : $old['service']) . '</td></tr>'
+              . '<tr style="background:#f7f7f7"><td style="padding:10px 20px;color:#666">Name</td><td style="padding:10px 20px">' . $e($old['nom']) . '</td></tr>'
               . '<tr><td style="padding:10px 20px;color:#666">Email</td><td style="padding:10px 20px"><a href="mailto:' . $e($old['email']) . '">' . $e($old['email']) . '</a></td></tr>'
-              . '<tr style="background:#f7f7f7"><td style="padding:10px 20px;color:#666">Téléphone</td><td style="padding:10px 20px"><a href="tel:' . $e($tel) . '">' . $e($old['telephone']) . '</a></td></tr>'
-              . '<tr><td style="padding:10px 20px;color:#666;vertical-align:top">Demande</td><td style="padding:10px 20px;white-space:pre-wrap">' . $e($old['description']) . '</td></tr>'
-              . '</table><div style="padding:12px 20px;font-size:12px;color:#999">Reçu le ' . date('d/m/Y à H:i') . ' - répondez directement à cet email pour contacter la personne.</div></div>';
+              . '<tr style="background:#f7f7f7"><td style="padding:10px 20px;color:#666">Phone</td><td style="padding:10px 20px"><a href="tel:' . $e($tel) . '">' . $e($old['telephone']) . '</a></td></tr>'
+              . '<tr><td style="padding:10px 20px;color:#666;vertical-align:top">Request</td><td style="padding:10px 20px;white-space:pre-wrap">' . $e($old['description']) . '</td></tr>'
+              . '</table><div style="padding:12px 20px;font-size:12px;color:#999">Received on ' . date('d/m/Y \a\t H:i') . ' - reply directly to this email to contact the person.</div></div>';
         $headers  = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
         $headers .= "From: CSC Site <{$from}>\r\n";
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['csrf'] = bin2hex(random_bytes(16));
             $old = array_map(fn() => '', $old);
         } else {
-            $errors['global'] = L('Votre demande n\'a pas pu être envoyée. Merci de réessayer plus tard ou d\'écrire à ', 'تعذر إرسال طلبك. يرجى المحاولة لاحقا أو الكتابة إلى ') . $to;
+            $errors['global'] = L('Your request could not be sent. Please try again later or write to ', 'تعذر إرسال طلبك. يرجى المحاولة لاحقا أو الكتابة إلى ') . $to;
         }
     }
 }
@@ -91,7 +91,7 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fontawesome.css">
-    <title><?= L('Inscription - CS Constantine', 'التسجيل - النادي الرياضي القسنطيني') ?></title>
+    <title><?= L('Join us - CS Constantine', 'التسجيل - النادي الرياضي القسنطيني') ?></title>
     <style>
         .ins-wrap{max-width:820px;margin:0 auto;}
         .ins-intro{text-align:center;margin-bottom:35px;}
@@ -133,11 +133,11 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
     <?php require 'header.php'; ?>
 
     <div class="inner-banner-header wf100">
-        <h1 data-generated="<?= L('Inscription', 'التسجيل') ?>"><?= L('Inscription', 'التسجيل') ?></h1>
+        <h1 data-generated="<?= L('Join us', 'التسجيل') ?>"><?= L('Join us', 'التسجيل') ?></h1>
         <div class="gt-breadcrumbs">
             <ul>
-                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Accueil', 'الرئيسية') ?></a></li>
-                <li><a href="#"><?= L('Inscription', 'التسجيل') ?></a></li>
+                <li><a href="index.php" class="active"><i class="fas fa-home"></i> <?= L('Home', 'الرئيسية') ?></a></li>
+                <li><a href="#"><?= L('Join us', 'التسجيل') ?></a></li>
             </ul>
         </div>
     </div>
@@ -147,17 +147,17 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
             <div class="container">
                 <div class="ins-wrap">
                     <div class="ins-intro">
-                        <h2><?= L('Rejoignez l\'aventure du CSC', 'انضم إلى مغامرة النادي الرياضي القسنطيني') ?></h2>
-                        <p><?= L('Choisissez le service qui vous intéresse, décrivez votre demande : l\'équipe du club vous recontactera.', 'اختر الخدمة التي تهمك وصف طلبك، وسيتواصل معك فريق النادي.') ?></p>
+                        <h2><?= L('Join the CSC adventure', 'انضم إلى مغامرة النادي الرياضي القسنطيني') ?></h2>
+                        <p><?= L('Choose the department you are interested in and describe your request. The club team will get back to you.', 'اختر الخدمة التي تهمك وصف طلبك، وسيتواصل معك فريق النادي.') ?></p>
                     </div>
 
                     <div class="ins-card">
                     <?php if ($success): ?>
                         <div class="ins-success">
                             <i class="fas fa-check-circle"></i>
-                            <h3><?= L('Merci, votre inscription a bien été envoyée !', 'شكرا، تم إرسال تسجيلك بنجاح!') ?></h3>
-                            <p><?= L('L\'équipe du CS Constantine étudiera votre demande et vous recontactera par email ou par téléphone.', 'سيدرس فريق النادي الرياضي القسنطيني طلبك ويتواصل معك عبر البريد الإلكتروني أو الهاتف.') ?></p>
-                            <a href="index.php" class="ins-submit" style="display:inline-block;margin-top:15px;text-decoration:none;"><?= L('Retour à l\'accueil', 'العودة إلى الرئيسية') ?></a>
+                            <h3><?= L('Thank you, your application has been sent!', 'شكرا، تم إرسال تسجيلك بنجاح!') ?></h3>
+                            <p><?= L('The CS Constantine team will review your request and contact you by email or phone.', 'سيدرس فريق النادي الرياضي القسنطيني طلبك ويتواصل معك عبر البريد الإلكتروني أو الهاتف.') ?></p>
+                            <a href="index.php" class="ins-submit" style="display:inline-block;margin-top:15px;text-decoration:none;"><?= L('Back to home', 'العودة إلى الرئيسية') ?></a>
                         </div>
                     <?php else: ?>
                         <?php if (!empty($errors['global'])): ?><div class="ins-alert err"><?= htmlspecialchars($errors['global']) ?></div><?php endif; ?>
@@ -165,7 +165,7 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
                             <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                             <div class="ins-hp" aria-hidden="true"><input type="text" name="site_web" tabindex="-1" autocomplete="off"></div>
 
-                            <p class="ins-step"><b>1</b> <?= L('Choisissez le service', 'اختر الخدمة') ?></p>
+                            <p class="ins-step"><b>1</b> <?= L('Choose the department', 'اختر الخدمة') ?></p>
                             <?php $icons = ['Marketing' => 'fa-chart-line', 'Logistique' => 'fa-truck', 'Administration' => 'fa-briefcase', 'Communication' => 'fa-comments']; ?>
                             <div class="ins-services">
                                 <?php foreach ($SERVICES as $i => $s): ?>
@@ -175,18 +175,18 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
                             </div>
                             <?= $err('service') ?>
 
-                            <p class="ins-step"><b>2</b> <?= L('Votre demande', 'طلبك') ?></p>
+                            <p class="ins-step"><b>2</b> <?= L('Your request', 'طلبك') ?></p>
                             <div class="ins-field">
                                 <label for="description"><?= L('Description', 'الوصف') ?> <span>*</span></label>
-                                <textarea id="description" name="description" maxlength="3000" placeholder="<?= L('Présentez-vous et expliquez ce que vous souhaitez faire / proposer...', 'عرّف بنفسك واشرح ما تريد القيام به أو اقتراحه...') ?>" required><?= htmlspecialchars($old['description']) ?></textarea>
+                                <textarea id="description" name="description" maxlength="3000" placeholder="<?= L('Introduce yourself and explain what you would like to do or offer...', 'عرّف بنفسك واشرح ما تريد القيام به أو اقتراحه...') ?>" required><?= htmlspecialchars($old['description']) ?></textarea>
                                 <div class="ins-count"><span id="descCount">0</span> / 3000</div>
                                 <?= $err('description') ?>
                             </div>
 
-                            <p class="ins-step"><b>3</b> <?= L('Vos coordonnées', 'معلومات الاتصال') ?></p>
+                            <p class="ins-step"><b>3</b> <?= L('Your contact details', 'معلومات الاتصال') ?></p>
                             <div class="ins-field">
-                                <label for="nom"><?= L('Nom complet', 'الاسم الكامل') ?> <span>*</span></label>
-                                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($old['nom']) ?>" placeholder="<?= L('Nom et prénom', 'الاسم واللقب') ?>" required>
+                                <label for="nom"><?= L('Full name', 'الاسم الكامل') ?> <span>*</span></label>
+                                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($old['nom']) ?>" placeholder="<?= L('First and last name', 'الاسم واللقب') ?>" required>
                                 <?= $err('nom') ?>
                             </div>
                             <div class="ins-row">
@@ -196,14 +196,14 @@ $err = fn($k) => isset($errors[$k]) ? '<div class="ins-error">' . htmlspecialcha
                                     <?= $err('email') ?>
                                 </div>
                                 <div class="ins-field">
-                                    <label for="telephone"><?= L('Téléphone', 'الهاتف') ?> <span>*</span></label>
+                                    <label for="telephone"><?= L('Phone', 'الهاتف') ?> <span>*</span></label>
                                     <input type="tel" id="telephone" name="telephone" value="<?= htmlspecialchars($old['telephone']) ?>" placeholder="0555 12 34 56" required>
                                     <?= $err('telephone') ?>
                                 </div>
                             </div>
 
                             <div style="text-align:center;margin-top:10px;">
-                                <button type="submit" class="ins-submit"><i class="fas fa-paper-plane"></i> <?= L('Envoyer mon inscription', 'إرسال التسجيل') ?></button>
+                                <button type="submit" class="ins-submit"><i class="fas fa-paper-plane"></i> <?= L('Send my application', 'إرسال التسجيل') ?></button>
                             </div>
                         </form>
                     <?php endif; ?>

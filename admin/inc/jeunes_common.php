@@ -1,9 +1,9 @@
 <?php
 /* Catégories jeunes : mêmes codes que Data/jeunes.php */
 require_once __DIR__ . '/../../Data/jeunes.php';
-const JEUNE_TYPES = [1 => 'Joueurs', 2 => 'Staff'];
-const JEUNE_POSTES = ['Gardien', 'Défenseur', 'Milieu', 'Attaquant'];
-const JEUNE_POSTES_STAFF = ['Entraîneur', 'Entraîneur adjoint', 'Entraîneur des gardiens', 'Préparateur physique'];
+const JEUNE_TYPES = [1 => 'Players', 2 => 'Staff'];
+const JEUNE_POSTES = ['Goalkeeper', 'Defender', 'Midfielder', 'Forward'];
+const JEUNE_POSTES_STAFF = ['Coach', 'Assistant coach', 'Goalkeeper coach', 'Fitness coach'];
 const JEUNE_PHOTO_SIZE = [600, 750];   // même format que les cartes (4:5)
 
 function jeune_cat_label(string $code): string {
